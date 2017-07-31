@@ -10,7 +10,6 @@ class Welcome extends MX_Controller {
         parent::__construct();
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
-        $this->load->model( 'video/mvideos' );
         $this->load->model( 'siswa/msiswa' );
         $this->load->model( 'ortuback/Ortuback_model' );
         $this->load->model( 'ortu/mortu' );
@@ -49,7 +48,6 @@ class Welcome extends MX_Controller {
     }
     
     
-    $data['video'] = $this->mvideos->get_video_limit();
     $data['topik'] = $this->msiswa->persentasi_limit(3);
     $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
     $data['pesan'] = $this->msiswa->get_pesan();
@@ -128,7 +126,6 @@ public function get_data_learning_line(){
         $persentasi = (int)$item['stepDone'] / (int)$item['jumlah_step'] * 100;   
         $row[] = (int)$persentasi;
         $row[] = "<span class='skill-bar' title=".$item['namaTopik']." ".$persentasi."> <span class='bar'><span class='bg-color-4 skill-bar-progress' processed='true' style='width: ".$persentasi."%;'></span></span></span>";
-
 
         $data[] = $row;
         $n++;

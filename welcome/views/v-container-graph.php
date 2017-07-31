@@ -96,39 +96,6 @@
 <!-- PERKEMBANGAN learning Line -->
 <section class="padding-section" style="padding:0;">
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
-    <h3>Topik yang baru saja dipelajari..</h3> 
-    Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br>
-    <a onclick="show_modal_learning()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
-    <div class="grid-col-row clear-fix">
-      <?php foreach ($topik  as $item): ?>
-        <?php $persentasi = (int)$item['stepDone'] / (int)$item['jumlah_step'] * 100; ?>
-        <div class="grid-col grid-col-4" title="<?=(int)$persentasi ?>%">
-          <div class="portfolio-item">
-            <div class="picture">
-              <div class="course-item">
-                <div class="course-date bg-color-3 clear-fix skill-bar">
-                  <h3 style="margin:0;"><a href="<?=base_url("linetopik/learningline/".$item['babID']) ?>"><?=$item['namaTopik'] ?></a></h3>
-                  <hr style="margin-bottom: 5px">  
-                  <div class="day"><?=(int)$persentasi ?>% Progress</div><br>
-                  <div class="day"><?=$item['stepDone'] ?> / <?=$item['jumlah_step'] ?> Step Line Dikerjakan</div>
-                  <div class="bar">
-                    <span class="bg-color-4 skill-bar-progress" processed="true" style="width: <?=$persentasi ?>%;"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      <?php endforeach ?>
-    </div>
-  </div>
-</section>
-<!-- PERKEMBANGAN learning Line -->
-
-
-<!-- PERKEMBANGAN learning Line -->
-<section class="padding-section" style="padding:0;">
-  <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
     <h3>Latihan</h3> 
     Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan anda<br><br>
     <a onclick="show_modal_latihan()" class="cws-button bt-color-3 alt small">Selengkapnya</a> <br><br>    
@@ -160,45 +127,6 @@
   </div>
 </section>
 <!-- PERKEMBANGAN learning Line -->
-
-<!-- video random -->
-<section class="padding-section" style="padding-bottom: : 0;">
-  <div class="grid-row clear-fix">
-    <h3 style="margin:0">Recent Video</h3>
-    Nah, dibawah ini terdapat video terbaru loh, yuk coba tonton..
-    <hr>  <br>
-    <div class="grid-col-row clear-fix">
-      <?php foreach ($video as $item): ?>
-        <div class="grid-col grid-col-3">
-          <div class=" portfolio-item">
-            <div class="picture">
-              <div class="hover-effect"></div>
-              <div class="link-cont">
-                <span></span>
-                <?php $url =  base_url()."video/seevideo/".$item['videoid']?>
-                <a href="<?=$url ?>" class="cws-right fa fa-play"></a>
-              </div>
-              <center>
-                <?php if (!empty($item['link'])): ?>
-                  <iframe  width="250" src="<?=$item['link'] ?>"></iframe>
-                <?php endif ?>
-              </center>
-
-            </div>
-            <h3><?=$item['judulVideo'] ?></h3>
-            <p><?=$item['deskripsi'] ?></p>
-          </div>
-        </div>
-      <?php endforeach ?>
-
-
-    </div>
-    <hr class="divider-color">  
-
-  </div>
-</section>
-<!-- video random -->
-
 
 <!-- PERKEMBANGAN TO -->
 <section class="padding-section" style="padding-top: 0;margin-top: 0">
