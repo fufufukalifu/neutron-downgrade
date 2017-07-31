@@ -613,5 +613,14 @@ class Admincabang extends MX_Controller {
 		$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
 		echo json_encode($data);
 	}
+
+	public function get_id_cbg_laporan()
+	{
+		$id_pengguna=$this->session->userdata["id"];
+		$arrPengguna=$this->admincabang_model->get_id_cabang();
+		$data["id_cabang"]=$arrPengguna[0]["id_cabang"];
+		$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
+		echo json_encode($data);
+	}
 }
 ?>

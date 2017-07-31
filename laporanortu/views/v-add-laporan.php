@@ -27,10 +27,10 @@
 
           <div class="col-sm-4" id="cabang">
              <select class="form-control hide" name="cabang">
-           <!--    <option value="all">Semua Cabang</option>
+              <option value="all">Semua Cabang</option>
               <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?> -->
+              <?php endforeach ?>
             </select>
           </div>
 

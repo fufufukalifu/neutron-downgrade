@@ -26,11 +26,11 @@
         <div class="col-md-11">
 
            <div class="col-sm-4" id="cabang">
-             <select class="form-control hide" name="cabang">
-              <!-- <option value="all">Semua Cabang</option>
+             <select class="form-control" name="cabang">
+              <option value="all">Semua Cabang</option>
               <?php foreach ($cabang as $item): ?>
                 <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
-              <?php endforeach ?> -->
+              <?php endforeach ?>
             </select>
           </div>
 
@@ -106,7 +106,7 @@ var dataTableReport;
 $(document).ready(function(){
 
   function get_cabang(){
-      var url_get_cabang=base_url+"admincabang/get_idCabang";
+      var url_get_cabang=base_url+"admincabang/get_id_cbg_laporan";
       $.ajax({
         url:url_get_cabang,
         dataType:"text",
@@ -117,7 +117,7 @@ $(document).ready(function(){
           cabang=ob_cabang.id_cabang;
           // info cabang
           $("[name=cabang]").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
-          $("[name=cabang]").attr("disabled","true");
+          // $("[name=cabang]").attr("disabled","true");
            // <option value="all">Semua Cabang</option>
 
 

@@ -40,7 +40,7 @@ class Laporanortu extends MX_Controller {
 		$data['judul_halaman'] = "Laporan Orang Tua";
 		
 		# get cabang
-		// $data['cabang'] = $this->mcabang->get_all_cabang();
+		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get tingkat
 		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
 
