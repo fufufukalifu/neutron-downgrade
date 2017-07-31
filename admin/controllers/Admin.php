@@ -4,7 +4,7 @@ class Admin extends MX_Controller {
 
         parent::__construct();
 
-        $this->load->model('video/mvideos');
+        // $this->load->model('video/mvideos');
 
         $this->load->model('matapelajaran/mmatapelajaran');
 
