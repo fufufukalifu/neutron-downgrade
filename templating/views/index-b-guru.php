@@ -378,9 +378,9 @@
 <li class="dropdown custom" id="header-dd-notification">
  <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
   <span class="meta">
-   <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true">
+   <!-- <input type="int" name="count_komen" value="<?=$count_komen; ?>" hidden="true"> -->
    <span class="icon" id="new_count_komen">
-     <span class="jumlah_notifikasi"><?=$count_komen; ?></span>
+     <!-- <span class="jumlah_notifikasi"><?=$count_komen; ?></span> -->
      <i class="ico-bell"></i></span>
 
      <!-- <?php if ($count_komen!=0): ?>

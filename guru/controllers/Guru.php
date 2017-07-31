@@ -10,8 +10,8 @@ class Guru extends MX_Controller {
     $this->load->helper( 'session' );
     parent::__construct();
     $this->load->model( 'mguru' );
-    $this->load->model( 'video/mvideos' );
-    $this->load->model( 'komenback/mkomen' );
+    // $this->load->model( 'video/mvideos' );
+    // $this->load->model( 'komenback/mkomen' );
     $this->load->model( 'konsultasi/mkonsultasi' );
 
     $this->load->model( 'register/mregister' );
@@ -42,27 +42,7 @@ class Guru extends MX_Controller {
 
   }
 
-  public function videobyteacher() {
-        // $this->setGuruId();
-    $penggunaID=$this->session->userdata['id'];
-    $guru_id = $this->getGuruId();
-    $data['videos_uploaded'] = $this->load->mvideos->get_video_by_teacher( $guru_id );
-        //var_dump($data);
-        //untuk mengambil data guru
-    $data['data_guru'] = $this->load->mguru->get_single_guru( $penggunaID )[0];
-    $namaDepan=$data['data_guru']['namaDepan'];
-    $photo = $data['data_guru']['photo'];
-    if ($photo=='' || $photo==' ' || $photo=='default.jpg') {
-      $data['photo']= $this->generateavatar->generate_first_letter_avtar_url($namaDepan);
-    } else {
-      $data['photo']=base_url()."assets/image/photo/guru/".$photo;
-    }
-
-        //untuk menghitung berapa banyak video yang sudah diupload
-    $data['jumlah_video'] = count( $this->load->mvideos->get_video_by_teacher( $guru_id ) );
-       // var_dump($data);
-    return $data;
-  }
+ 
   function jumlah_komen(){
     $data['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
     $data['new_count_konsultasi'] = $this->db->where('statusRespon = 0 and mentorID='.$this->session->userdata('id_guru'))->count_all_results('tb_k_pertanyaan');
@@ -77,49 +57,35 @@ class Guru extends MX_Controller {
   }
 
   public function dashboard() {
-  //   $data = $this->videobyteacher();
-  //       #Sesudah Tempalting#
-  //       //get data komen yg belum di baca
-  //   $data['datKomen']=$this->datKomen();
-  //   $data['konsultasi'] = $this->mkonsultasi->get_pertanyaan_blm_direspon();
-  //   $data['judul_halaman'] = "Dashboard";
-  //   $data['files'] = array(
-  //     APPPATH . 'modules/guru/views/v-container-video.php',
-  //     );
-  //        #START cek hakakses#
-  //   $hakAkses=$this->session->userdata['HAKAKSES'];
-  //   if ($hakAkses=='admin') {
-  //         // jika admin
-  //     $this->parser->parse('admin/v-index-admin', $data);
-  //   } elseif($hakAkses=='guru'){
-  //         ##count komen
-  //         //get id guru
-  //     $id_guru = $this->session->userdata['id_guru'];
-  //         // get jumlah komen yg belum di baca
-  //     $data['count_konsultasi'] = count($data['konsultasi']);
+    
+    $data['judul_halaman'] = "Dashboard";
+    $data['files'] = array(
+      APPPATH . 'modules/guru/views/v-container-video.php',
+      );
+         #START cek hakakses#
+    $hakAkses=$this->session->userdata['HAKAKSES'];
+    if ($hakAkses=='admin') {
+          // jika admin
+      $this->parser->parse('admin/v-index-admin', $data);
+    } elseif($hakAkses=='guru'){
+         
+      $id_guru = $this->session->userdata['id_guru'];
+      
 
-  //     $data['count_komen']=$this->jumlah_komen();
-  //         // print_r($data['count_komen']);
-  //         ## count komen
-  //     $data["keahlian"]=$this->get_keahlianGuru($id_guru,0);
-  //     $data['keahlian_detail']=json_encode($this->mguru->get_m_keahlianGuru($id_guru));
+          // id keahlian
+      $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
+      $mapel_id ="";
+      foreach ($keahlian_detail as $key) {
+        $mapel_id =$mapel_id."".$key['mapelID'].",";
+      }    
 
-  //         // id keahlian
-  //     $keahlian_detail=($this->mguru->get_m_keahlianGuru($this->session->userdata('id_guru')));
-  //     $mapel_id ="";
-  //     foreach ($keahlian_detail as $key) {
-  //       $mapel_id =$mapel_id."".$key['mapelID'].",";
-  //     }
-  // // id keahlian
-  //     $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
-
-  //         // jika guru
-  //     $this->parser->parse('templating/index-b-guru', $data);
-  //   }else{
-  //       // jika siswa redirect ke welcome
-  //     redirect(site_url('login'));
-  //   }
-  $this->load->view('video/maintenis.php');
+          // jika guru
+      $this->parser->parse('templating/index-b-guru', $data);
+    }else{
+        // jika siswa redirect ke welcome
+      redirect(site_url('login'));
+    }
+  // $this->load->view('video/maintenis.php');
     #END Cek USer#
   }
 
