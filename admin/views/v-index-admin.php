@@ -531,13 +531,6 @@ JS aoutocomplate
 
       </li>
 
-      <li>
-  <a href="<?=base_url('komenback') ?>" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-comments"></i></span>
-    <span class="text">Komen</span>
-    <span class="arrow"></span>
-  </a>
-</li>
 <!--Start menu konsultasi -->
 
 
