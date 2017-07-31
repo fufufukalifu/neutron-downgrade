@@ -73,12 +73,12 @@
 	var pagination_admincabang;
 	var meridian = 4;
 	var prev=1;
-  var next=2;
-  var records_per_page=10;
+  	var next=2;
+  	var records_per_page=10;
     var page=0;
-  var pageVal;
-  var keySearch='';
-   var pageSelek=0;
+  	var pageVal;
+  	var keySearch='';
+   	var pageSelek=0;
 
 
 	$(document).ready(function(){
@@ -91,7 +91,7 @@
 				dataType:"text",
 				type:"post",
 				 success:function(Data)
-        {
+        		{
         	// set emty tabel 
         	$('#record_daftar_admin').empty();
           tb_admincabang = JSON.parse(Data);
@@ -225,103 +225,103 @@
 
 	function selectPage(pageVal='0'){
 		page=pageVal;
-  	pageSelek=page*records_per_page;
+	  	pageSelek=page*records_per_page;
 
-  	datas ={records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
-			$.ajax({
-				url:url,
-				data:datas,
-				dataType:"text",
-				type:"post",
-				 success:function(Data)
-        {
-        	// set emty tabel 
-        	$('#record_daftar_admin').empty();
-          tb_admincabang = JSON.parse(Data);
-          //set tabel
-          $('#record_daftar_admin').append(tb_admincabang);
-        },
-        error:function(){
+	  	datas ={records_per_page:records_per_page,pageSelek:pageSelek,keySearch:keySearch};
+				$.ajax({
+					url:url,
+					data:datas,
+					dataType:"text",
+					type:"post",
+					 success:function(Data)
+	        {
+	        	// set emty tabel 
+	        	$('#record_daftar_admin').empty();
+	          tb_admincabang = JSON.parse(Data);
+	          //set tabel
+	          $('#record_daftar_admin').append(tb_admincabang);
+	        },
+	        error:function(){
 
-        },
+	        },
 			});	
 
 		//meridian adalah nilai tengah padination
-  $('#page-'+meridian).removeClass('active');
-  var newMeridian=page+1;
-  var loop;
-  var hidePage;
-  var showPage;
-  if (newMeridian<=4) {
-    $("#page-prev").addClass('hide');
-    //banyak pagination yg akan di tampilkan dan sisembunyikan
-    loop=meridian-newMeridian;
-    // start id pagination yg akan ditampilkan
-    var idPaginationshow =1;
-    // start id pagination yg akan sembunyikan
-    var idPaginationhide =9;
-    prev=1;
-    next=7;
-    //lakukan pengulangan sebanyak loop
-    for (var i = 0; i < loop; i++) {
-      hidePagination='#page-'+idPaginationhide;
-      showPagination='#page-'+idPaginationshow;
-      //pagination yg di hide
-      $(showPagination).removeClass('hide');
-      //pagination baru yg ditampilkan
-      $(hidePagination).addClass('hide');
-      idPaginationshow++;
-      idPaginationhide--;
-    }
-  }else if( newMeridian>meridian){
-    $("#page-prev").removeClass('hide');
-        //banyak pagination yg akan di tampilkan dan sisembunyikan
-        loop=newMeridian-meridian;
-        // start id pagination yg akan ditampilkan
-        var idPaginationshow =newMeridian+3;
-        // start id pagination yg akan sembunyikan
-        var idPaginationhide =meridian-3;
-        console.log("ini"+next);
-        //lakukan pengulangan sebanyak loop
-        for (var i = 0; i < loop; i++) {
-          hidePagination='#page-'+idPaginationhide;
-          showPagination='#page-'+idPaginationshow;
-          //pagination yg di hide
-          $(showPagination).removeClass('hide');
-          //pagination baru yg ditampilkan
-          $(hidePagination).addClass('hide');
-          idPaginationshow--;
-          idPaginationhide++;
-        }
-      }else{
+		  $('#page-'+meridian).removeClass('active');
+		  var newMeridian=page+1;
+		  var loop;
+		  var hidePage;
+		  var showPage;
+		  if (newMeridian<=4) {
+		    $("#page-prev").addClass('hide');
+		    //banyak pagination yg akan di tampilkan dan sisembunyikan
+		    loop=meridian-newMeridian;
+		    // start id pagination yg akan ditampilkan
+		    var idPaginationshow =1;
+		    // start id pagination yg akan sembunyikan
+		    var idPaginationhide =9;
+		    prev=1;
+		    next=7;
+		    //lakukan pengulangan sebanyak loop
+		    for (var i = 0; i < loop; i++) {
+		      hidePagination='#page-'+idPaginationhide;
+		      showPagination='#page-'+idPaginationshow;
+		      //pagination yg di hide
+		      $(showPagination).removeClass('hide');
+		      //pagination baru yg ditampilkan
+		      $(hidePagination).addClass('hide');
+		      idPaginationshow++;
+		      idPaginationhide--;
+		    }
+		  }else if( newMeridian>meridian){
+		    $("#page-prev").removeClass('hide');
+		        //banyak pagination yg akan di tampilkan dan sisembunyikan
+		        loop=newMeridian-meridian;
+		        // start id pagination yg akan ditampilkan
+		        var idPaginationshow =newMeridian+3;
+		        // start id pagination yg akan sembunyikan
+		        var idPaginationhide =meridian-3;
+		        console.log("ini"+next);
+		        //lakukan pengulangan sebanyak loop
+		        for (var i = 0; i < loop; i++) {
+		          hidePagination='#page-'+idPaginationhide;
+		          showPagination='#page-'+idPaginationshow;
+		          //pagination yg di hide
+		          $(showPagination).removeClass('hide');
+		          //pagination baru yg ditampilkan
+		          $(hidePagination).addClass('hide');
+		          idPaginationshow--;
+		          idPaginationhide++;
+		        }
+		      }else{
 
-    //banyak pagination yg akan di tampilkan dan sisembunyikan
-    loop=meridian-newMeridian;
-    // start id pagination yg akan ditampilkan
-    var idPaginationshow =newMeridian-3;
-    // start id pagination yg akan sembunyikan
-    var idPaginationhide =meridian+3;
-    //lakukan pengulangan sebanyak loop
-    for (var i = 0; i < loop; i++) {
-      hidePagination='#page-'+idPaginationhide;
-      showPagination='#page-'+idPaginationshow;
-      //pagination yg di hide
-      $(showPagination).removeClass('hide');
-      //pagination baru yg ditampilkan
-      $(hidePagination).addClass('hide');
-      idPaginationshow++;
-      idPaginationhide--;
-    }
-  } 
-  prev=newMeridian-2;
-  next=newMeridian;
-  meridian=newMeridian;
-  $('#page-'+meridian).addClass('active');
+		    //banyak pagination yg akan di tampilkan dan sisembunyikan
+		    loop=meridian-newMeridian;
+		    // start id pagination yg akan ditampilkan
+		    var idPaginationshow =newMeridian-3;
+		    // start id pagination yg akan sembunyikan
+		    var idPaginationhide =meridian+3;
+		    //lakukan pengulangan sebanyak loop
+		    for (var i = 0; i < loop; i++) {
+		      hidePagination='#page-'+idPaginationhide;
+		      showPagination='#page-'+idPaginationshow;
+		      //pagination yg di hide
+		      $(showPagination).removeClass('hide');
+		      //pagination baru yg ditampilkan
+		      $(hidePagination).addClass('hide');
+		      idPaginationshow++;
+		      idPaginationhide--;
+		    }
+		  } 
+		  prev=newMeridian-2;
+		  next=newMeridian;
+		  meridian=newMeridian;
+		  $('#page-'+meridian).addClass('active');
 
 	}
-function editAdminCabang(idCabang){
+	function editAdminCabang(idCabang){
 
-	console.log(idCabang);
+		console.log(idCabang);
 
-}
+	}
 </script>

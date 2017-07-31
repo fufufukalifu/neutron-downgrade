@@ -8,7 +8,7 @@
 					  <div class="panel-heading">
               <h4 class="panel-title">Daftar Guru</h4>
               <div class="panel-toolbar text-right">
-              	<a href="http://localhost/netjoo-2/register/registerGuru" class="btn btn-success"><i class="ico-user-plus"></i></a>
+              	<a href="<?=base_url()?>register/registerGuru" class="btn btn-success"><i class="ico-user-plus"></i></a>
               </div>
             </div>
             <!-- /Panel Heading -->

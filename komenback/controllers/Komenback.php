@@ -8,7 +8,7 @@ class Komenback extends MX_Controller
   function __construct(){
    $this->load->library('parser');
    $this->load->model('mkomen');
-   $this->load->model('video/mvideos');
+   // $this->load->model('video/mvideos');
    $this->load->model('guru/mguru');
    $this->load->model('konsultasi/mkonsultasi');
    $this->load->library('generateavatar');

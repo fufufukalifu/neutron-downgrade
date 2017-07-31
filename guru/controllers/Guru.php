@@ -10,7 +10,7 @@ class Guru extends MX_Controller {
     $this->load->helper( 'session' );
     parent::__construct();
     $this->load->model( 'mguru' );
-    $this->load->model( 'video/mvideos' );
+    // $this->load->model( 'video/mvideos' );
     $this->load->model( 'komenback/mkomen' );
     $this->load->model( 'konsultasi/mkonsultasi' );
 

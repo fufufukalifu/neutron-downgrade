@@ -30,7 +30,7 @@
 					<div class="form-group" id="pass">
 						<label class="control-label">Katasandi</label>
 						<div class="has-icon pull-left">
-							<input type="password" class="form-control" name="password" data-parsley-required="" disabled="true">
+							<input type="password" class="form-control" name="password" data-parsley-required="" >
 							<i class="ico-key2 form-control-icon"></i>
 						</div>
 							<span class="hidden" style="color:red;" id="error-msg-pass">*katasandi minimal 8 karakter</span>
@@ -38,7 +38,7 @@
 					<div class="form-group" id="re-pass">
 						<label class="control-label">Ulangi Katasandi</label>
 						<div class="has-icon pull-left">
-							<input type="password" class="form-control" name="retype-password" data-parsley-equalto="input[name=password]" disabled="true">
+							<input type="password" class="form-control" name="retype-password" data-parsley-equalto="input[name=password]" >
 							<i class="ico-asterisk form-control-icon"></i>
 						</div>
 						<span class="hidden" style="color:red;" id="error-msg-repass">*katasandi tidak sama</span>
@@ -53,18 +53,11 @@
 							</select>
 						</div>
 					</div>
-<!-- 					<div class="form-group">
-						<label class="control-label">Email</label>
-						<div class="has-icon pull-left">
-							<input type="email" class="form-control" name="email" data-parsley-equalto="input[name=password]" disabled="true">
-							<i class="ico-mail form-control-icon"></i>
-						</div>
-					</div> -->
 					<div class="form-group" id="email">
 						<label class="control-label">Email</label>
 						<div class="input-group">
 							<div class="has-icon pull-left">
-								<input type="email" class="form-control" name="email" data-parsley-required="" disabled="true">
+								<input type="email" class="form-control" name="email" data-parsley-required="" >
 								<i class="ico-mail form-control-icon"></i>
 							</div>
 							<span class="input-group-addon btn" id="cekEmail" ><i class="ico-ok"></i></span>
@@ -74,21 +67,8 @@
 					</div>
 
 				</div>
-				<!-- end panel body -->
-<!-- 				<hr class="nm">
-				<div class="panel-body">
-					<p class="semibold text-muted">To confirm and activate your new account, we will need to send the activation code to your e-mail.</p>
-					<div class="form-group">
-						<label class="control-label">Email</label>
-						<div class="has-icon pull-left">
-							<input type="email" class="form-control" name="email" placeholder="you@mail.com">
-							<i class="ico-envelop form-control-icon"></i>
-						</div>
-					</div>
-
-				</div> -->
 				<div class="panel-footer">
-					<button class="btn btn-block btn-success" disabled="true"><span class="semibold">Simpan</span></button> 
+					<button class="btn btn-block btn-success" ><span class="semibold">Simpan</span></button> 
 				</div>
 			</form>
 			<!--/ Form horizontal layout bordered -->
@@ -118,7 +98,6 @@ var retype_password;
 
 	 	function sendData(datas){
 	 		var url=base_url+"admincabangback/add_admincabang";
-	 		console.log("inininini");
 	 		$.ajax({
 	 			url:url,
 	 			data:datas, 
@@ -243,7 +222,6 @@ var retype_password;
 	 			$('#re-pass').addClass("has-success");
 	 			$("[name=email]").prop('disabled', false);
 	 		} else {
-	 			console.log("salah");
 	 			// parsley-error
 	 			$('#re-pass').addClass("has-error");
 	 			$("#re-pass").removeClass("has-success");
