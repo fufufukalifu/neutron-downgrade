@@ -507,33 +507,6 @@ JS aoutocomplate
         </a>
       </li>
 
-      <li>
-        <a href="javascript:void(0);" data-target="#gallery" data-toggle="submenu" data-parent=".topmenu">
-          <span class="figure"><i class="ico-images"></i></span>
-          <span class="text">Gallery</span>
-          <span class="arrow"></span>
-        </a>
-
-        <ul id="gallery" class="submenu collapse ">
-          <li class="submenu-header ellipsis">gallery</li>
-          <li >
-            <a href="<?=base_url('index.php/gallery')?>">
-              <span class="text">Gallery</span>
-            </a>
-          </li>
-          <li >
-            <a href="javascript:void(0)" onclick="filter_gallery()">
-              <span class="text">Filter Gallery</span>
-            </a>
-          </li>
-          <li >
-            <a href="javascript:void(0)" onclick="add_gallery()">
-              <span class="text">Tambahkan gallery</span> 
-            </a>
-          </li>
-
-        </ul>
-      </li>
 
       <li>
         <a href="javascript:void(0);" data-target="#guru" data-toggle="submenu" data-parent=".topmenu">
@@ -566,60 +539,8 @@ JS aoutocomplate
   </a>
 </li>
 <!--Start menu konsultasi -->
-<li>
- <a href="javascript:void(0);" data-target="#konsultasi" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Konsultasi Forum</span>
-  <span class="arrow"></span>
-</a>
 
-<ul id="konsultasi" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Konsultasi Forum/li>
 
-    <li >
-     <a href="javascript:void(0);">
-      <span class="text">Daftar Konsultasi Forum</span>
-    </a>
-  </li>
-
-  <li>
-   <a href="<?= base_url('index.php/konsulback/aq_konsul');?>">
-    <span class="text">Akumulasi Poin Konsultasi</span>
-  </a>
-</li>
-
-</ul>
-</li>
-
-<li>
- <a href="<?= base_url('learningline') ?>">
-  <span class="figure"><i class="ico-list-ol"></i></span>
-  <span class="text">Learningline</span>
-</a>
-</li>
-<li>
-  <a href="javascript:void(0);" data-target="#materi" data-toggle="submenu" data-parent=".topmenu">
-    <span class="figure"><i class="ico-files"></i></span>
-    <span class="text">Materi</span>
-    <span class="arrow"></span>
-  </a>
-
-  <ul id="materi" class="submenu collapse ">
-    <li class="submenu-header ellipsis">Materi</li>
-
-    <li >
-      <a href="<?=base_url('index.php/materi/form_materi')?>" >
-        <span class="text">Form Materi</span> 
-      </a>
-    </li>
-    <li >
-      <a href="<?=base_url('index.php/materi/list_all_materi')?>">
-        <span class="text">Tambah Materi</span>
-      </a>
-    </li>
-
-  </ul>
-</li>
 <li>
   <a href="<?=base_url('ortuback/list_ortu') ?>" data-toggle="submenu" data-parent=".topmenu">
     <span class="figure"><i class="ico-comments"></i></span>
@@ -634,7 +555,9 @@ JS aoutocomplate
   <span class="arrow"></span>
 </a>
 </li>
-<li>
+
+
+<!-- <li>
  <a href="javascript:void(0);" data-target="#mpengawas" data-toggle="submenu" data-parent=".topmenu">
   <span class="figure"><i class="ico-clipboard"></i></span>
   <span class="text">Pengawas</span>
@@ -662,7 +585,7 @@ JS aoutocomplate
 </li>
 
 </ul>
-</li>
+</li> -->
 
 
 
@@ -800,49 +723,6 @@ JS aoutocomplate
         <span class="text">Kirim Token</span>
       </a>
     </li>
-  </ul>
-</li>
-
-      <li>
-       <a href="javascript:void(0);" data-target="#video" data-toggle="submenu" data-parent=".topmenu">
-        <span class="figure"><i class="ico-facetime-video"></i></span>
-        <span class="text">Video</span>
-        <span class="arrow"></span>
-      </a>
-
-      <ul id="video" class="submenu collapse ">
-        <li class="submenu-header ellipsis">Video</li>
-
-        <li >
-         <a href="<?=base_url('index.php/videoback/formupvideo')?>">
-          <span class="text">Upload Video</span>
-        </a>
-      </li>
-
-      <li>
-       <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
-
-        <span class="text">Daftar video</span>
-
-        <span class="arrow"></span>
-
-      </a>
-
-      <ul id="filtervideo" class="submenu collapse ">
-
-        <li class="submenu-header ellipsis">Daftar video</li>
-
-        <li><a href="<?=base_url('/index.php/videoback/daftarvideo')?>"><span class="text">Daftar Semua video</span>
-
-        </a></li>
-
-        <li><a href="javascript:void(0);" onclick="filter_video()"><span class="text">Filter Video</span>
-
-        </a></li>
-
-      </ul>
-    </li>
-
   </ul>
 </li>
 
