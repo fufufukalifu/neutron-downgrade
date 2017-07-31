@@ -28,7 +28,6 @@ class Testimoni extends MX_Controller {
 
     public function ajax_daftar_testimoni() {
         $list = $this->Mtestimoni->tampil_testimoni();
-
         $data = array();
         $no = 0;
         //mengambil nilai list
