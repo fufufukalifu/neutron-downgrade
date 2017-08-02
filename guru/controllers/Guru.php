@@ -43,7 +43,7 @@ class Guru extends MX_Controller {
 
   }
 
- 
+  
   function jumlah_komen(){
     $data['new_count_komen'] = $this->db->where('read_status',0)->count_all_results('tb_komen');
     $data['new_count_konsultasi'] = $this->db->where('statusRespon = 0 and mentorID='.$this->session->userdata('id_guru'))->count_all_results('tb_k_pertanyaan');
@@ -69,7 +69,7 @@ class Guru extends MX_Controller {
           // jika admin
       $this->parser->parse('admin/v-index-admin', $data);
     } elseif($hakAkses=='guru'){
-         
+     
       $id_guru = $this->session->userdata['id_guru'];
       
 

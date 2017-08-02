@@ -8,6 +8,9 @@
       </div>
       <div class="panel-body">
         <div class="row">
+                    </div>
+
+
           <div class="col-sm-12">
             <div class="panel-body bgcolor-info">
               <ul class="list-unstyled mt15 mb15">
@@ -21,7 +24,10 @@
               </ul>
             </div><br>
           </div>
-          <div class="col-sm-3">
+
+
+
+          <div class="col-sm-4">
             <!-- START Statistic Widget -->
             <div class="table-layout animation delay animating fadeInDown">
               <div class="col-xs-4 panel bgcolor-info">
@@ -37,7 +43,7 @@
             <!--/ END Statistic Widget -->
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <!-- START Statistic Widget -->
             <div class="table-layout animation delay animating fadeInUp">
               <div class="col-xs-4 panel bgcolor-info">
@@ -53,23 +59,8 @@
             <!--/ END Statistic Widget -->
           </div>
 
-          <div class="col-sm-3">
-            <!-- START Statistic Widget -->
-            <div class="table-layout animation delay animating fadeInUp">
-              <div class="col-xs-4 panel bgcolor-info">
-                <div class="ico-list-alt fsize24 text-center"></div>
-              </div>
-              <div class="col-xs-8 panel">
-                <div class="panel-body text-center">
-                  <h4 class="semibold nm">{jumlah_line} Step</h4>
-                  <p class="semibold text-muted mb0 mt5">Learning Line</p>
-                </div>
-              </div>
-            </div>
-            <!--/ END Statistic Widget -->
-          </div>
-
-          <div class="col-sm-3">
+        
+          <div class="col-sm-4">
             <!-- START Statistic Widget -->
             <div class="table-layout animation delay animating fadeInDown">
               <div class="col-xs-4 panel bgcolor-info">
@@ -219,112 +210,6 @@
 </div>
 <!-- LAPORAN SEMUA LATIHAN -->
 
-<!-- LAPORAN SEMUA LEARNING LINE -->
-<div class="col-md-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Laporan Semua Learning Line</h3> 
-    </div>
-    <div class="panel-body">
-      <table class="rline_log table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-        <thead>
-          <tr>
-            <th>no</th>
-            <th>Topik</th>
-            <th>Jenis Step</th>
-            <th>Status</th>
-            <th>Jumlah Soal</th>
-            <th>Nama Step</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        </tbody>
-      </table>
-
-
-    </div>
-  </div>
-</div>
-<!-- LAPORAN SEMUA LEARNING LINE -->
-
-<!-- DAFTAR KONSULTASI -->
-<div class="col-md-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Daftar Konsultasi</h3> 
-    </div>
-    <div class="panel-body">
-      <table class="rkonstultasi table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-        <thead>
-          <tr>
-            <th>no</th>
-            <th>Judul</th>
-            <th>Isi Pertanyaan</th>
-            <th>Tanggal Dibuat</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        </tbody>
-      </table>
-
-
-    </div>
-  </div>
-  </div>
-<!-- DAFTAR KONSULTASI -->
-
-
-<!-- PRODRESS LEARNING LINE -->
-  <!-- Browser Breakpoint -->
-  <div class="col-lg-12">
-    <!-- START panel -->
-    <div class="panel panel-default">
-      <!-- panel heading/header -->
-      <div class="panel-heading">
-        <h3 class="panel-title ellipsis"><i class="ico-files mr5"></i>Progress learning Line</h3>
-        <!-- panel toolbar -->
-        <div class="panel-toolbar text-right">
-          <!-- option -->
-          <div class="option">
-            <button class="btn up" data-toggle="panelcollapse"><i class="arrow"></i></button>
-            <button class="btn" data-toggle="panelremove" data-parent=".col-md-12"><i class="remove"></i></button>
-          </div>
-          <!--/ option -->
-        </div>
-        <!--/ panel toolbar -->
-      </div>
-      <!--/ panel heading/header -->
-      <!-- panel body with collapse capabale -->
-      <div class="table-responsive panel-collapse pull out">
-        <table class="table rpersentase" style="font-size: 13px" width=100%>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama topik</th>
-              <th>Dikerjakan</th>
-              <th>Jumlah Step</th>
-              <th>Belum Dikerjakan</th>
-              <th>Progress</th>
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-      <!--/ panel body with collapse capabale -->
-    </div>
-    <!--/ END panel -->
-  </div>
-  <!-- Browser Breakpoint -->
-<!-- PRODRESS LEARNING LINE -->
-
-
 
 </div>
 
@@ -369,47 +254,6 @@ dataTableReportPaket = $('.rlatihan').DataTable({
 });
 // ## datatable report latihan
 
-// ## datatable line log
-url3 = base_url+"learningline/get_line_log";
-dataTableReportPaket = $('.rline_log').DataTable({
-  "ajax": {
-    "url": url3,
-    "type": "POST",
-  },
-  "emptyTable": "Tidak Ada Data Pesan",
-  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-  "bDestroy": true,
-});
-
-// ## datatable line log
-
-// ## datatable konsultasi
-url4 = base_url+"siswa/ajax_daftar_konsultasi";
-
-dataTableReportPaket = $('.rkonstultasi').DataTable({
-  "ajax": {
-    "url": url4,
-    "type": "POST",
-  },
-  "emptyTable": "Tidak Ada Data Pesan",
-  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-  "bDestroy": true,
-});
-
-// ## datatable konsultasi
-
-// ## datatable persentasi learning line
-url4 = base_url+"siswa/async_persentase_learning";
-
-dataTableReportPaket = $('.rpersentase').DataTable({
-  "ajax": {
-    "url": url4,
-    "type": "POST",
-  },
-  "emptyTable": "Tidak Ada Data Pesan",
-  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-  "bDestroy": true,
-});
 
 })
 // ## datatable persentasi learning line

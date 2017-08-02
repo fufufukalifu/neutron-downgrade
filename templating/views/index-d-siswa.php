@@ -47,8 +47,8 @@
 
 <!-- START Body -->
 <body>
-    
-    <!-- sound notification -->
+
+  <!-- sound notification -->
   <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
   <!-- /sound notification -->
 
@@ -114,10 +114,10 @@
    <!-- <div class="indicator inline"><span class="spinner"></span></div> -->
    <!--/ indicator -->
 
-    <!-- Message list -->
+   <!-- Message list -->
    <div class="media-list" id="message-tbody">
 
-       <?php foreach ($datLapor as $key ): ?>
+     <?php foreach ($datLapor as $key ): ?>
       <a href="<?=base_url()?>ortuback/pesan/<?=$key['UUID']?>" class="media border-dotted read">
         <span class="pull-left">
           <img src="<?=base_url()?>assets\image\photo\siswa\>" class="media-object img-circle" alt="">
@@ -235,9 +235,8 @@
    </span>
  </a>
  <ul class="dropdown-menu" role="menu">
-  <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
-  <li><a href="<?=base_url('index.php/guru/pengaturanProfileguru');?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
-  <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
+ <li><a href="<?=base_url('index.php/siswa');?>"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
+  <li><a href="<?=base_url('index.php/siswa/profilesetting');?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
   <li class="divider"></li>
   <li><a href="<?=base_url('index.php/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
 </ul>
@@ -273,66 +272,17 @@
     </a>
   </li>
 
+  
   <li>
-   <a href="">
-    <span class="figure"><i class="ico-bubble-video-chat"></i></span>
-    <span class="text">Video</span>
+   <a href="<?= base_url('index.php/tryout') ?>">
+    <span class="figure"><i class="ico-pencil5"></i></span>
+    <span class="text">Tryout</span>
   </a>
-</li>
-
-<li>
- <a href="<?= base_url('index.php/Konsultasi') ?>">
-  <span class="figure"><i class="ico-bubbles8"></i></span>
-  <span class="text">Konsultasi</span>
-</a>
-</li>
-
-<li>
- <a href="<?= base_url('index.php/tryout') ?>">
-  <span class="figure"><i class="ico-pencil5"></i></span>
-  <span class="text">Tryout</span>
-</a>
 </li>
 <li>
  <a href="<?= base_url('index.php/tesonline/daftarlatihan') ?>">
   <span class="figure"><i class="ico-notebook"></i></span>
   <span class="text">Latihan</span>
-</a>
-</li>
-
-
-
-<li>
-  <a href="javascript:void(0);" data-target="#filtervideo" data-toggle="submenu"  >
-    <span class="figure"><i class="ico-stack"></i></span>
-    <span class="text">Learning Line</span>
-    <span class="arrow"></span>
-  </a>
-
-  <ul id="filtervideo" class="submenu collapse">
-    <li>
-      <span class="text"><a href="<?=base_url("linetopik/lineMapel/1") ?>">SD</a></span>
-    </li>
-
-    <li>
-      <span class="text"><a href="<?=base_url("linetopik/lineMapel/2") ?>">SMP</a></span>
-    </li>
-
-    <li>
-      <span class="text"><a href="<?=base_url("linetopik/lineMapel/3") ?>">SMA IPS</a></span>
-    </li>
-
-    <li>
-      <span class="text"><a href="<?=base_url("linetopik/lineMapel/4") ?>">SMA IPA</a></span>
-    </li>
-
-  </ul>
-</li>
-
-<li>
- <a href="<?= base_url('index.php/modulonline/allmodul') ?>">
-  <span class="figure"><i class="ico-download-alt"></i></span>
-  <span class="text">Edu Drive</span>
 </a>
 </li>
 
@@ -393,8 +343,7 @@
 <script type="text/javascript" src="<?= base_url('assets/javascript/tables/datatable.js') ?>"></script>
 <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 
- <script type="text/javascript">
-
+<script type="text/javascript">
   jQuery(document).ready(function () {
     var socket = io.connect( 'http://'+window.location.hostname+':3000' );
     var new_count_komen = 0;
@@ -404,57 +353,43 @@
     var url = "<?= base_url() ?>index.php/siswa/ajax_getsiswa";
 
      // SOCKET CREATE PERTANYAAN
-      socket.on('pesan_baru', function(data){
-        $.getJSON( base_url+"siswa/jumlah_pesan", function( datas ) {
+     socket.on('pesan_baru', function(data){
+      $.getJSON( base_url+"siswa/jumlah_pesan", function( datas ) {
         $('.jumlah_notifikasi').text(datas);
       });
-        var id_ortu = data.id_ortu;
-        var jenis_lapor = data.jenis_lapor;
-        var isi = data.isi;
-        var namaPengguna = data.namaPengguna;
+      var id_ortu = data.id_ortu;
+      var jenis_lapor = data.jenis_lapor;
+      var isi = data.isi;
+      var namaPengguna = data.namaPengguna;
 
-        $.ajax({
-            url:url,
-            success:function(data){
-              // ubah type data  dari json ke objek
-              obj =JSON.parse(data);
-              
-               idortu = obj[0].id_ortu;
-               // namaPengguna = obj[0].penggunaID;
-
-               for (i = 0; i < obj.length; i++) { 
-                // cek pengguna yang dituju bukan?
-                if (id_ortu == idortu ) {
-                  //jika true 
-                  var old_count_komen = parseInt($('[name=count_komen]').val());
-                  new_count_komen = old_count_komen + 1;
-                  $('[name=count_komen]').val(new_count_komen);
-                  $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
-                    // play sound notification
-                    $('#notif_audio')[0].play();
-                    //add komen baru ke data notif id message-tbody
-                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
-                } 
-              }
-
-
-
-             },              
-          });
-
-       
-        
-
-      });
-      // SOCKET CREATE PERTANYAAN
-
-    
-
- 
-  });
+      $.ajax({
+        url:url,
+        success:function(data){
+        // ubah type data  dari json ke objek
+        obj =JSON.parse(data);
+        idortu = obj[0].id_ortu;
+         // namaPengguna = obj[0].penggunaID;
+         for (i = 0; i < obj.length; i++) { 
+          // cek pengguna yang dituju bukan?
+          if (id_ortu == idortu ) {
+            //jika true 
+            var old_count_komen = parseInt($('[name=count_komen]').val());
+            new_count_komen = old_count_komen + 1;
+            $('[name=count_komen]').val(new_count_komen);
+            $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+                // play sound notification
+                $('#notif_audio')[0].play();
+                //add komen baru ke data notif id message-tbody
+                $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+              } 
+            }
+          },              
+        });
+    });    
+   });
 
 
-</script>
+ </script>
 
 
 </body>

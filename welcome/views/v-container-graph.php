@@ -48,41 +48,7 @@
 </div>
 <!-- MODAL LATIHAN PERSENTASE-->
 
-<!-- MODAL LATIHAN PERSENTASE-->
-<div class="modal fade" tabindex="-1" role="dialog" id="learning_persentase">
-  <div class="modal-dialog" role="document" style="width: 80%">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Progress Learning Line</h3>
 
-      </div>
-      <div class="modal-body">
-
-        <table class="table lpersentase" width=100% style="font-size: 13px">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Topik</th>
-              <th>Step Dikerjakan</th>
-              <th>Jumlah Step</th>
-              <th>Persentase</th>
-              <th>Bar</th>
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal-footer bg-color-3">
-        <button type="button" class="cws-button bt-color-1 alt small selesai" data-dismiss="modal">Batal</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- MODAL LATIHAN PERSENTASE-->
 
 
 <div class="page-title" style="background:#2b3036">
@@ -170,19 +136,7 @@ dataTableLatihan = $('.rpersentase').DataTable({
 });
 // ## datatable latihan
 
-// ## datatable line log
-url5 = base_url+"welcome/get_data_learning_line";
 
-dataTableLearningLine = $('.lpersentase').DataTable({
-  "ajax": {
-    "url": url5,
-    "type": "POST",
-  },
-  "emptyTable": "Tidak Ada Data Pesan",
-  "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-  "bDestroy": true,
-});
-// ## datatable line log
 
 })
 </script>
