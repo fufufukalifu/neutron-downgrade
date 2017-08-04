@@ -227,6 +227,13 @@ class Laporanortu extends MX_Controller {
 		->set_output( json_encode( $this->Laporanortu_model->get_nc( $tingkat ) ) );
 	}
 
+	// function get cabang
+	public function get_cabang() {
+	  $data = $this->output
+	  ->set_content_type( "application/json" )
+	  ->set_output( json_encode( $this->Laporanortu_model->get_cabang() ) ) ;
+	}
+
 
 }
 

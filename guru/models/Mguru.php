@@ -238,8 +238,11 @@ return $query->result_array();
 		return $query->result_array();
 	}
 		function jumlah_guru(){
-		    $this->db->where('status','1');
-		    return $this->db->get('tb_guru')->num_rows();
+		    		$this->db->where('pengguna.status', 1);
+		$this->db->where('guru.status', 1);
+		    		$this->db->join('tb_pengguna pengguna','guru.penggunaID = pengguna.id');
+		    return $this->db->get('tb_guru guru')->num_rows();
+
 		}
 
     // get data siswa per segment
