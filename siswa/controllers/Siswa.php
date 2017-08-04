@@ -23,6 +23,7 @@ class Siswa extends MX_Controller {
         $this->load->model('register/mregister');
         $this->load->model('cabang/mcabang');
         $this->load->model('tryout/mtryout');
+        $this->load->model('learningline/learning_model');
         $this->load->model('konsultasi/mkonsultasi');
         $this->load->model('ortuback/Ortuback_model');
         
@@ -82,6 +83,7 @@ class Siswa extends MX_Controller {
                 'sisa'=>$this->session->userdata('sisa'),
                 'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
                 'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
+                'jumlah_line'=>count($this->learning_model->get_line_log_step_line_by_user())
                 );
 
             $data['files'] = array( 
@@ -382,6 +384,9 @@ public function savesiswa(){
         $kataSandi = htmlspecialchars(md5($this->input->post('katasandi')));
         $email = htmlspecialchars($this->input->post('email'));
         $id_kk=htmlspecialchars($this->input->post('kk'));
+        if ($id_kk!=''||$id_kk!=' ') {
+                $id_kk=null;
+            }
         $hakAkses = 'siswa';
 
         //data array akun
@@ -816,6 +821,9 @@ public function editSiswa(){
             $cabangID = htmlspecialchars($this->input->post('cabang'));
             $noIndukNeutron = htmlspecialchars($this->input->post('noinduk'));
             $id_kelompok_kelas=htmlentities($this->input->post('kk'));
+            if ($id_kelompok_kelas!=''||$id_kelompok_kelas!=' ') {
+                $id_kelompok_kelas=null;
+            }
 
             //data array siswa
             $data_post = array(
