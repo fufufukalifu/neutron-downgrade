@@ -22,8 +22,6 @@
                                         <h4 class="semibold ellipsis nm text-primary">Tryout</h4>
                                         <p class="text-muted nm">Ultrices Industries</p>
                                     </li>
-                                    <li class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</li>
                                 </ul>
                             </div>
                             <!--/ panel body -->
@@ -47,8 +45,6 @@
                                         <h4 class="semibold ellipsis nm text-primary">Bank Soal</h4>
                                         <p class="text-muted nm">Ultrices Industries</p>
                                     </li>
-                                    <li class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</li>
                                 </ul>
                             </div>
                             <!--/ panel body -->
@@ -73,8 +69,6 @@
                                         <h4 class="semibold ellipsis nm text-primary">Kirim Laporan</h4>
                                         <p class="text-muted nm">Ultrices Industries</p>
                                     </li>
-                                    <li class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</li>
                                 </ul>
                             </div>
                             <!--/ panel body -->
