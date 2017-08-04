@@ -151,6 +151,15 @@ class Laporanortu_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	// get untuk option cabang
+	public function get_cabang()
+	{
+	    $this->db->select('id, namaCabang');
+	    $this->db->from('tb_cabang');
+	    $query = $this->db->get();
+	    return $query->result_array();
+	}
 	
 
 }

@@ -539,16 +539,28 @@ JS aoutocomplate
 
       </li>
 
+<!-- menu laporan ortu -->
+<li>
+  <a href="javascript:void(0);" data-target="#laporanortu" data-toggle="submenu" data-parent=".topmenu">
+    <span class="figure"><i class="ico-users3"></i></span>
+    <span class="text">Laporan Orang Tua</span>
+    <span class="arrow"></span>
+  </a>
 
-      <li>
-        <a href="<?=base_url('/laporanortu') ?>">
-          <span class="figure"><i class="ico-bubble-user"></i></span>
-          <span class="text">Laporan Orang Tua</span>
-          <span class="arrow"></span>
-        </a>
-
-      </li>
-
+  <ul id="laporanortu" class="submenu collapse ">
+    <li class="submenu-header ellipsis">Laporan Orang Tua</li>
+    <li>
+      <a href="<?=base_url('laporanortu/addlaporan') ?>">
+        <span class="text">Add Laporan</span>
+      </a>
+    </li>
+    <li>
+      <a href="<?=base_url('laporanortu') ?>">
+        <span class="text">List Laporan</span>
+      </a>
+    </li>
+  </ul>
+</li>
 <!--Start menu konsultasi -->
 
 
