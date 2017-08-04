@@ -454,7 +454,7 @@ function reload_tblist(){
  tblist_paketAdd.ajax.reload(null,false); 
  tblist_pengawasAdd.ajax.reload(null,false); 
  tblist_paket.ajax.reload();
- tblist_pengawas.ajax.reload();
+ // tblist_pengawas.ajax.reload();
 }
 
 function adda() {
@@ -658,6 +658,7 @@ function dropSiswa(idKey) {
     type: "POST",
     dataType: "TEXT",
     success: function(data,respone){  
+      set_tb_siswa();
       reload_tblist();
     },
     error: function (jqXHR, textStatus, errorThrown){
