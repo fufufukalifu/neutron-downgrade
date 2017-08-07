@@ -1,24 +1,12 @@
- <!-- START Template Main -->
-
- <section id="main" role="main">
-
-  <!-- START Template Container -->
-  <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
-  <!--js buat menampilakan priview video sebelum di upload  -->
-  <script type="text/javascript" src="<?= base_url('assets/javascript/components/button.js') ?>"></script>
-
-
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-  </script>
-  <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+<!-- Strat Script Matjax -->
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+ showProcessingMessages: false,
+ tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+});
 </script>
-<!-- <script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script> -->
-<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML-full"></script>
-
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/preview.js') ?>"></script>
-<!-- Script priview mathjax form input buat rumus-->
 <script>
   var Preview = {
   delay: 150,        // delay after keystroke before updating
@@ -106,11 +94,9 @@
 Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
-</script> 
-<!--END Script priview mathjax form input buat rumus-->
-<!-- Script priview mathjax untuk priview soal-->
+</script>
 <script>
-  var Preview2 = {
+var Preview2 = {
   delay: 150,        // delay after keystroke before updating
 
   preview: null,     // filled in by Init below
@@ -151,7 +137,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
   //
   Update: function () {
     if (this.timeout) {clearTimeout(this.timeout)}
-      this.timeout = setTimeout(this.callback,this.delay);
+    this.timeout = setTimeout(this.callback,this.delay);
   },
 
   //
@@ -164,7 +150,7 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
   CreatePreview: function () {
     Preview2.timeout = null;
     if (this.mjPending) return;
-    var text = CKEDITOR.instances.editor1.getData();
+        var text = CKEDITOR.instances.editor1.getData();
     // console.log(text);
     if (text === this.oldtext) return;
     if (this.mjRunning) {
@@ -174,9 +160,9 @@ Preview.callback.autoReset = true;  // make sure it can run more than once
       this.buffer.innerHTML = this.oldtext = text;
       this.mjRunning = true;
       MathJax.Hub.Queue(
-        ["Typeset",MathJax.Hub,this.buffer],
-        ["PreviewDone",this]
-        );
+  ["Typeset",MathJax.Hub,this.buffer],
+  ["PreviewDone",this]
+      );
     }
   },
 
@@ -198,8 +184,17 @@ Preview2.callback = MathJax.Callback(["CreatePreview",Preview2]);
 Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 </script>
-<!-- Script priview mathjax untuk priview soal -->
 <!-- END Script Matjax -->
+<!-- ENND pengecekan jika pilihan 5 atau 4 pilihan -->
+<!-- START Template Main -->
+<script type="text/javascript" src="<?= base_url('assets/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>"></script>
+ <!-- START Template Main -->
+ <section id="main" role="main">
+
+  <!-- START Template Container -->
+  <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
+  <!--js buat menampilakan priview video sebelum di upload  -->
+  <script type="text/javascript" src="<?= base_url('assets/javascript/components/button.js') ?>"></script>
 
 <div class="container-fluid">
   <!-- Priview -->
@@ -531,41 +526,43 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
            <textarea class="editor1 " name="editor1" id="editor1" cols="60" rows="10"  ></textarea>
          </div>
        </div>
-       <!-- End Editor Soal -->
-       <!-- Start Math jax -->
-       <div id="editor-rumus" hidden="true">
-        <label class="control-label col-sm-2">Buat rumus</label>
-        <div class="col-sm-10">
-         <textarea class="form-control " id="MathInput" cols="60" rows="10" onkeyup ="Preview.Update()" ></textarea>
-       </div>
-       <label class="control-label col-sm-2"></label>
-       <div class="col-sm-10">
-         <p>
-           Configured delimiters:
-           <ul>
-             <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
-             <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
-             <li>Asciimath: <code>`...`</code>.</li>
-           </ul>
-         </p>
-       </div>
+      <!-- End Editor Soal -->
+ <!-- Start Math jax -->
+ <div id="editor-rumus" hidden="true">
+  <label class="control-label col-sm-2">Buat rumus </label>
+  <div class="col-sm-10">
 
-       <label class="control-label col-sm-2"></label>
-       <div class="col-sm-10">
-        <label class="control-label" >Preview :</label>
-        <textarea class="form-control" id="MathPreview" ></textarea>
-        <textarea class="form-control" id="MathBuffer" style=" 
-        visibility:hidden; position:absolute; top:0; left: 0" cols="60" rows="10"></textarea>
-      </div>
-    </div>
-    <script>
-      Preview.Init();
-    </script>
-    <script>
-      Preview2.Init();
-    </script>
-    <!-- End MathJax -->
-  </div>
+   <textarea class="form-control" id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" ></textarea>
+
+ </div>
+ <label class="control-label col-sm-2"></label>
+ <div class="col-sm-10">
+   <p>
+     Configured delimiters:
+     <ul>
+       <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
+       <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
+       <li>Asciimath: <code>`...`</code>.</li>
+     </ul>
+   </p>
+ </div>
+
+ <label class="control-label col-sm-2"></label>
+ <div class="col-sm-10">
+  <label class="control-label" >Preview is shown here:</label>
+  <div class="form-control" id="MathPreview" ></div>
+  <div class="form-control" id="MathBuffer" style=" 
+  visibility:hidden; position:absolute; top:0; left: 0"></div>
+</div>
+</div>
+<script>
+  Preview.Init();
+</script>
+<script>
+  Preview2.Init();
+</script>
+<!-- End MathJax -->
+</div>
 
 
 
