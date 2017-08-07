@@ -99,19 +99,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
  			// parameter untuk di lempar ke fungsi di js
  			$namaPengguna="'".$value->namaPengguna."'";
  			$tb_admincabang.='
- 												<tr>
- 														<td>'.$no.'</td>
- 														<td>'.$value->namaPengguna.'</td>
- 														<td>'.$value->eMail.'</td>
- 														<td>'.$value->namaCabang.'</td>
- 														<td>'.$value->tgldaftar.'</td>
- 														<td>
+			<tr>
+					<td>'.$no.'</td>
+					<td>'.$value->namaPengguna.'</td>
+					<td>'.$value->eMail.'</td>
+					<td>'.$value->namaCabang.'</td>
+					<td>'.$value->tgldaftar.'</td>
+					<td>
 
- 																<a class="btn btn-sm btn-warning" onclick="editAdminCabang('.$value->idCabang.')" title="Edit"><i class="ico-pencil3"></i></a>
- 																<a class="btn btn-sm btn-danger" title="Rest Katasandi"  onclick="restKatasandi('.$value->id.','.$namaPengguna.')"><i class="ico-key2"></i></a>
- 																	<a class="btn btn-sm btn-danger" title="Hapus admin cabang" onclick="hapusAkun('.$value->id.','.$value->idCabang.')"><i class="ico-close3"></i></a>
- 														</td>
- 												</tr>
+						
+							<a class="btn btn-sm btn-danger" title="Rest Katasandi"  onclick="restKatasandi('.$value->id.','.$namaPengguna.')"><i class="ico-key2"></i></a>
+								<a class="btn btn-sm btn-danger" title="Hapus admin cabang" onclick="hapusAkun('.$value->id.','.$value->idCabang.')"><i class="ico-close3"></i></a>
+					</td>
+			</tr>
  			';
  			$no++;
  		}

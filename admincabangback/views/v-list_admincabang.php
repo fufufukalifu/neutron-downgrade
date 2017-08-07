@@ -147,13 +147,6 @@
 		});
 	});
 
-
-
-	// menampilkan modal edit admincabang
-	function editAdminCabang(id_pengguna=''){
-		console.log(id_pengguna);
-	}
-
 	function restKatasandi(id_pengguna='',namaPengguna=''){
 		swal({
 			title: "Yakin akan mereset katasandi Akun "+namaPengguna+" ?",
@@ -161,7 +154,7 @@
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Ya,Tetap hapus!",
+			confirmButtonText: "Ya,Tetap Reset!",
 			closeOnConfirm: false
 		},
 		function(){
@@ -281,7 +274,6 @@
 		        var idPaginationshow =newMeridian+3;
 		        // start id pagination yg akan sembunyikan
 		        var idPaginationhide =meridian-3;
-		        console.log("ini"+next);
 		        //lakukan pengulangan sebanyak loop
 		        for (var i = 0; i < loop; i++) {
 		          hidePagination='#page-'+idPaginationhide;
@@ -317,11 +309,6 @@
 		  next=newMeridian;
 		  meridian=newMeridian;
 		  $('#page-'+meridian).addClass('active');
-
-	}
-	function editAdminCabang(idCabang){
-
-		console.log(idCabang);
 
 	}
 </script>
