@@ -23,9 +23,9 @@
       <div class="panel-heading">
         <h3 class="panel-title">Daftar Laporan </h3> 
         <div class="panel-toolbar text-right">
-        <div class="col-md-11">
+          <div class="col-md-11">
 
-          <div class="col-sm-4" id="cabang">
+            <div class="col-sm-4" id="cabang">
              <select class="form-control" name="cabang">
               <option value="all">Semua Cabang</option>
             </select>
@@ -40,57 +40,57 @@
             </select>
           </div>
 
-        <div class="kelas col-sm-4">
-          <select class="form-control col-sm-6" name="kelas">
-            <option value="all">Semua Kelas</option>
-          </select>
-        </div>
-
-         
-
-        </div>
-    </div>
-
-</div>
-
-<div class="panel-body">
-  <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-         <div  class="form-group">
-           <label class="col-sm-2 control-label">Jenis Laporan</label>
-           <div class="col-sm-9">
-             <!-- stkt = soal tingkat -->
-             <select class="form-control" name="jenis">
-              <option value="0">-- Pilih Jenis --</option>
-              <option value="nilai">Nilai</option>
-              <option value="absen">Absen</option>
-              <option value="umum">Umum</option>
+          <div class="kelas col-sm-4">
+            <select class="form-control col-sm-6" name="kelas">
+              <option value="all">Semua Kelas</option>
             </select>
           </div>
+
+
+
         </div>
-      </form>
-  <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama Orang Tua</th>
-        <th>Nama Siswa</th>
-        <th>Username</th>
-        <th>Pesan</th>
-        <th>
-          <span class="checkbox custom-checkbox check-all">
-            <input type="checkbox" name="checkall" id="check-all">
+      </div>
+
+    </div>
+
+    <div class="panel-body">
+      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
+       <div  class="form-group">
+         <label class="col-sm-2 control-label">Jenis Laporan</label>
+         <div class="col-sm-9">
+           <!-- stkt = soal tingkat -->
+           <select class="form-control" name="jenis">
+            <option value="0">-- Pilih Jenis --</option>
+            <option value="nilai">Nilai</option>
+            <option value="absen">Absen</option>
+            <option value="umum">Umum</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Orang Tua</th>
+          <th>Nama Siswa</th>
+          <th>Username</th>
+          <th>Pesan</th>
+          <th>
+            <span class="checkbox custom-checkbox check-all">
+              <input type="checkbox" name="checkall" id="check-all">
               <label for="check-all">&nbsp;&nbsp;</label>
-          </span> 
-        </th>
-      </tr>
-    </thead>
+            </span> 
+          </th>
+        </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
 
-    </tbody>
-  </table>
-  <a class="btn btn-primary send_laporan">Kirim</a>
-</div>
+      </tbody>
+    </table>
+    <a class="btn btn-primary send_laporan">Kirim</a>
+  </div>
 
 </div>
 </div>   
@@ -100,46 +100,46 @@
 <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
 <!-- /sound notification -->
 <script src="http://macyjs.com/assets/js/macy.min.js"></script>
-  <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 
 <script type="text/javascript">
-var dataTableReport;
-$(document).ready(function(){
-  var cabang = $('select[name=cabang]').val();
-  dataTableReport = $('.daftarreport').DataTable({
-            "ajax": {
-                "url": base_url+"laporanortu/addlaporanortu_ajax/"+cabang,
-                "type": "POST"
-              },
-              "emptyTable": "Tidak Ada Data Pesan",
-              "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-              "bDestroy": true,
-            });
+  var dataTableReport;
+  $(document).ready(function(){
+    var cabang = $('select[name=cabang]').val();
+    dataTableReport = $('.daftarreport').DataTable({
+      "ajax": {
+        "url": base_url+"laporanortu/addlaporanortu_ajax/"+cabang,
+        "type": "POST"
+      },
+      "emptyTable": "Tidak Ada Data Pesan",
+      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+      "bDestroy": true,
+    });
 
     get_cabang();  
 
-});
+  });
 
   function get_cabang(){
-      var url_get_cabang=base_url+"laporanortu/get_cabang";
-      $.ajax({
-        url:url_get_cabang,
-        dataType:"json",
-        type:"post",
-        success:function(data){
-         $('select[name=cabang]').html('<option value="all">Semua Cabang </option>');
+    var url_get_cabang=base_url+"laporanortu/get_cabang";
+    $.ajax({
+      url:url_get_cabang,
+      dataType:"json",
+      type:"post",
+      success:function(data){
+       $('select[name=cabang]').html('<option value="all">Semua Cabang </option>');
 
-          $.each(data, function(i, data){
-            $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
-          });
-
-        },
-        error:function(){
-
-        }
+       $.each(data, function(i, data){
+        $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
       });
 
-    }
+     },
+     error:function(){
+
+     }
+   });
+
+  }
 
 
 // CABANG KETIKA DI CHANGE
@@ -227,8 +227,8 @@ function pdf() {
   tryout = $('select[name=to]').val();
   paket = $('select[name=paket]').val();
   if (cabang != "all" && tryout != "all" && paket != "all") {
-      url = base_url+"admincabang/admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
-      window.open(url, '_blank');
+    url = base_url+"admincabang/admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
+    window.open(url, '_blank');
   }else{
     $("#cekInput").modal("show");
   }
@@ -275,15 +275,15 @@ function kirim_laporan(){
             // ini buat ngehapus array
             pesan.push(tempt_pesan);   
           }
-     
-   }); 
+
+        }); 
 
    jumlah_ortu = id_ortu.length;
 
    // cek jumlah ortu yang dipilih
-      if (jumlah_ortu==0) {
-        swal('Silahkan tentukan ortu terlebih dahulu');
-      }else{
+   if (jumlah_ortu==0) {
+    swal('Silahkan tentukan ortu terlebih dahulu');
+  }else{
           // cek udah diceklis blm siswanya?
           if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
             // cek dulu isi pesannya kosong gak?
@@ -291,16 +291,16 @@ function kirim_laporan(){
               swal('Pesan tidak boleh kosong');
             } else {
               $.ajax({
-              type:"POST",
-              url:base_url+"laporanortu/kirim_laporan",
-              data:{id_ortu:id_ortu,
-              jumlah_ortu:jumlah_ortu,
-              jenis_lapor:jenis_lapor,
-              isi:pesan},
-              dataType: "json",
-              cache : false,
-              success: function(data){
-
+                type:"POST",
+                url:base_url+"laporanortu/kirim_laporan",
+                data:{id_ortu:id_ortu,
+                  jumlah_ortu:jumlah_ortu,
+                  jenis_lapor:jenis_lapor,
+                  isi:pesan},
+                  dataType: "json",
+                  cache : false,
+                  success: function(data){
+/*
                 // AWAL IO
                 if(data.success == true){
                 
@@ -321,33 +321,34 @@ function kirim_laporan(){
                         siswaID: data.siswaID
 
                       });
-
-                swal('Laporan Berhasil Di Kirim');
-                reload();
-
+                      */
+                      swal('Yes!','Laporan Berhasil Di Kirim','success');
+                      reload();
+/*
 
                  } else if(data.success == false){
                       console.log("gagal");
                     }
+                    */
 
                 // END IO
               },error:function(){
-                swal('Gagal mengirim Laporan');
+                swal('No!','Gagal mengirim Laporan','error');
               }
             });
             }
           } else {
-         
+
            swal('Pesan tidak boleh');
-          }
-        
-      }
-    }
+         }
 
-}
+       }
+     }
 
-function reload(){
-  dataTableReport.ajax.reload(null,false); 
-}
+   }
+
+   function reload(){
+    dataTableReport.ajax.reload(null,false); 
+  }
 
 </script>

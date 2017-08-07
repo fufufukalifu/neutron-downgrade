@@ -273,68 +273,6 @@
 </ul>
 </li>
 
-<li>
- <a href="javascript:void(0);" data-target="#banksoal" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-clipboard2"></i></span>
-  <span class="text">Bank Soal</span>
-  <span class="arrow"></span>
-</a>
-
-<ul id="banksoal" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Bank Soal</li>
-
-  <li >
-   <a href="javascript:void(0);" onclick="add_soal()">
-    <span class="text">Tambahkan Bank Soal</span> 
-  </a>
-</li>
-<li >
- <a href="javascript:void(0);" data-target="#subbanksoal" data-toggle="submenu"  >
-  <span class="text">Daftar Bank Soal</span>
-  <span class="arrow"></span>
-</a>
-<ul id="subbanksoal" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Sub Bank Soal</li>
-  <li><a href="<?=base_url('index.php/banksoal/mysoal')?>"><span class="text">Daftar Soal Saya</span>
-  </a></li>
-  <li><a href="<?=base_url('index.php/banksoal/listsoal')?>"><span class="text">Daftar Semua Soal</span>
-  </a></li>
-  <li><a href="<?=base_url('index.php/banksoal/allsoal')?>"><span class="text">Daftar Tabel Soal</span>
-  </a></li>
-  <li><a href="javascript:void(0);" onclick="add_soal()"><span class="text">Filter Bank Soal</span>
-  </a></li>
-
-
-</ul>
-</li>
-
-</ul>
-</li>
-
-<li>
- <a href="javascript:void(0);" data-target="#tryout" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Try Outs</span>
-  <span class="arrow"></span>
-</a>
-
-<ul id="tryout" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Try Out</li>
-
-  <li >
-   <a href="<?= base_url('index.php/paketsoal/tambahpaketsoal');?>">
-    <span class="text">Paket Soal</span>
-  </a>
-</li>
-
-<li >
- <a href="<?= base_url('index.php/toback/listTo');?>">
-  <span class="text">Daftar Try Out</span>
-</a>
-</li>
-
-</ul>
-</li>
 
 
 </ul>
