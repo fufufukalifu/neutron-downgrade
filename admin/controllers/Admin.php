@@ -93,8 +93,6 @@ class Admin extends MX_Controller {
             APPPATH . 'modules/admin/views/v-daftar-mapel.php',
         );
 
-
-
         $data['mapels'] = $this->mmatapelajaran->daftarMapel();
 
 

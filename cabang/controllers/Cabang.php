@@ -57,7 +57,7 @@ class Cabang extends MX_Controller {
 
 			$row[] =  ' <a class="btn btn-sm btn-default"  title="Tambah Kelas" onclick="add_kelas('."'".$cabang_item->id."'".')"><i class="ico-plus"></i></a> '.
 			'<a class="btn btn-sm btn-danger"  title="Delete" onclick="drop_cabang('."'".$cabang_item->id."'".')"><i class="ico-remove"></i></a>'.
-			' <a class="btn btn-sm btn-info detail-'.$cabang_item->id.'"  title="Detail Cabang" data-id='."'".json_encode($cabang_item)."'".' onclick="detail_cabang('."'".$cabang_item->id."'".')" ><i class="ico-copy2"></i></a>'.
+			' <a class="btn btn-sm btn-info detail-'.$cabang_item->id.' hide"  title="Detail Cabang" data-id='."'".json_encode($cabang_item)."'".' onclick="detail_cabang('."'".$cabang_item->id."'".')" ><i class="ico-copy2"></i></a>'.
 			' <a class="btn btn-sm btn-success"  title="Edit Cabang" onclick="edit_cabang('."'".$cabang_item->id."'".')"><i class="ico-pencil5"></i></a>';
 			$data[] = $row;
 		}
