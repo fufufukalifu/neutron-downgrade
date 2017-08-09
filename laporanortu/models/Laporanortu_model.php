@@ -24,9 +24,9 @@ class Laporanortu_model extends CI_Model{
 		$this->db->join('tb_pengguna p' , 's.penggunaID = p.id');
 
 
-		// if ($data['cabang']!="all") {
-		// 	$this->db->where('c.id', $data['cabang']);
-		// }
+		if ($data['cabang']!="all") {
+			$this->db->where('c.id', $data['cabang']);
+		}
 
 		$tingkat = $data['tingkat'];
 		if ($data['tingkat']!="all") {
