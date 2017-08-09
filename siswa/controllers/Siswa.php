@@ -1,8 +1,4 @@
 <?php
-
-/**
- *
- */
 class Siswa extends MX_Controller {
 
     function get_status_login(){
@@ -83,7 +79,6 @@ class Siswa extends MX_Controller {
                 'sisa'=>$this->session->userdata('sisa'),
                 'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
                 'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
-                'jumlah_line'=>count($this->learning_model->get_line_log_step_line_by_user())
                 );
 
             $data['files'] = array( 
