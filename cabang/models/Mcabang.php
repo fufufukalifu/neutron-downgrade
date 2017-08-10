@@ -9,7 +9,7 @@ class Mcabang extends CI_Model
 	function get_all_cabang(){
 		$this->db->select('*');
 		$this->db->from('tb_cabang cabang');
-		$this->db->order_by('id desc');
+		$this->db->order_by('cabang.namaCabang asc');
 
 
 		$query = $this->db->get();
