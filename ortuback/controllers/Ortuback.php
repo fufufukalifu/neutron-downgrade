@@ -162,42 +162,44 @@ class Ortuback extends MX_Controller {
 		// get report berdasarkan umum
 		$report_umum = $this->Ortuback_model->get_report_umum($id_pengguna);
 
-		$data['namaortu'] = $report_nilai[0]['namaOrangTua'];
+		// cek reportnya null atau tidak?
+		if ($report_nilai!='') {
+			$data['namaortu'] = $report_nilai[0]['namaOrangTua'];
 
-		$n=1;
+			$n=1;
+			// untuk nampung report nilai
+			$data['nilai']=array(); 
+			foreach ( $report_nilai as $item ) {
+			
+				$data['nilai'][]=array(
+	                'namaortu'=>$item['namaOrangTua'],
+	                'jenis'=>$item['jenis'],
+	                'isi'=>$item['isi'],
+	               );
+			}
 
-		// untuk nampung report nilai
-		$data['nilai']=array(); 
-		foreach ( $report_nilai as $item ) {
-		
-			$data['nilai'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-                'jenis'=>$item['jenis'],
-                'isi'=>$item['isi'],
-               );
-		}
+			// untuk nampung report absen
+			$data['absen']=array(); 
+			foreach ( $report_absen as $item ) {
+			
+				$data['absen'][]=array(
+	                'namaortu'=>$item['namaOrangTua'],
+	                'jenis'=>$item['jenis'],
+	                'isi'=>$item['isi'],
+	               );
+			}
 
-		// untuk nampung report absen
-		$data['absen']=array(); 
-		foreach ( $report_absen as $item ) {
-		
-			$data['absen'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-                'jenis'=>$item['jenis'],
-                'isi'=>$item['isi'],
-               );
-		}
-
-		// untuk nampung report umum
-		$data['umum']=array(); 
-		foreach ( $report_umum as $item ) {
-		
-			$data['umum'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-                'jenis'=>$item['jenis'],
-                'isi'=>$item['isi'],
-               );
-		}
+			// untuk nampung report umum
+			$data['umum']=array(); 
+			foreach ( $report_umum as $item ) {
+			
+				$data['umum'][]=array(
+	                'namaortu'=>$item['namaOrangTua'],
+	                'jenis'=>$item['jenis'],
+	                'isi'=>$item['isi'],
+	               );
+			}
+		} else {}
 
 		$data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id);
 		$data['count_pesan'] = $this->Ortuback_model->get_count($id);
