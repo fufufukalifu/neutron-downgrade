@@ -36,7 +36,7 @@ class Guru extends MX_Controller {
   }
     // function untuk menampikan halam pertama saat registrasi
   function index() {
-
+    redirect('guru/dashboard');
   }
 
   public function checkJumlahPostingan() {

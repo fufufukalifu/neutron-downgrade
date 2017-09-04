@@ -17,63 +17,67 @@ class Welcome extends MX_Controller {
         $this->load->library('sessionchecker');
         //cek login
         $this->sessionchecker->checkloggedin();
-   }
+        if($this->session->userdata('HAKAKSES')=='guru' || 
+           $this->session->userdata('HAKAKSES')=='admin'){
+            redirect($this->session->userdata('HAKAKSES'));
+    }
+    }
 
 
-   public function index() {
+    public function index() {
 
-    $data = array(
-        'judul_halaman' => 'Neon - Welcome',
-        'judul_header' =>'Video',
+        $data = array(
+            'judul_halaman' => 'Neon - Welcome',
+            'judul_header' =>'Video',
+            'judul_header2' =>'Video Belajar'
+            );
+
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header-login.php',
+            APPPATH.'modules/welcome/views/v-container-graph.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
+            );
+        
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id_pengguna= $this->session->userdata['id'];
+            $namaDepan=$this->mortu->get_siswa($id_pengguna)[0]['namaDepan'];
+            $namaBelakang=$this->mortu->get_siswa($id_pengguna)[0]['namaBelakang'];
+            $data['siswa'] =$namaDepan.' '. $namaBelakang ;
+        // ini buat ortu
+
+            $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
+            $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
+        } else {
+
+        }
+
+
+        $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
+        $data['pesan'] = $this->msiswa->get_pesan();
+
+        $this->parser->parse( 'templating/index', $data );
+
+
+    }
+
+
+    public function faq(){
+       $data = array(
+        'judul_halaman' => 'Neon - FAQ',
+        'judul_header' =>'FAQ HASIL DETECTION',
         'judul_header2' =>'Video Belajar'
         );
 
-    $data['files'] = array( 
+       $data['files'] = array( 
         APPPATH.'modules/homepage/views/v-header-login.php',
-        APPPATH.'modules/welcome/views/v-container-graph.php',
+        APPPATH.'modules/welcome/views/v-faq.php',
         APPPATH.'modules/testimoni/views/v-footer.php',
         );
-        
-    if ($this->session->userdata('HAKAKSES')=='ortu') {
-        $id_pengguna= $this->session->userdata['id'];
-        $namaDepan=$this->mortu->get_siswa($id_pengguna)[0]['namaDepan'];
-        $namaBelakang=$this->mortu->get_siswa($id_pengguna)[0]['namaBelakang'];
-        $data['siswa'] =$namaDepan.' '. $namaBelakang ;
-        // ini buat ortu
-        
-        $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
-        $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
-    } else {
-        
-    }
-    
-    
-    $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
-    $data['pesan'] = $this->msiswa->get_pesan();
-
-    $this->parser->parse( 'templating/index', $data );
-
-
-}
-
-
-public function faq(){
- $data = array(
-    'judul_halaman' => 'Neon - FAQ',
-    'judul_header' =>'FAQ HASIL DETECTION',
-    'judul_header2' =>'Video Belajar'
-    );
-
- $data['files'] = array( 
-    APPPATH.'modules/homepage/views/v-header-login.php',
-    APPPATH.'modules/welcome/views/v-faq.php',
-    APPPATH.'modules/testimoni/views/v-footer.php',
-    );
- $this->parser->parse( 'templating/index', $data );
-}
+       $this->parser->parse( 'templating/index', $data );
+   }
 
 ## get data latihan persentase buat di datatable.
-public function get_data_latihan(){
+   public function get_data_latihan(){
     $list = $this->msiswa->get_limit_persentase_latihan(10);
     $data = array();
     $n=1;
