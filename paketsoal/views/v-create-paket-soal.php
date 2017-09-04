@@ -80,6 +80,37 @@
                   <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6">
+                            <label class="control-label">Jenis Penilaian</label>
+                            <div class="checkbox custom-checkbox">  
+                                <select name="jenis_penilaian" class="form-control" id="jenis_penilaian" required="true">
+                                    <option value="">--Silahkan Pilih Jenis Penilaian--</option>
+                                    <option value="SMBPTN">SMBPTN</option>
+                                    <option value="UMBK">UMBK</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="control-label">Tingkat</label>
+                            <div class="checkbox custom-checkbox">  
+                                <select name="tingkat_ID" class="form-control" id="tingkat_ID" required="true">
+                                    <option value="">--Silahkan Pilih Tingkat--</option>
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMA">SMA</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
                             <label class="control-label">Apakah soal akan di random?</label>
                             <div class="checkbox custom-checkbox">  
                                 <input type="checkbox" name="random" id="idrand" value="1">  
@@ -89,6 +120,7 @@
                         </div>
                     </div>
                 </div>
+                  
             </div>
             <div class="panel-footer">
                 <button type="submit" class="btn btn-primary" name="proses" id="btnSave" onclick="save()" >Simpan</button>
@@ -215,6 +247,8 @@ function save(){
     var nama_paket= $('[name="nama_paket"]').val();
     var jumlah_soal  = $('[name="jumlah_soal"]').val();
     var durasi = $('[name="durasi"]').val();
+    var jenis_penilaian = $('[name="jenis_penilaian"]').val();
+    var tingkat_ID = $('[name="tingkat_ID"]').val();
     var deskripsi= $('[name="deskripsi"]').val();
     var random = $('input[name=random]:checked').val();
 
@@ -246,6 +280,8 @@ function save(){
                           jumlah_soal:jumlah_soal,
                           deskripsi:deskripsi,
                           durasi:durasi,
+                          jenis_penilaian:jenis_penilaian,
+                          tingkat_ID:tingkat_ID,
                           random:random};
 
              $.ajax({
@@ -332,6 +368,8 @@ function edit_paket(id)
             $('[name="nama_paket"]').val(data.nm_paket);
             $('[name="deskripsi"]').val(data.deskripsi);
             $('[name="jumlah_soal"]').val(data.jumlah_soal);
+            $('[name="jenis_penilaian"]').val(data.jenis_penilaian);
+            $('[name="tingkatID"]').val(data.tingkatID);
             $('[name="durasi"]').val(data.durasi);
             if (data.random ==1) {
                $('#idrand').attr('checked', true);

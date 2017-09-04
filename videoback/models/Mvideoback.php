@@ -95,6 +95,21 @@ class Mvideoback extends CI_Model
 		return $query->result_array();
 	}
 
+
+        public function scTingkatvideo_paket($tingkatID)
+    {
+        
+        
+        $this->db->select('id,aliasTingkat');
+                $this->db->from('tb_tingkat');
+                $this->db->where('id',$tingkatID);
+                $this->db->limit(5);
+        $query = $this->db->get();
+        return $query->result_array();
+    
+    
+    }
+
 	public function get_video_by_sub()
 	{
 				$this->db->select('*');

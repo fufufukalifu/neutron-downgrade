@@ -39,6 +39,7 @@
            <h3 class="panel-title">Daftar Soal</h3>
 
            <input type="text" name="id" id="id_paket" value="<?=$id_paket;?>" hidden="true">
+           <input type="text" name="id" id="tingkat_ID" value="<?=$tingkat_ID;?>" hidden="true">
 
          </div>
 
@@ -64,9 +65,9 @@
 
                <div class="col-sm-4">
 
-                <select name="" id="tingkatID" class="form-control">
+                <select name="" id="tingkatID" class="form-control" disabled>
 
-                 <option value="">Tingkat</option>
+                 <!-- <option value="">Tingkat</option> -->
 
                </select>
 
@@ -344,6 +345,8 @@
 
 <script>
 
+
+
   //declare global variable
   console.log(base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>);
   var tblist_soal;
@@ -351,14 +354,26 @@
   var list_soal;
 
   var paket = $('#id_paket').val();
+  var tingkat_ID =$('#tingkat_ID').val();
 
   //##
+
+   if (tingkat_ID == 'SD') {
+    tingkatID = 1;
+  }
+  else if (tingkat_ID == 'SMP') {
+    tingkatID = 2;
+  }
+  else if (tingkat_ID == 'SMA') {
+    tingkatID = 3;
+  }
 
 
 
   $(document).ready(function() {
 
    var id_paket =$('#id_paket').val();
+   var tingkat_ID =$('#tingkat_ID').val();
 
      //# ketika tingkat di change
 
@@ -366,7 +381,8 @@
 
        var form_data = {
 
-        name: $('#TingkatID').val()
+        name: $('#TingkatID').val(),
+        tingkat_ID: $('#tingkat_ID').val()
 
       };
 
@@ -431,9 +447,11 @@
 
 //# buat load tingkat
 
-function loadTingkat(){
+function loadTingkat(tingkat_ID){
+
 
  jQuery(document).ready(function(){
+  // console.log(tingkat_ID);
 
   var tingkat_id = {"tingkat_id" : $('#tingkatID').val()};
 
@@ -446,13 +464,14 @@ function loadTingkat(){
 
    data: tingkat_id,
 
-   url: "<?= base_url() ?>index.php/videoback/getTingkat",
+
+   url: "<?= base_url() ?>index.php/videoback/getTingkat_paket/"+tingkatID,
 
 
 
    success: function(data){
 
-    $('#tingkatID').html('<option value="">Tingkat</option>');
+    // $('#tingkatID').html('<option value="">Tingkat</option>');
 
     $.each(data, function(i, data){
 
@@ -476,7 +495,7 @@ $('#tingkatID').change(function(){
 
  tingkat_id={"tingkat_id" : $('#tingkat').val()};
 
- load_pelajaran($('#tingkatID').val());
+ load_pelajaran($('#tingkatID').val(),$('#tingkat_ID').val());
 
  $('.soal').empty();
 
@@ -552,15 +571,15 @@ $('.tambahsoal').click(function(){
 
  //# buat load pelajaran
 
- function load_pelajaran(tingkatID){
+ function load_pelajaran(tingkat_ID){
 
+  
    $.ajax({
 
     type: "POST",
     dataType: "json",
 
     data: tingkatID.tingkat_id,
-
 
 
     url: "<?php echo base_url() ?>index.php/videoback/getPelajaran/"+tingkatID,
@@ -752,7 +771,7 @@ function cek_soal(){
 }
 //##
 
-loadTingkat();
-// console.log(cek_soal());
+loadTingkat(tingkat_ID);
+load_pelajaran(tingkat_ID);
 cek_soal();
 </script>

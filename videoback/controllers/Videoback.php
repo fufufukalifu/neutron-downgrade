@@ -611,6 +611,14 @@ public function getTingkat() {
   ->set_output( json_encode( $this->Mvideoback->scTingkatvideo() ) ) ;
 }
 
+public function getTingkat_paket($tingkatID) {
+  $data = $this->output
+  ->set_content_type( "application/json" )
+  ->set_output( json_encode( $this->Mvideoback->scTingkatvideo_paket($tingkatID) ) ) ;
+}
+
+
+
 
 
 

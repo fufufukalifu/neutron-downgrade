@@ -38,6 +38,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
+			'jenis_penilaian' =>$this->input->post( 'jenis_penilaian' ),
+			'tingkat_ID' =>$this->input->post( 'tingkat_ID' ),
 			'durasi' =>$this->input->post( 'durasi' )
 			);
 
@@ -211,10 +213,14 @@ class paketsoal extends MX_Controller
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
 			'deskripsi' =>$this->input->post( 'deskripsi' ),
 			'durasi' =>$this->input->post( 'durasi' ),
+			'jenis_penilaian' =>$this->input->post( 'jenis_penilaian' ),
+			'tingkat_ID' =>$this->input->post( 'tingkat_ID' ),
 			'random'=>$this->input->post('random'),
 			'penggunaID'=>$this->session->userdata['id']
 
 			);
+
+
 
 		$this->mpaketsoal->insertpaketsoal( $data );
 	}
@@ -232,6 +238,8 @@ class paketsoal extends MX_Controller
 			'nm_paket' =>  $this->input->post( 'nama_paket' ) ,
 			'deskripsi' => $this->input->post( 'deskripsi' ),
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
+			'jenis_penilaian' => $this->input->post( 'jenis_penilaian' ),
+			'tingkat_ID' => $this->input->post( 'tingkat_ID' ),
 			'durasi' => $this->input->post( 'durasi' ),
 			'random'=>$this->input->post('random')
 			);
@@ -266,15 +274,17 @@ class paketsoal extends MX_Controller
 	}
 
 	function addbanksoal( $idpaket ) {
-		
+
 		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
 		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
 
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
+		$data['idpaket2'] =  $idpaket;
 		if (!$paket_soal==array()) {
 			$data['listadd_soal']=$this->load->mpaketsoal->soal_by_paketID($idpaket);
 			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
 			$data['id_paket']=$idpaket;
+			$data['tingkat_ID']=$paket_soal['tingkat_ID'];
 			
 			$data['files'] = array(
 				APPPATH.'modules/paketsoal/views/v-add-soal.php',
