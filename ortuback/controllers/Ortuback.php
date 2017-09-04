@@ -446,35 +446,35 @@ class Ortuback extends MX_Controller {
 		// $datArrOrtu=array();
 		
 		if ($this->input->post() ) {
-			// $arrIdSiswa=$this->input->post("id_siswa");
-			// 	$siswa=$this->Ortuback_model->get_siswa_batch($arrIdSiswa);
+			$arrIdSiswa=$this->input->post("id_siswa");
+				$siswa=$this->Ortuback_model->get_siswa_batch($arrIdSiswa);
 
-			// // }
-			// $pengguna_ortu=array();
-			// foreach ($siswa as $value) {
-			// 	$pengguna[]=array(
-			// 		"namaPengguna"=>"P-".$value->namaPengguna,
-			// 		"kataSandi"=>$value->kataSandi,
-			// 		"hakakses"=>"ortu",
-			// 		"aktivasi"=>"1",
-			// 		"status"=>"1",
-			// 		"keterangan"=>$value->siswaID
-			// 		);
 			// }
-			// $this->Ortuback_model->in_pengguna_ortu($pengguna);
+			$pengguna_ortu=array();
+			foreach ($siswa as $value) {
+				$pengguna[]=array(
+					"namaPengguna"=>"P-".$value->namaPengguna,
+					"kataSandi"=>$value->kataSandi,
+					"hakakses"=>"ortu",
+					"aktivasi"=>"1",
+					"status"=>"1",
+					"keterangan"=>$value->siswaID
+					);
+			}
+			$this->Ortuback_model->in_pengguna_ortu($pengguna);
 
 
-			// //get id pengguna ortu berdasarkan id_siswa
-			// $arrPengguna_ortu=$this->Ortuback_model->get_penggunaOrtu($arrIdSiswa);
-			// foreach ($arrPengguna_ortu as $val) {
-			// 	$ortu[]=array(
-			// 		"namaOrangTua"=>$val->namaPengguna,
-			// 		"siswaID"=>$val->id_siswa,
-			// 		"penggunaID"=>$val->id
-			// 		);
-			// }
-			// $this->Ortuback_model->in_data_ortu($ortu);
-			// echo json_encode($ortu);
+			//get id pengguna ortu berdasarkan id_siswa
+			$arrPengguna_ortu=$this->Ortuback_model->get_penggunaOrtu($arrIdSiswa);
+			foreach ($arrPengguna_ortu as $val) {
+				$ortu[]=array(
+					"namaOrangTua"=>$val->namaPengguna,
+					"siswaID"=>$val->id_siswa,
+					"penggunaID"=>$val->id
+					);
+			}
+			$this->Ortuback_model->in_data_ortu($ortu);
+			echo json_encode($ortu);
 		} else {
 			echo json_encode("Data Kosong atau NULL");
 		}
