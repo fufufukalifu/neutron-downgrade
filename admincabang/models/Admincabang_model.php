@@ -354,5 +354,17 @@ class Admincabang_model extends CI_model {
 		$query=$this->db->get();
 		return $query->result_array();
 	}
+
+	public function get_to_cabang($id_cabang='')
+	{
+		$this->db->select('*');
+		$this->db->from('tb_tryout to')->order_by('to.id_tryout','DESC');
+		$this->db->join('tb_hakakses-to hto',"to.id_tryout=hto.id_tryout");
+		$this->db->join("tb_siswa siswa","siswa.id=hto.id_siswa");
+		$this->db->where('siswa.cabangID',$id_cabang);
+		$this->db->where('to.publish',1);
+		$query = $this->db->get();
+        return $query->result_array();
+	}
 }
 ?>

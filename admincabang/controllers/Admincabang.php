@@ -11,8 +11,6 @@ class Admincabang extends MX_Controller {
 		$this->load->model('logtryout/logtryout_model');
 	}
 
-
-
 	public function index() {
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
@@ -494,8 +492,8 @@ public function laporanpaket(){
 		# get cabang sementara tidak di pakai karena laporan sesuai admincabang
 		// $data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
-	$data['to'] = $this->mtoback->get_To();
-
+	$id_cabang=$this->get_cabang()['id_cabang'];
+	$data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
 	$hakAkses = $this->session->userdata['HAKAKSES'];
 	if ($hakAkses == 'admin_cabang') {
 		$this->parser->parse('v-index-admincabang', $data);
@@ -512,6 +510,16 @@ public function laporanpaket(){
 	} else {
 		redirect(site_url('login'));
 	}
+
+}
+
+public function get_cabang()
+{
+	$id_pengguna=$this->session->userdata["id"];
+	$arrPengguna=$this->admincabang_model->get_idCabang_adminCabang($id_pengguna);
+	$data["id_cabang"]=$arrPengguna[0]["id_cabang"];
+	$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
+	return $data;
 }
 
 public function laporan(){
@@ -613,10 +621,7 @@ public function get_paket_registrasi($id_tryout,$cabangID='all'){
 
 public function get_idCabang()
 {
-	$id_pengguna=$this->session->userdata["id"];
-	$arrPengguna=$this->admincabang_model->get_idCabang_adminCabang($id_pengguna);
-	$data["id_cabang"]=$arrPengguna[0]["id_cabang"];
-	$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
+	$data=$this->get_cabang();
 	echo json_encode($data);
 }
 

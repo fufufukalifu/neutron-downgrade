@@ -353,7 +353,7 @@ function pdf() {
   cabang = $('#select_cabang').val();
   tryout = $('#select_to').val();
   paket = $('#select_paket').val();
-  console.log("ini gemes");
+  console.log(cabang);
   if (cabang != "all" && tryout != "all" && paket != "all") {
     url = base_url+"admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
     window.open(url, '_blank');
