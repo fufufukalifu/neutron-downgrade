@@ -16,11 +16,14 @@ class Tryout extends MX_Controller {
         $this->sessionchecker->checkloggedin();
         if ($this->session->userdata('HAKAKSES')=='ortu') {
             # langusung masuk
+        }else if($this->session->userdata('HAKAKSES')=='guru' || 
+           $this->session->userdata('HAKAKSES')=='admin'){
+            redirect('toback/listTO');
         }else{
-        $this->sessionchecker->cek_token();
+            $this->sessionchecker->cek_token();
         }
 
-       
+        
     }
 
 
@@ -50,7 +53,7 @@ class Tryout extends MX_Controller {
             
             );
 
-         if ($this->session->userdata('HAKAKSES')=='ortu') {
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
                 //untuk mengambil id siswa jika ortu yang login 
             $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
             // ini buat ambil pesan ortu
@@ -58,8 +61,8 @@ class Tryout extends MX_Controller {
             $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
             $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
         }else{
-        $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
-    }
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+        }
         $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
         $this->parser->parse('templating/index', $data);
     }
@@ -353,7 +356,7 @@ class Tryout extends MX_Controller {
             $tempt = ['label'=>$item['nm_tryout'],'y'=> (int)number_format($item['nilai'],1)];
             $array[] = $tempt;
         }
-      echo json_encode($array);
+        echo json_encode($array);
 
     }
 }

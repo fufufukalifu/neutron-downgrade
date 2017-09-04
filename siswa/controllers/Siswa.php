@@ -26,84 +26,88 @@ class Siswa extends MX_Controller {
         $this->load->helper('session');
         $this->load->library('parser');
         $this->load->library('pagination');
-                $this->load->library('sessionchecker');
-        $this->sessionchecker->checkloggedin();
+        $this->load->library('sessionchecker');
+        if($this->session->userdata('HAKAKSES')=='guru' || 
+         $this->session->userdata('HAKAKSES')=='admin'){
+            redirect($this->session->userdata('HAKAKSES'));
     }
+    $this->sessionchecker->checkloggedin();
+}
 
-    
 
-    public function profilesetting() {
-        if ($this->get_status_login()) {
-            $data = array(
-                'judul_halaman' => 'Neon - Pengaturan Akun',
-                'judul_header'  => 'Pengaturan Akun',
-                'judul_header2' => 'Pengaturan Akun'
-                );
 
-            $data['files'] = array( 
-                APPPATH.'modules/homepage/views/v-header-login.php',
-                APPPATH.'modules/siswa/views/headersiswa.php',
-                APPPATH.'modules/siswa/views/vPengaturanProfile.php',
-                APPPATH.'modules/testimoni/views/v-footer.php',
-                );
+public function profilesetting() {
+    if ($this->get_status_login()) {
+        $data = array(
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+            'judul_header'  => 'Pengaturan Akun',
+            'judul_header2' => 'Pengaturan Akun'
+            );
 
-            $data['siswa'] = $this->msiswa->get_datsiswa();
-            $this->parser->parse( 'templating/index', $data );
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header-login.php',
+            APPPATH.'modules/siswa/views/headersiswa.php',
+            APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
+            );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/index', $data );
+    }else{
+        redirect('login');
+    }
+}
+
+public function index() {      
+    $hak_akses = $this->get_hak_akses();
+
+    if ($this->get_status_login() && $hak_akses=="siswa") {
+        $data['siswa'] = $this->msiswa->get_datsiswa()[0];
+        if ($data['siswa']['biografi']=="") {
+            $bio = "ini masih malu-malu nyeritain tentang dirinya";
         }else{
-            redirect('login');
+            $bio = $data['siswa']['biografi'];
         }
-    }
+        $data = array(
+            'judul_halaman' => 'Neon - Dashboard Siswa',
+            'judul_header' =>'Dashboard Siswa',
+            'judul_header2' =>'Dashboard Siswa',
+            'namaDepan' => $data['siswa']['namaDepan'],
+            'namaBelakang' => $data['siswa']['namaBelakang'],
+            'alamat' => $data['siswa']['alamat'],
+            'noKontak' => $data['siswa']['noKontak'],
+            'biografi' => $bio,
+            'namaSekolah' => $data['siswa']['namaSekolah'],
+            'alamatSekolah'  =>$data['siswa']['alamatSekolah'],
+            'photo'=>base_url().'assets/image/photo/siswa/'.$data['siswa']['photo'],
+            'sisa'=>$this->session->userdata('sisa'),
+            'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
+            'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
+            );
 
-    public function index() {      
-        $hak_akses = $this->get_hak_akses();
+        $data['files'] = array( 
+            APPPATH.'modules/siswa/views/t-profile-siswa.php',
+            );
+        $data['count_laporan'] = $this->msiswa->get_count();
+        $data['datLapor'] = $this->msiswa->get_daftar_pesan();
 
-        if ($this->get_status_login() && $hak_akses=="siswa") {
-            $data['siswa'] = $this->msiswa->get_datsiswa()[0];
-            if ($data['siswa']['biografi']=="") {
-                $bio = "ini masih malu-malu nyeritain tentang dirinya";
-            }else{
-                $bio = $data['siswa']['biografi'];
-            }
-            $data = array(
-                'judul_halaman' => 'Neon - Dashboard Siswa',
-                'judul_header' =>'Dashboard Siswa',
-                'judul_header2' =>'Dashboard Siswa',
-                'namaDepan' => $data['siswa']['namaDepan'],
-                'namaBelakang' => $data['siswa']['namaBelakang'],
-                'alamat' => $data['siswa']['alamat'],
-                'noKontak' => $data['siswa']['noKontak'],
-                'biografi' => $bio,
-                'namaSekolah' => $data['siswa']['namaSekolah'],
-                'alamatSekolah'  =>$data['siswa']['alamatSekolah'],
-                'photo'=>base_url().'assets/image/photo/siswa/'.$data['siswa']['photo'],
-                'sisa'=>$this->session->userdata('sisa'),
-                'jumlah_paket' =>$this->mtryout->get_jumlah_report_paket(),
-                'jumlah_latihan' =>count($this->mtryout->get_report_latihan()),
-                );
-
-            $data['files'] = array( 
-                APPPATH.'modules/siswa/views/t-profile-siswa.php',
-                );
-            $data['count_laporan'] = $this->msiswa->get_count();
-            $data['datLapor'] = $this->msiswa->get_daftar_pesan();
-
-            $this->parser->parse( 'templating/index-d-siswa', $data );
-        }else{
-            redirect('login');
-        }        
-    }
+        $this->parser->parse( 'templating/index-d-siswa', $data );
+    }else{
+        redirect('login');
+    }        
+}
 
     //menampilkan halaman pengaturan profile
-    public function PengaturanProfile() {
-        if ($this->get_status_login()) {
-         $data['tb_siswa'] = $this->msiswa->get_datsiswa();
-         $this->load->view('templating/t-header');
-         $this->load->view('templating/t-navbarUser');
-         $this->load->view('vPengaturanProfile', $data);
-         $this->load->view('templating/t-footer');
-     }else{
-        redirect('login');
-    }   
+public function PengaturanProfile() {
+    if ($this->get_status_login()) {
+       $data['tb_siswa'] = $this->msiswa->get_datsiswa();
+       $this->load->view('templating/t-header');
+       $this->load->view('templating/t-navbarUser');
+       $this->load->view('vPengaturanProfile', $data);
+       $this->load->view('templating/t-footer');
+   }else{
+    redirect('login');
+}   
 
 }
 
@@ -175,8 +179,8 @@ public function ubahemailsiswa() {
 
 
         if ($this->form_validation->run() == FALSE) {
-         $this->profilesetting();
-     } else {
+           $this->profilesetting();
+       } else {
         $email = htmlspecialchars($this->input->post('email'));
 
         $data_post = array(
@@ -332,9 +336,9 @@ public function daftarsiswa() {
 
 //function untuk menyimpan data pendaftaran user siswa ke database
 public function savesiswa(){
-   $hak_akses = $this->get_hak_akses();
+ $hak_akses = $this->get_hak_akses();
 
-   if ($this->get_status_login()&& $hak_akses=="admin") {   
+ if ($this->get_status_login()&& $hak_akses=="admin") {   
     //load library n helper
     $this->load->helper(array('form', 'url'));
     $this->load->library('form_validation');
@@ -380,8 +384,8 @@ public function savesiswa(){
         $email = htmlspecialchars($this->input->post('email'));
         $id_kk=htmlspecialchars($this->input->post('kk'));
         if ($id_kk!=''||$id_kk!=' ') {
-                $id_kk=null;
-            }
+            $id_kk=null;
+        }
         $hakAkses = 'siswa';
 
         //data array akun
@@ -443,41 +447,41 @@ public function deleteSiswa() {
 
     //tgl 30 Oktober
 function updateSiswa($idsiswa, $idpengguna) {
-   $hak_akses = $this->get_hak_akses();
-    if ($this->get_status_login()&& $hak_akses=="admin") {  
-        if ($idsiswa == null || $idpengguna == 0) {
-            echo 'kosong';
-        } else {
-         $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
-         $data['cabang'] = $this->mcabang->get_all_cabang();
-         $idsiswa = $idsiswa;
-         $idpengguna = $idpengguna;
-         $datSiswa = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
-         $data['siswa']=$datSiswa[0];
-         $data['datKelas']=$this->msiswa->get_kelas();
-         $data['judul_halaman'] = "Rubah Data Siswa";
-         $data['files'] = array(
-            APPPATH . 'modules/siswa/views/v-update-siswa.php',
-            );
-         $optionKk=null;
-         $id_cabang=$datSiswa[0]["cabangID"];
-         $id_kelompok_kelas=$datSiswa[0]["id_kelompok_kelas"];
-         $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
-         foreach ($arrKk as $val) {
+ $hak_akses = $this->get_hak_akses();
+ if ($this->get_status_login()&& $hak_akses=="admin") {  
+    if ($idsiswa == null || $idpengguna == 0) {
+        echo 'kosong';
+    } else {
+       $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
+       $data['cabang'] = $this->mcabang->get_all_cabang();
+       $idsiswa = $idsiswa;
+       $idpengguna = $idpengguna;
+       $datSiswa = $this->msiswa->get_siswa_byid($idsiswa, $idpengguna);
+       $data['siswa']=$datSiswa[0];
+       $data['datKelas']=$this->msiswa->get_kelas();
+       $data['judul_halaman'] = "Rubah Data Siswa";
+       $data['files'] = array(
+        APPPATH . 'modules/siswa/views/v-update-siswa.php',
+        );
+       $optionKk=null;
+       $id_cabang=$datSiswa[0]["cabangID"];
+       $id_kelompok_kelas=$datSiswa[0]["id_kelompok_kelas"];
+       $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
+       foreach ($arrKk as $val) {
           if ($id_kelompok_kelas==$val->id_kk) {
             $optionKk.='
             <option value="'.$val->id_kk.'" selected>'.$val->kelompokKelas.'</option>';
-          } else {
+        } else {
             $optionKk.='
             <option value="'.$val->id_kk.'">'.$val->kelompokKelas.'</option>';
-          }
-          
-          
-         }
-         $data['kelompokKelas']=$optionKk;
-         $this->parser->parse('admin/v-index-admin', $data);
-     }
- }else{
+        }
+        
+        
+    }
+    $data['kelompokKelas']=$optionKk;
+    $this->parser->parse('admin/v-index-admin', $data);
+}
+}else{
     redirect('login');
 }
 }
@@ -494,7 +498,7 @@ function reportSiswa($idsiswa='',$idpengguna='') {
             $data['reportto'] = $this->msiswa->get_reporttryout_siswa($idpengguna);
 
             $data['judul_halaman'] = "Report Siswa".'  <a class="btn  btn-sm btn-warning"  title="Edit" href="' . base_url('index.php/siswa/updateSiswa/' . $idsiswa . '/' . $idpengguna) . '" ">Edit Data Siswa  <i class="ico-edit"></i></a> 
-';
+            ';
             $data['files'] = array(
                 APPPATH . 'modules/siswa/views/v-report-siswa.php',
                 );
@@ -577,53 +581,53 @@ public function listSiswa()
 {
     if ($this->get_status_login()){     
        // code u/ pagination
-     $this->load->database();
-     $jumlah_data = $this->msiswa->jumlah_siswa();
+       $this->load->database();
+       $jumlah_data = $this->msiswa->jumlah_siswa();
 
-     $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
-     $config['total_rows'] = $jumlah_data;
-     $config['per_page'] = 100;
+       $config['base_url'] = base_url().'index.php/siswa/listSiswa/';
+       $config['total_rows'] = $jumlah_data;
+       $config['per_page'] = 100;
 
         // Start Customizing the “Digit” Link
-     $config['num_tag_open'] = '<li>';
-     $config['num_tag_close'] = '</li>';
+       $config['num_tag_open'] = '<li>';
+       $config['num_tag_close'] = '</li>';
         // end  Customizing the “Digit” Link
 
         // Start Customizing the “Current Page” Link
-     $config['cur_tag_open'] = '<li><a><b>';
-     $config['cur_tag_close'] = '</b></a></li>';
+       $config['cur_tag_open'] = '<li><a><b>';
+       $config['cur_tag_close'] = '</b></a></li>';
         // END Customizing the “Current Page” Link
 
         // Start Customizing the “Previous” Link
-     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
-     $config['prev_tag_open'] = '<li>';
-     $config['prev_tag_close'] = '</li>';
+       $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+       $config['prev_tag_open'] = '<li>';
+       $config['prev_tag_close'] = '</li>';
          // END Customizing the “Previous” Link
 
         // Start Customizing the “Next” Link
-     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
-     $config['next_tag_open'] = '<li>';
-     $config['next_tag_close'] = '</li>';
+       $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+       $config['next_tag_open'] = '<li>';
+       $config['next_tag_close'] = '</li>';
          // END Customizing the “Next” Link
 
         // Start Customizing the first_link Link
-     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
-     $config['first_tag_open'] = '<li>';
-     $config['first_tag_close'] = '</li>';
+       $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+       $config['first_tag_open'] = '<li>';
+       $config['first_tag_close'] = '</li>';
          // END Customizing the first_link Link
 
         // Start Customizing the last_link Link
-     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
-     $config['last_tag_open'] = '<li>';
-     $config['last_tag_close'] = '</li>';
+       $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+       $config['last_tag_open'] = '<li>';
+       $config['last_tag_close'] = '</li>';
          // END Customizing the last_link Link
 
-     $from = $this->uri->segment(3);
-     $this->pagination->initialize($config);     
-     $list = $this->msiswa->data_siswa($config['per_page'],$from);
+       $from = $this->uri->segment(3);
+       $this->pagination->initialize($config);     
+       $list = $this->msiswa->data_siswa($config['per_page'],$from);
 
-     $this->tampSiswa($list,$jumlah_data);
- }else{
+       $this->tampSiswa($list,$jumlah_data);
+   }else{
     redirect('login');
 }
 
@@ -666,8 +670,8 @@ public function tampSiswa($list,$jumlah_data=''){
             $this->parser->parse('admin/v-index-admin', $data);
         } elseif($hakAkses=='guru'){
              // jika guru
-         $this->parser->parse('templating/index-b-guru', $data);
-     }else{
+           $this->parser->parse('templating/index-b-guru', $data);
+       }else{
             // jika siswa redirect ke welcome
         redirect(site_url('welcome'));
     }
@@ -680,20 +684,20 @@ public function tampSiswa($list,$jumlah_data=''){
   //search autocomplete soal berdasarkan judul soal
 public function autocompleteSiswa()
 {
- $keyword = $_GET['term'];
+   $keyword = $_GET['term'];
      // cari di database
- $data = $this->msiswa->get_cari_siswa($keyword); 
+   $data = $this->msiswa->get_cari_siswa($keyword); 
     // format keluaran di dalam array
- $arr = array();
- foreach($data as $row)
- {
-     $arr[] = array(
+   $arr = array();
+   foreach($data as $row)
+   {
+       $arr[] = array(
         'value' =>$row['namaDepan'].$row['namaBelakang']." (".$row['namaPengguna']." )",
         'url'=>base_url('siswa/reportSiswa/').$row['idsiswa'] .'/'.$row['penggunaID'],
         );
- }
+   }
         // minimal PHP 5.2
- echo json_encode($arr);
+   echo json_encode($arr);
 }
 
 function ajax_report_tryout($id=""){
@@ -742,10 +746,10 @@ function ajax_report_tryout($id=""){
         }else{
 
 
-        $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
-        data-todo='.htmlspecialchars(json_encode($array)).' 
+            $row[] ='<a class="btn btn-sm btn-success  modal-on'.$list_item['id_paket'].'" 
+            data-todo='.htmlspecialchars(json_encode($array)).' 
 
-        title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
+            title="Lihat Pembahasan" onclick="pembahasanto('."'".$list_item['id_paket']."'".')"><i class="ico-book"></i></a>';
         }
 
         $list[] = $row;   
@@ -938,7 +942,7 @@ function persentase_json($id=""){
 
 
 function get_tryout_for_select(){
-   if ($this->get_status_login()){
+ if ($this->get_status_login()){
     $datas = $this->mtryout->get_tryout_by_pengguna();
     echo json_encode($datas);
 }else{
@@ -948,63 +952,63 @@ function get_tryout_for_select(){
 }
 
 function get_high_three_learning(){
-        $datas = $this->msiswa->persentasi_limit();
-        echo json_encode($datas);
+    $datas = $this->msiswa->persentasi_limit();
+    echo json_encode($datas);
 }
 public function cariSiswa($key=''){
     if ($key=='') {
         $key=htmlspecialchars($this->input->get('keyword'));
     } 
 
-     if ($this->get_status_login()){     
+    if ($this->get_status_login()){     
        // code u/ pagination
-     $this->load->database();
-     $jumlah_data = $this->msiswa->sum_cari_siswa($key);
+       $this->load->database();
+       $jumlah_data = $this->msiswa->sum_cari_siswa($key);
 
-     $config['base_url'] = base_url().'index.php/siswa/cariSiswa/'.$key.'/';
-     $config['total_rows'] = $jumlah_data;
-     $config['per_page'] = 10;
+       $config['base_url'] = base_url().'index.php/siswa/cariSiswa/'.$key.'/';
+       $config['total_rows'] = $jumlah_data;
+       $config['per_page'] = 10;
 
         // Start Customizing the “Digit” Link
-     $config['num_tag_open'] = '<li>';
-     $config['num_tag_close'] = '</li>';
+       $config['num_tag_open'] = '<li>';
+       $config['num_tag_close'] = '</li>';
         // end  Customizing the “Digit” Link
 
         // Start Customizing the “Current Page” Link
-     $config['cur_tag_open'] = '<li><a><b>';
-     $config['cur_tag_close'] = '</b></a></li>';
+       $config['cur_tag_open'] = '<li><a><b>';
+       $config['cur_tag_close'] = '</b></a></li>';
         // END Customizing the “Current Page” Link
 
         // Start Customizing the “Previous” Link
-     $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
-     $config['prev_tag_open'] = '<li>';
-     $config['prev_tag_close'] = '</li>';
+       $config['prev_link'] = '<span aria-hidden="true">&laquo;</span>';
+       $config['prev_tag_open'] = '<li>';
+       $config['prev_tag_close'] = '</li>';
          // END Customizing the “Previous” Link
 
         // Start Customizing the “Next” Link
-     $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
-     $config['next_tag_open'] = '<li>';
-     $config['next_tag_close'] = '</li>';
+       $config['next_link'] = '<span aria-hidden="true">&raquo;</span>';
+       $config['next_tag_open'] = '<li>';
+       $config['next_tag_close'] = '</li>';
          // END Customizing the “Next” Link
 
         // Start Customizing the first_link Link
-     $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
-     $config['first_tag_open'] = '<li>';
-     $config['first_tag_close'] = '</li>';
+       $config['first_link'] = '<span aria-hidden="true">&larr; First</span>';
+       $config['first_tag_open'] = '<li>';
+       $config['first_tag_close'] = '</li>';
          // END Customizing the first_link Link
 
         // Start Customizing the last_link Link
-     $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
-     $config['last_tag_open'] = '<li>';
-     $config['last_tag_close'] = '</li>';
+       $config['last_link'] = '<span aria-hidden="true">Last &rarr;</span>';
+       $config['last_tag_open'] = '<li>';
+       $config['last_tag_close'] = '</li>';
          // END Customizing the last_link Link
 
-     $from = $this->uri->segment(4);
-     $this->pagination->initialize($config);     
-     $list = $this->msiswa->data_siswa_cari($config['per_page'],$from,$key);
+       $from = $this->uri->segment(4);
+       $this->pagination->initialize($config);     
+       $list = $this->msiswa->data_siswa_cari($config['per_page'],$from,$key);
 
-     $this->tampSiswa($list);
- }else{
+       $this->tampSiswa($list);
+   }else{
     redirect('login');
 }    
 }
@@ -1019,10 +1023,10 @@ public function getTingkatSiswa() {
 
 public function getKelasSiswa( $tingkatID ) {
 
-   $status=2;
-  $data = $this->output
-  ->set_content_type( "application/json" )
-  ->set_output( json_encode( $this->msiswa->get_tingkat_siswa($status,$tingkatID) ) ) ;
+ $status=2;
+ $data = $this->output
+ ->set_content_type( "application/json" )
+ ->set_output( json_encode( $this->msiswa->get_tingkat_siswa($status,$tingkatID) ) ) ;
 }
 
 public function message()
@@ -1038,80 +1042,80 @@ public function message()
         APPPATH.'modules/siswa/views/v-message.php',
         APPPATH.'modules/testimoni/views/v-footer.php',
         );
-   
+    
    // get message 
-   $data['pesan'] = $this->msiswa->get_pesan();
+    $data['pesan'] = $this->msiswa->get_pesan();
 
 
     $this->parser->parse( 'templating/coba-index', $data );
 }
 
-    public function ajax_getsiswa()
+public function ajax_getsiswa()
 {
   $siswaID=$this->session->userdata['id'];
   $arrSiswa=$this->msiswa->get_siswa_id($siswaID);
   echo json_encode($arrSiswa);
 }
 
-    public function see_message($id)
-    {
-        $data['judul_halaman'] = "Pesan Orang Tua";
+public function see_message($id)
+{
+    $data['judul_halaman'] = "Pesan Orang Tua";
 
-        $hakAkses = $this->session->userdata['HAKAKSES'];
+    $hakAkses = $this->session->userdata['HAKAKSES'];
 
-        $id_pengguna= $this->session->userdata['id'];
+    $id_pengguna= $this->session->userdata['id'];
 
-        $data['datLapor'] = $this->msiswa->get_daftar_pesan();
+    $data['datLapor'] = $this->msiswa->get_daftar_pesan();
 
-            $data['files'] = array(
-                APPPATH . 'modules/ortuback/views/v-single-pesan.php',
-                );
-            $all_report = $this->Ortuback_model->get_pesan_by_id($id);
+    $data['files'] = array(
+        APPPATH . 'modules/ortuback/views/v-single-pesan.php',
+        );
+    $all_report = $this->Ortuback_model->get_pesan_by_id($id);
 
             // update status read menjadi 1
-            $this->Ortuback_model->update_read($id);
+    $this->Ortuback_model->update_read($id);
 
-        $n=1;
-        $data['pesan']=array(); 
-        foreach ( $all_report as $item ) {
+    $n=1;
+    $data['pesan']=array(); 
+    foreach ( $all_report as $item ) {
         
-            $data['pesan'][]=array(
-                'namaortu'=>$item['namaOrangTua'],
-                'isi'=>$item['isi']
-               );
-        }
-
-        $this->parser->parse('templating/index', $data);
-        
+        $data['pesan'][]=array(
+            'namaortu'=>$item['namaOrangTua'],
+            'isi'=>$item['isi']
+            );
     }
+
+    $this->parser->parse('templating/index', $data);
+    
+}
 
     // get jumlah pesan untuk pesan
-    function jumlah_pesan(){
-        $data['new_count_pesan'] = (int)$this->msiswa->get_count();
+function jumlah_pesan(){
+    $data['new_count_pesan'] = (int)$this->msiswa->get_count();
 
-      echo json_encode($data['new_count_pesan']);
-    }
+    echo json_encode($data['new_count_pesan']);
+}
 
     // get kelompok kelas siswa neutron
-    public function get_kk_siswa($value='')
-    {
-        $id_cabang=$this->input->post("id_cabang");
+public function get_kk_siswa($value='')
+{
+    $id_cabang=$this->input->post("id_cabang");
         //get data kelompok keahlian berdasrkan id_cabang yg di post
-        $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
-        
-        $optionKk='<option value="">- Pilih Kelompok Kelas -</option>';
-        $no=0;
-        foreach ($arrKk as $val) {
-            $optionKk.='
-             <option value="'.$val->id_kk.'">'.$val->kelompokKelas.'</option>
-            ';
-            $no++;
-        }
-        if ($arrKk==null) {
-            $optionKk='<option value="">Belum kelompok Kelas</option>';
-        }
-        echo json_encode($optionKk);
+    $arrKk=$this->msiswa->get_kk_by_idCabang($id_cabang);
+    
+    $optionKk='<option value="">- Pilih Kelompok Kelas -</option>';
+    $no=0;
+    foreach ($arrKk as $val) {
+        $optionKk.='
+        <option value="'.$val->id_kk.'">'.$val->kelompokKelas.'</option>
+        ';
+        $no++;
     }
+    if ($arrKk==null) {
+        $optionKk='<option value="">Belum kelompok Kelas</option>';
+    }
+    echo json_encode($optionKk);
+}
 
 }
 ?>
