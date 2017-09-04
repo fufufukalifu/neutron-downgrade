@@ -480,7 +480,11 @@ JS aoutocomplate
           <li class="submenu-header ellipsis">Bank Soal</li>
 
           <li >
+<<<<<<< HEAD
             <a href="<?=base_url('index.php/banksoal/formsoal')?>" >
+=======
+            <a href="<?=base_url('index.php/banksoal/formsoal')?>"">
+>>>>>>> 1703659ce3bc0cde85ea616f533d37a93a1b63d1
               <span class="text">Tambahkan Bank Soal</span> 
             </a>
           </li>
