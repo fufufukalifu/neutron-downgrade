@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<td>
 
 						
-							<a class="btn btn-sm btn-danger" title="Rest Katasandi"  onclick="restKatasandi('.$value->id.','.$namaPengguna.')"><i class="ico-key2"></i></a>
+							<a class="btn btn-sm btn-danger" title="Reset Katasandi"  onclick="restKatasandi('.$value->id.','.$namaPengguna.')"><i class="ico-key2"></i></a>
 								<a class="btn btn-sm btn-danger" title="Hapus admin cabang" onclick="hapusAkun('.$value->id.','.$value->idCabang.')"><i class="ico-close3"></i></a>
 					</td>
 			</tr>
