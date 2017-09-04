@@ -268,7 +268,7 @@ function kirim_laporan(){
             tempt_pesan = $('.pesan').val();
               // cek dulu isi pesannya kosong gak?
               if (tempt_pesan==null || tempt_pesan=="") {
-                swal('Pesan tidak boleh kosong');
+                swal('Maaf','Pesan tidak bolek kosong','error');
               }else{
                 // ini buat ngehapus array
                 pesan.push(tempt_pesan);   
@@ -318,7 +318,8 @@ function kirim_laporan(){
 
                 // END IO
               },error:function(){
-                swal('No!','Gagal mengirim Laporan','error');
+                // swal('No!','Gagal mengirim Laporan','error');
+                console.log('Gagal mengirim laporan');
               }
             });
             // }
