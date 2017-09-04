@@ -458,6 +458,7 @@ function add_ortu(){
 		sweetAlert("Oops","Silahkan pilih siswa","error");
 	} else if(jumlah_siswa>0) {
 		var url = base_url+"ortuback/set_ortu";
+		console.log(id_siswa);
 			$.ajax({
 			url:url,
 			data:{id_siswa:id_siswa},
