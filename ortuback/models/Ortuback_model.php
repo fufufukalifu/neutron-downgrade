@@ -13,7 +13,12 @@ class Ortuback_model extends CI_Model{
 		$this->db->where("l.jenis = 'nilai'");
 		$this->db->order_by("l.id", 'desc');
 		$query = $this->db->get();
-		return $query->result_array();
+		// cek jika hasil query null
+        if($query->num_rows() == 1) {
+            return $query->result_array();
+        }else{
+             return $query='';
+        }
 	}	
 
 	/*Mengambil report berdasarkan absen*/
@@ -28,7 +33,12 @@ class Ortuback_model extends CI_Model{
 		$this->db->order_by("l.id", 'desc');
 
 		$query = $this->db->get();
-		return $query->result_array();
+		// cek jika hasil query null
+        if($query->num_rows() == 1) {
+            return $query->result_array();
+        }else{
+             return $query='';
+        }
 	}	
 
 	/*Mengambil report berdasarkan umum*/

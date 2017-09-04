@@ -221,18 +221,6 @@ $('select[name=kelas]').change(function(){
   });
 });
 
-function pdf() {
-  /// TOMBOL PDF KETIKA DI KLIK
-  cabang = $('select[name=cabang]').val();
-  tryout = $('select[name=to]').val();
-  paket = $('select[name=paket]').val();
-  if (cabang != "all" && tryout != "all" && paket != "all") {
-    url = base_url+"admincabang/admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
-    window.open(url, '_blank');
-  }else{
-    $("#cekInput").modal("show");
-  }
-}
 
 $('[name="checkall"]:checkbox').click(function () {
  if($(this).attr("checked")){
@@ -267,44 +255,41 @@ function kirim_laporan(){
      id_ortu[i] = $(this).val();
    }); 
 
-   $('.pesan').each(function(i){
-    tempt_pesan = $(this).val();
-          // cek dulu isi pesannya kosong gak?
-          if (tempt_pesan==null || tempt_pesan=="") {
-          }else{
-            // ini buat ngehapus array
-            pesan.push(tempt_pesan);   
-          }
-
-        }); 
-
    jumlah_ortu = id_ortu.length;
 
-   // cek jumlah ortu yang dipilih
-   if (jumlah_ortu==0) {
-    swal('Silahkan tentukan ortu terlebih dahulu');
-  }else{
-          // cek udah diceklis blm siswanya?
-          if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
-            // cek dulu isi pesannya kosong gak?
-            if (tempt_pesan==null || tempt_pesan=="") {
-              swal('Pesan tidak boleh kosong');
-            } else {
-              $.ajax({
-                type:"POST",
-                url:base_url+"laporanortu/kirim_laporan",
-                data:{id_ortu:id_ortu,
-                  jumlah_ortu:jumlah_ortu,
-                  jenis_lapor:jenis_lapor,
-                  isi:pesan},
-                  dataType: "json",
-                  cache : false,
-                  success: function(data){
+    // cek jumlah ortu yang dipilih
+    if (jumlah_ortu==0) {
+      swal('Silahkan tentukan ortu terlebih dahulu');
+    }else{
+      // cek udah diceklis blm siswanya?
+        if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
+          // ambil pesan yang diceklis
+          $('.daftarreport tbody td :checkbox:checked').each(function(i){
+            tempt_pesan = $('.pesan').val();
+              // cek dulu isi pesannya kosong gak?
+              if (tempt_pesan==null || tempt_pesan=="") {
+                swal('Pesan tidak boleh kosong');
+              }else{
+                // ini buat ngehapus array
+                pesan.push(tempt_pesan);   
+              }
+
+          });
+          $.ajax({
+            type:"POST",
+            url:base_url+"laporanortu/kirim_laporan",
+            data:{id_ortu:id_ortu,
+            jumlah_ortu:jumlah_ortu,
+            jenis_lapor:jenis_lapor,
+            isi:pesan},
+            dataType: "json",
+            cache : false,
+            success: function(data){
 /*
-                // AWAL IO
-                if(data.success == true){
+              // AWAL IO
+              if(data.success == true){
                 
-                  var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+                var socket = io.connect( 'http://'+window.location.hostname+':3000' );
 
                 socket.emit('new_count_pesan', { 
                         new_count_pesan: data.new_count_pesan
@@ -322,8 +307,8 @@ function kirim_laporan(){
 
                       });
                       */
-                      swal('Yes!','Laporan Berhasil Di Kirim','success');
-                      reload();
+                  swal('Yes!','Laporan Berhasil Di Kirim','success');
+                  reload();
 /*
 
                  } else if(data.success == false){
@@ -336,19 +321,18 @@ function kirim_laporan(){
                 swal('No!','Gagal mengirim Laporan','error');
               }
             });
-            }
-          } else {
+            // }
+        } else {
+          swal('Pesan tidak boleh');
+        }
 
-           swal('Pesan tidak boleh');
-         }
-
-       }
-     }
-
-   }
-
-   function reload(){
-    dataTableReport.ajax.reload(null,false); 
+    }
   }
+
+}
+
+function reload(){
+  dataTableReport.ajax.reload(null,false); 
+}
 
 </script>
