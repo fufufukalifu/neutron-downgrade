@@ -206,8 +206,8 @@ class Laporanortu extends MX_Controller {
 			$row[] = $item ['namaPengguna'];
 			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
 			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-			<input type='checkbox' name="."report".$n." id="."soal".$item['id_ortu']." value=".$item['id_ortu'].">
-			<label for="."soal".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
+			<input type='checkbox' name="."report".$n." id="."report".$item['id_ortu']." value=".$item['id_ortu'].">
+			<label for="."report".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
 			
 			$data[] = $row;
 			$n++;

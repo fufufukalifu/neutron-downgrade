@@ -23,9 +23,9 @@
       <div class="panel-heading">
         <h3 class="panel-title">Daftar Laporan </h3> 
         <div class="panel-toolbar text-right">
-        <div class="col-md-11">
+          <div class="col-md-11">
 
-          <div class="col-sm-4" id="cabang">
+            <div class="col-sm-4" id="cabang">
              <select class="form-control" name="cabang">
               <option value="all">Semua Cabang</option>
             </select>
@@ -40,57 +40,57 @@
             </select>
           </div>
 
-        <div class="kelas col-sm-4">
-          <select class="form-control col-sm-6" name="kelas">
-            <option value="all">Semua Kelas</option>
-          </select>
-        </div>
-
-         
-
-        </div>
-    </div>
-
-</div>
-
-<div class="panel-body">
-  <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
-         <div  class="form-group">
-           <label class="col-sm-2 control-label">Jenis Laporan</label>
-           <div class="col-sm-9">
-             <!-- stkt = soal tingkat -->
-             <select class="form-control" name="jenis">
-              <option value="0">-- Pilih Jenis --</option>
-              <option value="nilai">Nilai</option>
-              <option value="absen">Absen</option>
-              <option value="umum">Umum</option>
+          <div class="kelas col-sm-4">
+            <select class="form-control col-sm-6" name="kelas">
+              <option value="all">Semua Kelas</option>
             </select>
           </div>
+
+
+
         </div>
-      </form>
-  <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama Orang Tua</th>
-        <th>Nama Siswa</th>
-        <th>Username</th>
-        <th>Pesan</th>
-        <th>
-          <span class="checkbox custom-checkbox check-all">
-            <input type="checkbox" name="checkall" id="check-all">
+      </div>
+
+    </div>
+
+    <div class="panel-body">
+      <form  class="panel panel-default form-horizontal form-bordered form-step"  method="post" >
+       <div  class="form-group">
+         <label class="col-sm-2 control-label">Jenis Laporan</label>
+         <div class="col-sm-9">
+           <!-- stkt = soal tingkat -->
+           <select class="form-control" name="jenis">
+            <option value="0">-- Pilih Jenis --</option>
+            <option value="nilai">Nilai</option>
+            <option value="absen">Absen</option>
+            <option value="umum">Umum</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <table class="daftarreport table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Orang Tua</th>
+          <th>Nama Siswa</th>
+          <th>Username</th>
+          <th>Pesan</th>
+          <th>
+            <span class="checkbox custom-checkbox check-all">
+              <input type="checkbox" name="checkall" id="check-all">
               <label for="check-all">&nbsp;&nbsp;</label>
-          </span> 
-        </th>
-      </tr>
-    </thead>
+            </span> 
+          </th>
+        </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
 
-    </tbody>
-  </table>
-  <a class="btn btn-primary send_laporan">Kirim</a>
-</div>
+      </tbody>
+    </table>
+    <a class="btn btn-primary send_laporan">Kirim</a>
+  </div>
 
 </div>
 </div>   
@@ -100,45 +100,57 @@
 <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
 <!-- /sound notification -->
 <script src="http://macyjs.com/assets/js/macy.min.js"></script>
-  <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
 
 <script type="text/javascript">
-var dataTableReport;
-$(document).ready(function(){
-  var cabang = $('select[name=cabang]').val();
-  dataTableReport = $('.daftarreport').DataTable({
-            "ajax": {
-                "url": base_url+"laporanortu/addlaporanortu_ajax/"+cabang,
-                "type": "POST"
-              },
-              "emptyTable": "Tidak Ada Data Pesan",
-              "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-              "bDestroy": true,
-            });
+  var dataTableReport;
+  $(document).ready(function(){
+    var cabang = $('select[name=cabang]').val();
+    dataTableReport = $('.daftarreport').DataTable({
+      "ajax": {
+        "url": base_url+"laporanortu/addlaporanortu_ajax/"+cabang,
+        "type": "POST"
+      },
+      "emptyTable": "Tidak Ada Data Pesan",
+      "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+      "bDestroy": true,
+    });
+
     get_cabang();  
-});
+
+  });
+
   function get_cabang(){
-      var url_get_cabang=base_url+"laporanortu/get_cabang";
-      $.ajax({
-        url:url_get_cabang,
-        dataType:"json",
-        type:"post",
-        success:function(data){
-         $('select[name=cabang]').html('<option value="all">Semua Cabang </option>');
-          $.each(data, function(i, data){
-            $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
-          });
-        },
-        error:function(){
-        }
+    var url_get_cabang=base_url+"laporanortu/get_cabang";
+    $.ajax({
+      url:url_get_cabang,
+      dataType:"json",
+      type:"post",
+      success:function(data){
+       $('select[name=cabang]').html('<option value="all">Semua Cabang </option>');
+
+       $.each(data, function(i, data){
+        $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
       });
-    }
+
+     },
+     error:function(){
+
+     }
+   });
+
+  }
+
+
 // CABANG KETIKA DI CHANGE
 $('select[name=cabang]').change(function(){
+
   cabang = $('select[name=cabang]').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
+
   url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
+
   dataTableReport = $('.daftarreport').DataTable({
     "ajax": {
       "url": url,
@@ -149,12 +161,16 @@ $('select[name=cabang]').change(function(){
     "bDestroy": true,
   });
 });
+
+
 // TINGKAT KETIKA DI CHANGE
 $('select[name=tingkat_pel]').change(function(){
   cabang = $('select[name=cabang]').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
+
   url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
+
   dataTableReport = $('.daftarreport').DataTable({
     "ajax": {
       "url": url,
@@ -164,8 +180,11 @@ $('select[name=tingkat_pel]').change(function(){
     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
     "bDestroy": true,
   });
+
   load_kelas(tingkat);
+
 });
+
 // LOAD KELAS
 function load_kelas(tingkat){
  $.ajax({
@@ -173,18 +192,24 @@ function load_kelas(tingkat){
   url: "<?php echo base_url() ?>laporanortu/get_kelas/"+tingkat,
   success: function(data){
    $('select[name=kelas]').html('<option value="all">-- Pilih Kelas  --</option>');
+
    $.each(data, function(i, data){
     $('select[name=kelas]').append("<option value='"+data.aliasTingkat+"'>"+data.aliasTingkat+"</option>");
   });
  }
+
 });
 }
+
 // KELAS KETIKA DI CHANGE
 $('select[name=kelas]').change(function(){
+
   cabang = $('select[name=cabang]').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
+
   url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
+
   dataTableReport = $('.daftarreport').DataTable({
     "ajax": {
       "url": url,
@@ -195,18 +220,8 @@ $('select[name=kelas]').change(function(){
     "bDestroy": true,
   });
 });
-function pdf() {
-  /// TOMBOL PDF KETIKA DI KLIK
-  cabang = $('select[name=cabang]').val();
-  tryout = $('select[name=to]').val();
-  paket = $('select[name=paket]').val();
-  if (cabang != "all" && tryout != "all" && paket != "all") {
-      url = base_url+"admincabang/admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
-      window.open(url, '_blank');
-  }else{
-    $("#cekInput").modal("show");
-  }
-}
+
+
 $('[name="checkall"]:checkbox').click(function () {
  if($(this).attr("checked")){
   $('table.daftarreport tbody input:checkbox').prop( "checked", true );
@@ -214,19 +229,23 @@ $('[name="checkall"]:checkbox').click(function () {
   $('table.daftarreport tbody input:checkbox').prop( "checked", false );
 }
 });
+
 // KETIKA BUTTON KIRIM DIKLIK
 $('.send_laporan').click(function(){
   kirim_laporan();
 });
+
 //fungsi kirim laporan
 function kirim_laporan(){
   //tampung id ortu
   id_ortu = [];
+
   // tampung isi pesan
   pesan = [];
   
   //tampung jenis laporan
   jenis_lapor = $('select[name=jenis]').val();
+
   //cek kalo belum set jenis laporan
   if (jenis_lapor==0) {
     swal('silahkan tentukan jenis terlebih dahulu');
@@ -235,78 +254,60 @@ function kirim_laporan(){
    $('.daftarreport tbody td :checkbox:checked').each(function(i){
      id_ortu[i] = $(this).val();
    }); 
+
+   jumlah_ortu = id_ortu.length;
+
    $('.pesan').each(function(i){
     tempt_pesan = $(this).val();
           // cek dulu isi pesannya kosong gak?
           if (tempt_pesan==null || tempt_pesan=="") {
           }else{
             // ini buat ngehapus array
+            // kalo ga kosong masukin ke array pesan
             pesan.push(tempt_pesan);   
           }
      
    }); 
-   
-   $('.daftarreport tbody td :checkbox:checked').each(function(i){
-     pesan[i] = $(this).find('textarea[name=isi]').val();
-     alert(pesan[i]);
-   }); 
-   jumlah_ortu = id_ortu.length;
-   // cek jumlah ortu yang dipilih
-      if (jumlah_ortu==0) {
-        swal('Silahkan tentukan ortu terlebih dahulu');
-      }else{
-          // cek udah diceklis blm siswanya?
-          if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
-            // cek dulu isi pesannya kosong gak?
-            if (tempt_pesan==null || tempt_pesan=="") {
-              swal('Pesan tidak boleh kosong');
-            } else {
-              $.ajax({
-              type:"POST",
-              url:base_url+"laporanortu/kirim_laporan",
-              data:{id_ortu:id_ortu,
-              jumlah_ortu:jumlah_ortu,
-              jenis_lapor:jenis_lapor,
-              isi:pesan},
-              dataType: "json",
-              cache : false,
-              success: function(data){
-                // AWAL IO
-                if(data.success == true){
-                
-                  var socket = io.connect( 'http://'+window.location.hostname+':3000' );
-                socket.emit('new_count_pesan', { 
-                        new_count_pesan: data.new_count_pesan
-                      });
-                console.log(data);
-                socket.emit('pesan_baru', { 
-                        id_ortu: data.id_ortu,
-                        jenis_lapor: data.jenis_lapor,
-                        isi: data.isi,
-                        namaPengguna : data.namaPengguna,
-                        UUID: data.UUID,
-                        siswaID: data.siswaID
-                      });
-                swal('Laporan Berhasil Di Kirim');
-                reload();
-                 } else if(data.success == false){
-                      console.log("gagal");
-                    }
-                // END IO
-              },error:function(){
-                swal('Gagal mengirim Laporan');
-              }
-            });
-            }
+
+    // cek jumlah ortu yang dipilih
+    if (jumlah_ortu==0) {
+      swal('Silahkan tentukan ortu terlebih dahulu');
+    }else{
+      
+      // cek udah diceklis blm siswanya?
+        if($('.daftarreport tbody td :checkbox:checked').is(':checked')) {
+          // cek jumlah pesan sesuai dengan yang diceklis atau tidak?
+          if (pesan.length != jumlah_ortu) {  
+            swal('Maaf', 'Pesan tidak boleh kosong!', 'error');           
           } else {
-         
-           swal('Pesan tidak boleh');
+            $.ajax({
+                    type:"POST",
+                    url:base_url+"laporanortu/kirim_laporan",
+                    data:{id_ortu:id_ortu,
+                    jumlah_ortu:jumlah_ortu,
+                    jenis_lapor:jenis_lapor,
+                    isi:pesan},
+                    dataType: "json",
+                    cache : false,
+                    success: function(data){
+                      swal('Yes!','Laporan Berhasil Di Kirim','success');
+                      reload();
+                    },error:function(){
+                      swal('No!','Gagal mengirim Laporan','error');
+                    }
+              });
           }
-        
-      }
+        } else {
+
+        }
+
     }
+  }
+
 }
+
 function reload(){
   dataTableReport.ajax.reload(null,false); 
 }
+
 </script>

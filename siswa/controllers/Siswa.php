@@ -27,10 +27,10 @@ class Siswa extends MX_Controller {
         $this->load->library('parser');
         $this->load->library('pagination');
         $this->load->library('sessionchecker');
-        if($this->session->userdata('HAKAKSES')=='guru' || 
-         $this->session->userdata('HAKAKSES')=='admin'){
-            redirect($this->session->userdata('HAKAKSES'));
-    }
+    //     if($this->session->userdata('HAKAKSES')=='guru' || 
+    //      $this->session->userdata('HAKAKSES')=='admin'){
+    //         redirect($this->session->userdata('HAKAKSES'));
+    // }
     $this->sessionchecker->checkloggedin();
 }
 

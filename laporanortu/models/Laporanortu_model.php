@@ -4,7 +4,7 @@ class Laporanortu_model extends CI_Model{
 
 	//get report all
 	function get_report_ortu($data){
-		$this->db->order_by('s.namaDepan','asc');
+		$this->db->order_by('p.id','desc');
 		$this->db->select('p.namaPengguna,
 			o.siswaID,
 			s.penggunaID,
@@ -70,7 +70,7 @@ class Laporanortu_model extends CI_Model{
 
 	//get report all
 	function get_report_ortu_all($data){
-		$this->db->order_by('s.namaDepan','asc');
+		$this->db->order_by('l.id','desc');
 		$this->db->select('p.namaPengguna,
 			o.siswaID,
 			s.penggunaID,
