@@ -51,7 +51,7 @@ class Mtryout extends MX_Controller {
         $id_siswa = $datas['id_siswa'];
 
         $query = "
-        SELECT *,p.id_paket,`nm_paket`,mmt.`id`,rp.`id_report` FROM `tb_hakakses-to` ha
+        SELECT *,p.id_paket,`nm_paket`,mmt.`id`,rp.`id_report`,p.jenis_penilaian as jp FROM `tb_hakakses-to` ha
         JOIN tb_siswa s ON s.`id` = ha.`id_siswa`
         JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout`
         JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout`
@@ -144,19 +144,28 @@ class Mtryout extends MX_Controller {
     }
 
     public function dataPaket($id) {
-        $this->db->select('id_paket');
-        $this->db->from('tb_mm-tryoutpaket');
-        $this->db->where('id', $id);
+        $this->db->select('mm.id_paket, p.jenis_penilaian as jp');
+        $this->db->from('tb_mm-tryoutpaket as mm');
+        $this->db->join('tb_paket as p ',' p.id_paket = mm.`id_paket`');
+        $this->db->where('mm.id', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function ambil_jumlah($id_paket){
+        $this->db->select('pak.id_paket, pak.jumlah_soal as js');
+        $this->db->from('`tb_paket` as `pak` ');
+        $this->db->where('pak.id_paket', $id_paket);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function get_soal($id_paket) {
+    public function get_soal($id_paket,$id_js) {
         $this->db->order_by('rand()');
         $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, audio, soal.judul_soal as judul, soal.gambar_soal as gambar');
         $this->db->from('tb_mm-paketbank as paban');
         $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal');
         $this->db->where('paban.id_paket', $id_paket);
+        $this->db->limit($id_js);
         $query = $this->db->get();
         $soal = $query->result_array();
 
@@ -250,11 +259,12 @@ class Mtryout extends MX_Controller {
         return $soal;
     }
 
-    public function get_soalnorandom($id_paket) { 
+    public function get_soalnorandom($id_paket,$id_js) { 
         $this->db->select('id_paket as idpak, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.audio as audio'); 
         $this->db->from('tb_mm-paketbank as paban'); 
         $this->db->join('tb_banksoal as soal', 'paban.id_soal = soal.id_soal'); 
         $this->db->where('paban.id_paket', $id_paket); 
+        $this->db->limit($id_js);
         $query = $this->db->get(); 
         $soal = $query->result_array(); 
 

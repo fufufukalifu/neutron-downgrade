@@ -94,7 +94,6 @@
           <tbody>
             <?php   echo $status_to; ?>
             <?php foreach ($paket as $paketitem):?>
-
               <tr>
 
                 <td><?=$paketitem['id_paket'] ?></td>
@@ -146,6 +145,7 @@
   <div class="col-md-12">
 
     <section>
+    <!-- <input type="text" name="id" id="jp" value="<?=$jp ?>" hidden="true"> -->
 
       <!-- gallery navigation -->
 
@@ -166,7 +166,7 @@
           </thead>
           <tbody>
             <?php foreach ($paket_dikerjakan as $paketitem): ?>
-              <tr>
+              <!-- <tr> -->
                 <td><?=$paketitem['id'] ?></td>
                 <td>
 
@@ -232,7 +232,6 @@
 <!--/ END Template Main -->
 
 <script type="text/javascript"> 
-
 
 
   function kerjakan(id_to){
@@ -335,7 +334,13 @@
   }
 
   function load_grafik(data) {
-  nilai =data.jmlh_benar/ data.jumlah_soal * 100;
+  // nilai =data.jmlh_benar/ data.jumlah_soal * 100;
+  if (data.jenis_penilaian == 'SMBPTN') {
+      nilai =(data.jmlh_benar * 4) + (data.jmlh_salah *(-1)) + (data.jmlh_kosong * 0);
+    }
+  else {
+      nilai =data.jmlh_benar/ data.jumlah_soal * 100;
+    }
 
    var chart = new CanvasJS.Chart("chartContainer", {
 

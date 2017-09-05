@@ -85,7 +85,7 @@
                                 <select name="jenis_penilaian" class="form-control" id="jenis_penilaian" required="true">
                                     <option value="">--Silahkan Pilih Jenis Penilaian--</option>
                                     <option value="SMBPTN">SMBPTN</option>
-                                    <option value="UMBK">UMBK</option>
+                                    <option value="UNBK">UNBK</option>
                                 </select>
                                 
                             </div>
@@ -369,7 +369,7 @@ function edit_paket(id)
             $('[name="deskripsi"]').val(data.deskripsi);
             $('[name="jumlah_soal"]').val(data.jumlah_soal);
             $('[name="jenis_penilaian"]').val(data.jenis_penilaian);
-            $('[name="tingkatID"]').val(data.tingkatID);
+            $('[name="tingkat_ID"]').val(data.tingkat_ID);
             $('[name="durasi"]').val(data.durasi);
             if (data.random ==1) {
                $('#idrand').attr('checked', true);

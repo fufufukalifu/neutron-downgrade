@@ -151,7 +151,7 @@
 
  </div>
 
- <div class="col-sm-12">
+ <div class="col-sm-12 ">
 
   <form >
 
@@ -660,7 +660,7 @@ function addsoal(subBabId){
     "type": "POST"
   },
   destroy: true,
-  searching: false
+  searching: true
 });
 }
 // ##

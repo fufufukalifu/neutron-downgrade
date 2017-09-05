@@ -131,6 +131,7 @@ class Tryout extends MX_Controller {
                 );
             // DAFTAR PAKET
             $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
+            // $data['jp'] =$this->Mtryout->get_paket_reported($datas)[0]['jp'];
             $data['paket'] = $this->Mtryout->get_paket_undo($datas);
             $data['status_to'] = $status_to;
             
@@ -208,19 +209,22 @@ class Tryout extends MX_Controller {
             $data['topaket'] = $this->Mtryout->datatopaket($id); 
 
             $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket; 
+            
             $random = $this->Mtryout->dataPaketRandom($id_paket)[0]->random; 
 
             $data['paket'] = $this->Mtryout->durasipaket($id_paket); 
-
             $this->load->view('templating/t-headerto'); 
             if ($random == 0) { 
+                $id_js= $this->load->Mtryout->ambil_jumlah($id_paket)[0]->js; 
                 $query = $this->load->Mtryout->get_soalnorandom($id_paket); 
             }else{ 
-                $query = $this->load->Mtryout->get_soal($id_paket); 
+                $id_js= $this->load->Mtryout->ambil_jumlah($id_paket)[0]->js; 
+                $query = $this->load->Mtryout->get_soal($id_paket,$id_js); 
             } 
             $data['soal'] = $query['soal']; 
             $data['pil'] = $query['pil']; 
 
+            
             $this->load->view('vHalamanTo-bu.php', $data); 
             $this->load->view('templating/t-footerto', $data); 
         } else { 
@@ -269,6 +273,9 @@ class Tryout extends MX_Controller {
     public function cekJawaban() {
         if ($this->input->post()) {
             $data = $this->input->post('pil');
+            $data = $this->input->post('pil');
+
+
             
             $id = $this->session->userdata['id_mm-tryoutpaket'];
             $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
@@ -300,7 +307,8 @@ class Tryout extends MX_Controller {
             $hasil['id_pengguna'] = $this->session->userdata['id'];
             $hasil['siswaID'] = $this->msiswa->get_siswaid();
             $hasil['id_mm-tryout-paket'] = $this->session->userdata['id_mm-tryoutpaket'];
-            
+
+
             $hasil['jmlh_kosong'] = $kosong;
             $hasil['jmlh_benar'] = $benar;
             $hasil['jmlh_salah'] = $salah;

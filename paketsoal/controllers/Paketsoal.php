@@ -280,6 +280,7 @@ class paketsoal extends MX_Controller
 
 		$data['judul_halaman'] = "Tambahkan Bank Soal";
 		$data['idpaket2'] =  $idpaket;
+
 		if (!$paket_soal==array()) {
 			$data['listadd_soal']=$this->load->mpaketsoal->soal_by_paketID($idpaket);
 			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
@@ -294,6 +295,7 @@ class paketsoal extends MX_Controller
 				APPPATH . 'modules/templating/views/v-data-notfound.php',
 				);
 		}
+		
 		
 		$hakAkses=$this->session->userdata['HAKAKSES'];
 		if ($hakAkses=='admin') {
