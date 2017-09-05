@@ -392,7 +392,7 @@ JS aoutocomplate
         <ul class="dropdown-menu" role="menu">
           <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
 
-          <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
+          <li><a href="<?=base_url()?>help"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
           <li class="divider"></li>
           <li><a href="<?=base_url('index.php/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
         </ul>
@@ -480,11 +480,7 @@ JS aoutocomplate
           <li class="submenu-header ellipsis">Bank Soal</li>
 
           <li >
-<<<<<<< HEAD
             <a href="<?=base_url('index.php/banksoal/formsoal')?>" >
-=======
-            <a href="<?=base_url('index.php/banksoal/formsoal')?>"">
->>>>>>> 1703659ce3bc0cde85ea616f533d37a93a1b63d1
               <span class="text">Tambahkan Bank Soal</span> 
             </a>
           </li>

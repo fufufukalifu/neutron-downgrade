@@ -23,7 +23,7 @@
 		if ($hakAkses == 'admin') {
 			$this->parser->parse('admin/v-index-admin', $data);
 		} elseif ($hakAkses == 'guru') {
-			redirect(site_url('guru/dashboard/'));
+			$this->parser->parse('templating/index-b-guru', $data);
 		} elseif ($hakAkses == 'siswa') {
 			redirect(site_url('welcome'));
 		} else {
@@ -78,7 +78,14 @@
  		$tAdminCabang.=$tampFooter;
  		$tGuru.=$tampFooter;
  		$tSiswa.=$tampFooter;
- 		$dat=$tAdmin."<hr>".$tAdminCabang."<hr>".$tGuru."<hr>".$tSiswa;
+ 		$hakAkses = $this->session->userdata['HAKAKSES'];
+ 		if ($hakAkses =='admin') {
+ 			$dat=$tAdmin."<hr>".$tAdminCabang."<hr>".$tGuru."<hr>".$tSiswa;
+ 		} else if($hakAkses =='guru') {
+ 			$dat=$tGuru."<hr>".$tSiswa;
+ 		}
+ 		
+ 		
  		echo json_encode($dat);
  	}
  	public function get_pdf_user_guide()
