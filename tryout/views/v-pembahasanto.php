@@ -117,8 +117,17 @@
                                                     <div class="panel panel-default" style="">
                                                         <div class="panel-heading">
                                                             <!-- <h1>Selamat datang</h1> -->
-                                                            <div class="row">
-                                                                <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
+                                                            <?php 
+                                                             if ($key['status_koreksi']==1) {
+                                                              $status_color = ['ico'=>'ico-checkmark3','kelas'=>'btn-success','title'=>'Jawaban Benar'];
+                                                             }else if($key['status_koreksi']==2){
+                                                              $status_color = ['ico'=>'ico-close4','kelas'=>'btn-danger','title'=>'Jawaban Salah'];
+                                                             }else{
+                                                              $status_color = ['ico'=>'ico-check-empty','kelas'=>'btn-warning','title'=>'Jawaban Kosong'];
+                                                             }
+                                                            ?>
+                                                            <div class="row" title="<?=$status_color['title'] ?>">
+                                                                <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small><i class="<?=$status_color['ico'] ?> text-right"></i></h4></div>
                                                             </div>
                                                         </div>
                                                         <div class="panel-collapse">
@@ -281,16 +290,28 @@
                                                     <!--<li class="pageNumbers"></li>-->
                                                     <div class="ljk" style="">
                                                         <?php
-                                                        $nojwb = 1;
-                                                        foreach ($soal as $jwb) {
-                                                            ?>
-                                                            <div id="flex-item" >
-                                                                <a id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
-                                                            </div>
-                                                            <?php
-                                                            $nojwb++;
-                                                        }
-                                                        ?>
+             $nojwb = 1;
+             foreach ($soal as $jwb) {
+              ?>
+              <div id="flex-item" >
+              <?php if ($jwb['status_koreksi']==1): ?>
+               <a id ="nom_sisS" class ="go_slide btn btn-success"  alt="<?= $nojwb ?>" title="Jawaban Benar"><?= $nojwb ?></a>               
+              <?php endif ?>
+
+              <?php if ($jwb['status_koreksi']==2): ?>
+               <a id ="nom_sisS" class ="go_slide btn btn-danger" alt="<?= $nojwb ?>" title="Jawaban Salah"><?= $nojwb ?></a>               
+              <?php endif ?>
+
+              <?php if ($jwb['status_koreksi']==3): ?>
+               <a id ="nom_sisS" class ="go_slide btn btn-warning"  alt="<?= $nojwb ?>" title="Jawaban Kosong"><?= $nojwb ?></a>               
+              <?php endif ?>
+
+
+              </div>
+              <?php
+              $nojwb++;
+             }
+             ?>
                                                     </div>
 
                                                 </div>

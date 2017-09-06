@@ -15,7 +15,24 @@ $(document).on("keydown", disableF5);
 $(document).bind("contextmenu", function (e) {
   e.preventDefault();
 });
-// DISABLE F 5    
+// DISABLE F 5 
+
+// fungsi disable ctrl+u, ctrl+c, ctrl+v
+var isCtrl = false;
+document.onkeyup=function(e)
+{
+   if(e.which == 17)
+     isCtrl=false;
+}
+document.onkeydown=function(e)
+{
+   if(e.which == 17)
+      isCtrl=true;
+   if((e.which == 85) || (e.which == 67) && isCtrl == true)
+   {
+      return false;
+   }
+}   
 </script>
 
 <script>

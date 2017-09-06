@@ -414,6 +414,18 @@ public function get_id_siswa_by_ortu() {
         return $query->result()[0]->id;
     }
 
+    // get report paket by mmid
+    function get_report_paket_by_mmid($data){
+        $this->db->select('*');
+        $this->db->from('tb_report-paket rp');
+        $this->db->join('`tb_pengguna` p ',' `rp`.`id_pengguna` = `p`.`id`'); 
+        $this->db->where('rp.id_mm-tryout-paket',$data['id_mm']);
+        $this->db->where('p.id',$data['id_pengguna']);
+        $query = $this->db->get(); 
+        return $query->result()[0]; 
+    }
+
+
 }
 
 ?>

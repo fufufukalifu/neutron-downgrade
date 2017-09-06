@@ -60,11 +60,28 @@
     $(document).on("keydown", disableF5);
     $(document).bind("contextmenu", function (e) {
         e.preventDefault();
+        return false;
     });
 
 
-</script>
+// fungsi disable ctrl+u, ctrl+c, ctrl+v
+var isCtrl = false;
+document.onkeyup=function(e)
+{
+   if(e.which == 17)
+     isCtrl=false;
+}
+document.onkeydown=function(e)
+{
+   if(e.which == 17)
+      isCtrl=true;
+   if((e.which == 85) || (e.which == 67) && isCtrl == true)
+   {
+      return false;
+   }
+}
 
+</script>
 
 <script type="text/javascript" src="<?= base_url('assets/plugins/owl/js/owl.carousel.min.js'); ?>"></script>
 
