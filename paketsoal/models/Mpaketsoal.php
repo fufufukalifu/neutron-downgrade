@@ -474,7 +474,7 @@ class MPaketsoal extends CI_Model {
 	}
 
 	public function get_jumlah_soal($idpaket){
-		$this->db->select('id');
+		$this->db->select('COUNT(`id`) as idl');
 		$this->db->from('tb_mm-paketbank paketbank');
 		$this->db->join('tb_banksoal bank','paketbank.id_soal = bank.id_soal');
 
@@ -482,7 +482,17 @@ class MPaketsoal extends CI_Model {
 
 		$query = $this->db->get();
 
-		return $query->num_rows();
+		$result = $query->result_array();
+
+		  // You should use $q->num_rows() to detect the number of returned rows
+
+		if($query->num_rows() == 1) {
+
+			return $result[0];
+
+		}
+
+		return $result;
 	}
 
 

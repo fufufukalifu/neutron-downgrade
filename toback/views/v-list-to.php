@@ -60,13 +60,13 @@
 </div>
 
 <div class="form-group">
- <label class="col-sm-3 control-label">Publish</label>
- <div class="col-sm-8">
+ <label class="col-sm-3 control-label"></label>
+ <!-- <div class="col-sm-8">
   <div class="checkbox custom-checkbox">  
    <input type="checkbox" name="publish" id="to_publish" value="1">  
    <label for="to_publish" >&nbsp;&nbsp;</label>   
  </div>
-</div>
+</div> -->
 </div> 
 </div>
 <!-- END Modal Body -->

@@ -673,11 +673,27 @@ function tambahkansoal(){
   var idsoal = [];
   var idSubBab = $('#subBabId').val();
   var id_paket =$('#id_paket').val();
-
+  soal = cek_soal(id_paket);
+  console.log(soal);
+  if (soal>5) {
+      swal('lebih');
+    }
+    else{
+      swal('kurang');
+    }
+  
   $(':checkbox:checked').each(function(i){
    idsoal[i] = $(this).val();
  }); 
   if (idsoal.length > 0) {
+    
+    // if (cek_soal(id_paket)== true) {}
+    // if (soal!=true) {
+    //   swal('lebih');
+
+    // } else{
+    //   swal('kurang');
+    // }
     var url = base_url+"index.php/paketsoal/addsoaltopaket";
     $.ajax({
      url : url,
@@ -756,7 +772,7 @@ function drop_soal(id){
 }
 
 
-function cek_soal(){
+function cek_soal(id_paket){
   $.ajax({
    url : base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>,
    type: "POST",

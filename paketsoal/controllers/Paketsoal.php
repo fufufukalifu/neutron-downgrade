@@ -262,8 +262,10 @@ class paketsoal extends MX_Controller
 		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
 		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
 		$jumlah_soal_paket = $this->load->mpaketsoal->get_jumlah_soal($idpaket);
+		$jumlah_soal_paket1 = (int)$jumlah_soal_paket['idl'];
+		// echo json_encode($jumlah_soal_paket1);
 
-		if ($jumlah_soal>=$jumlah_soal_paket) {
+		if ($jumlah_soal>=$jumlah_soal_paket1) {
 			// gaboleh inputin
 			echo json_encode(false);
 		}else{
