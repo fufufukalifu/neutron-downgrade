@@ -263,15 +263,30 @@ class paketsoal extends MX_Controller
 		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
 		$jumlah_soal_paket = $this->load->mpaketsoal->get_jumlah_soal($idpaket);
 		$jumlah_soal_paket1 = (int)$jumlah_soal_paket['idl'];
+
 		// echo json_encode($jumlah_soal_paket1);
 
-		if ($jumlah_soal>=$jumlah_soal_paket1) {
-			// gaboleh inputin
-			echo json_encode(false);
+		if ($jumlah_soal_paket1<=$jumlah_soal) {
+			// soal masih bisa ditambah
+			echo json_encode('bisa');
 		}else{
-			// boleh inputin
-			echo json_encode(true);
+			// soal sudah diisi
+			echo json_encode('tidak');
 		}
+
+	}
+
+	function jumlah_soal($idpaket){
+		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
+		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
+		echo json_encode($jumlah_soal);
+
+	}
+
+	function jumlah_soal_paket($idpaket){
+		$jumlah_soal_paket = $this->load->mpaketsoal->get_jumlah_soal($idpaket);
+		$jumlah_soal_paket1 = (int)$jumlah_soal_paket['idl'];
+		echo json_encode($jumlah_soal_paket1);
 
 	}
 
@@ -288,6 +303,7 @@ class paketsoal extends MX_Controller
 			$data['panelheading'] = "Soal Untuk Paket soal ".$paket_soal['nm_paket'];
 			$data['id_paket']=$idpaket;
 			$data['tingkat_ID']=$paket_soal['tingkat_ID'];
+
 			
 			$data['files'] = array(
 				APPPATH.'modules/paketsoal/views/v-add-soal.php',

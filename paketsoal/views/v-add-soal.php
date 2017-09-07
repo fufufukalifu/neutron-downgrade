@@ -350,6 +350,7 @@
   //declare global variable
   console.log(base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>);
   var tblist_soal;
+  var id_paket =$('#id_paket').val();
 
   var list_soal;
 
@@ -358,7 +359,7 @@
 
   //##
 
-   if (tingkat_ID == 'SD') {
+  if (tingkat_ID == 'SD') {
     tingkatID = 1;
   }
   else if (tingkat_ID == 'SMP') {
@@ -573,7 +574,7 @@ $('.tambahsoal').click(function(){
 
  function load_pelajaran(tingkat_ID){
 
-  
+
    $.ajax({
 
     type: "POST",
@@ -664,36 +665,71 @@ function addsoal(subBabId){
 });
 }
 // ##
+var status_soal;
+check_jumlah_soal();
+
+// check jumlah soal yang ada dipaket
+function check_jumlah_soal(){
+  $.getJSON(base_url+"paketsoal/get_validasi/"+id_paket, function(data) {
+    return_status(data);
+  });
+}
+
+function return_status(data){
+ status_soal =  data;
+}
+
+
+var status_soal2;
+jumlah_soal();
+// check jumlah soal yang ada dipaket
+function jumlah_soal(){
+  $.getJSON(base_url+"paketsoal/jumlah_soal/"+id_paket, function(data) {
+    return_status2(data);
+  });
+}
+
+function return_status2(data){
+ status_soal2 =  data;
+}
+
+
+var status;
+jumlah_soal_paket();
+// check jumlah soal yang ada dipaket
+function jumlah_soal_paket(){
+  $.getJSON(base_url+"paketsoal/jumlah_soal_paket/"+id_paket, function(data) {
+    return_paket(data);
+  });
+}
+
+function return_paket(data){
+ status =  data;
+}
+
+
+
 
 
 
 //#menambahkan soal ke paket tertentu.
-
-function tambahkansoal(){
+function add_soal_to_paket(){
+  // jumlah_soal();
+  
   var idsoal = [];
   var idSubBab = $('#subBabId').val();
-  var id_paket =$('#id_paket').val();
-  soal = cek_soal(id_paket);
-  console.log(soal);
-  if (soal>5) {
-      swal('lebih');
-    }
-    else{
-      swal('kurang');
-    }
-  
+
   $(':checkbox:checked').each(function(i){
    idsoal[i] = $(this).val();
  }); 
-  if (idsoal.length > 0) {
-    
-    // if (cek_soal(id_paket)== true) {}
-    // if (soal!=true) {
-    //   swal('lebih');
 
-    // } else{
-    //   swal('kurang');
-    // }
+  cekinput = idsoal.length;
+  if (cekinput > status_soal2) {
+    swal('Data tidak boleh lebih dari jumlah soal');
+
+  }
+  else{
+    if (idsoal.length > 0) {
     var url = base_url+"index.php/paketsoal/addsoaltopaket";
     $.ajax({
      url : url,
@@ -718,6 +754,23 @@ function tambahkansoal(){
     $("#msg_s_soal").hide();
     $("#emptyinput_op").show();
   }
+
+  }
+
+
+  
+}
+
+//tambahkan soal
+function tambahkansoal(){
+  check_jumlah_soal();
+
+  // console.log(status_soal);
+  if (status_soal=='bisa') {
+    add_soal_to_paket();
+  }else{
+    swal('Paket soal sudah sesuai jumlah');
+  } 
 }
 
 //###
@@ -753,6 +806,7 @@ function reload_tblist(){
 //# Drop soal from paket.
 
 function drop_soal(id){
+  check_jumlah_soal();
   console.log(base_url+"index.php/paketsoal/dropsoalpaket/"+id);
   if(confirm('Are you sure delete this data?')){
     $.ajax({
@@ -772,12 +826,12 @@ function drop_soal(id){
 }
 
 
-function cek_soal(id_paket){
+function cek_soal(){
   $.ajax({
-   url : base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>,
+   url : base_url+"index.php/paketsoal/jumlah_soal/"+<?=$this->uri->segment(3) ?>,
    type: "POST",
    success: function(data){
-      console.log(data);
+    // console.log(data);
   } ,
   error: function (jqXHR, textStatus, errorThrown)
   {
