@@ -348,7 +348,7 @@
 
 
   //declare global variable
-  console.log(base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>);
+  // console.log(base_url+"index.php/paketsoal/get_validasi/"+<?=$this->uri->segment(3) ?>);
   var tblist_soal;
   var id_paket =$('#id_paket').val();
 
@@ -653,6 +653,8 @@ function loadsubbab(babID) {
 //# Load soal ke tabel yang belum ada
 
 function addsoal(subBabId){
+   jumlah_soal_paket();
+ console.log(status);
   var url = base_url+"index.php/paketsoal/ajax_unregistered_soal/"+paket+"/"+subBabId;
   console.log(url);
   list_soal = $('#oplistsoal').DataTable({ 
@@ -726,6 +728,9 @@ function add_soal_to_paket(){
   cekinput = idsoal.length;
   if (cekinput > status_soal2) {
     swal('Data tidak boleh lebih dari jumlah soal');
+  }
+  else if (status_soal2 == status){
+    swal('anda tidak dapat menambahkan soal lagi');
 
   }
   else{
@@ -744,6 +749,7 @@ function add_soal_to_paket(){
         $(':checkbox').attr('checked',false);
         $("#emptyinput_op").hide();
         $("#msg_s_soal").show();
+        jumlah_soal_paket();
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
@@ -762,18 +768,34 @@ function add_soal_to_paket(){
 }
 
 //tambahkan soal
-function tambahkansoal(){
-  check_jumlah_soal();
+// function tambahkansoal(){
+//   check_jumlah_soal();
 
-  // console.log(status_soal);
-  if (status_soal=='bisa') {
+//   // console.log(status_soal);
+//   if (status_soal=='bisa') {
+//     add_soal_to_paket();
+//   }else{
+//     swal('Paket soal sudah sesuai jumlah');
+//   } 
+// }
+
+//###
+
+
+function tambahkansoal(){
+  // check_jumlah_soal();
+  jumlah_soal();
+  jumlah_soal_paket();
+
+  console.log(status);
+  console.log(status_soal2);
+
+  if (status<=status_soal2) {
     add_soal_to_paket();
   }else{
     swal('Paket soal sudah sesuai jumlah');
   } 
 }
-
-//###
 
 
 
@@ -843,5 +865,6 @@ function cek_soal(){
 
 loadTingkat(tingkat_ID);
 load_pelajaran(tingkat_ID);
+console.log(status);
 cek_soal();
 </script>
