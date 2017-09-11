@@ -726,11 +726,13 @@ function add_soal_to_paket(){
  }); 
 
   cekinput = idsoal.length;
+  // pengecekan ketika input awal lebih dari jumlah soal yang ditentukan
   if (cekinput > status_soal2) {
-    swal('Data tidak boleh lebih dari jumlah soal');
+    swal('Soal tidak boleh lebih dari jumlah soal yang ditentukan ');
   }
-  else if (status_soal2 == status){
-    swal('anda tidak dapat menambahkan soal lagi');
+  // pengecekan ketika jumlah soal yang diiputkan lebih dari sama dengan jumlah soal yang ditentkan
+  else if (status >= status_soal2){
+    swal('Anda tidak dapat menambahkan soal lagi');
 
   }
   else{
@@ -768,20 +770,6 @@ function add_soal_to_paket(){
 }
 
 //tambahkan soal
-// function tambahkansoal(){
-//   check_jumlah_soal();
-
-//   // console.log(status_soal);
-//   if (status_soal=='bisa') {
-//     add_soal_to_paket();
-//   }else{
-//     swal('Paket soal sudah sesuai jumlah');
-//   } 
-// }
-
-//###
-
-
 function tambahkansoal(){
   // check_jumlah_soal();
   jumlah_soal();
@@ -793,11 +781,11 @@ function tambahkansoal(){
   if (status<=status_soal2) {
     add_soal_to_paket();
   }else{
-    swal('Paket soal sudah sesuai jumlah');
+    swal('Anda tidak dapat menambahkan soal lagi');
   } 
 }
 
-
+//###
 
 //#fungsi hide message empty
 function hide_msg_empty(){
@@ -828,7 +816,7 @@ function reload_tblist(){
 //# Drop soal from paket.
 
 function drop_soal(id){
-  check_jumlah_soal();
+  
   console.log(base_url+"index.php/paketsoal/dropsoalpaket/"+id);
   if(confirm('Are you sure delete this data?')){
     $.ajax({
@@ -837,6 +825,7 @@ function drop_soal(id){
      dataType: "TEXt",
      success: function(data)
      {
+      jumlah_soal_paket();
       reload_tblist();
     },
     error: function (jqXHR, textStatus, errorThrown)

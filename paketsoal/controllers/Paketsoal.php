@@ -257,7 +257,6 @@ class paketsoal extends MX_Controller
 	##
 
 	#menambahkan soal ada paket tertentu.
-
 	function get_validasi($idpaket){
 		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
 		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
@@ -275,20 +274,24 @@ class paketsoal extends MX_Controller
 		}
 
 	}
+	##
 
+	#mengambil jumlah soal paket yang telah ditentukan
 	function jumlah_soal($idpaket){
 		$paket_soal = $this->load->mpaketsoal->getpaket_by_id($idpaket);
 		$jumlah_soal = (int)$paket_soal['jumlah_soal'];
 		echo json_encode($jumlah_soal);
 
 	}
-
+	##
+	#mengambil jumlah soal yang telah diinputkan 
 	function jumlah_soal_paket($idpaket){
 		$jumlah_soal_paket = $this->load->mpaketsoal->get_jumlah_soal($idpaket);
 		$jumlah_soal_paket1 = (int)$jumlah_soal_paket['idl'];
 		echo json_encode($jumlah_soal_paket1);
 
 	}
+	##
 
 	function addbanksoal( $idpaket ) {
 
