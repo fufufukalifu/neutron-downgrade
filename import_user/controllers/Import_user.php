@@ -84,9 +84,10 @@
  			$tgl_lahir=date("Y-m-d",$parse_tgl);
  			//data pengguna
  			$uuid=uniqid();
+ 			$kataSandi=$key["noIndukNeutron"].$tgl;
  			$dat_pengguna[]=array(
  				'namaPengguna'=> $key["noIndukNeutron"],
- 				'kataSandi'=>$key["noIndukNeutron"].$tgl,
+ 				'kataSandi'=>md5($kataSandi),
  				'eMail'=> $key["eMail"],
  				'hakAkses'=>'guru',
  				'uuid_user'=>$uuid);
@@ -101,7 +102,7 @@
  				'noKontakSekolah'=>$key['noKontakSekolah'],
 				'noIndukNeutron'=>$key['noIndukNeutron'],
 				'cabangID' => $cabangID,
-				'tingkatID' => 14,
+				'tingkatID' => $key["tingkatID"],
  				);
  			$uuid_arr[]=array(
  				'uuid_user'=>$uuid);
@@ -128,10 +129,5 @@
  	public function set_ortu_batch()
  	{
  		# code...
- 	}
-
- 	public function cek($value='')
- 	{
- 		phpinfo();
  	}
  } ?>
