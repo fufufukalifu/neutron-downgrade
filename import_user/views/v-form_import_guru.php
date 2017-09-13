@@ -3,11 +3,11 @@
 		<div class="col-md-12">
 			<div class="panel panel-teal">
 				<div class="panel-heading">
-					<h3 class="panel-title">Export Data Excel Siswa</h3>
+					<h3 class="panel-title">Export Data Excel Guru</h3>
 					<!-- dropdown cabang -->
 					<div class="panel-toolbar text-right">
 						<div class="btn-group">
-							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
+							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_guru.xlsx" rel="nofollow">Template Excel Guru</a>
 						</div>
 					</div>
 					<!-- / dropdown cabang -->
@@ -19,14 +19,6 @@
 							<form class="form">
 								<div class="form-group">
 									<div class="input-group">
-										<!-- <button type="button" class="btn btn-sm btn-default">Pilih Cabang</button> -->
-										<!-- <input  class="form-control" type="file" name="dat_excel" id="xlf"> -->
-										<div class="col-sm-2  mt10	">
-											<select  class="form-control" name="cabangID" id="op_cabang">
-												<!-- <option value="10" selected="true">records per page</option> -->
-												<option >Pilih Cabang</option>
-											</select>
-										</div>
 										<div class="col-sm-6 mt10" id="div_input">
 											<label for="xlf" class="btn btn-sm btn-default">
 												Upload File Excel
@@ -56,16 +48,13 @@
 								<thead>
 									<tr>
 										<th>No</th>
-										<th>No Induk neutron</th>
 										<th>Nama Depan</th>
 										<th>Nama Belakang</th>
 										<th>Alamat</th>
 										<th>Tanggal Lahr</th>
 										<th>Email</th>
 										<th>No Kontak</th>
-										<th>Nama Sekolah</th>
-										<th>Alamat Sekolah</th>
-										<th>No Kontak Sekolah</th>
+										
 									</tr>
 								</thead>
 								<tbody>
@@ -74,16 +63,12 @@
 							<tfoot>
 								<tr>
 										<th>No</th>
-										<th>No Induk neutron</th>
 										<th>Nama Depan</th>
 										<th>Nama Belakang</th>
 										<th>Alamat</th>
 										<th>Tanggal Lahr</th>
 										<th>Email</th>
 										<th>No Kontak</th>
-										<th>Nama Sekolah</th>
-										<th>Alamat Sekolah</th>
-										<th>No Kontak Sekolah</th>
 									</tr>
 							</tfoot>
 							</table>
@@ -104,24 +89,11 @@
 <!-- /Script ajax upload -->
 <script type="text/javascript">
 	var datImport;
-	var cabangID='';
 	var valid_post=false;
 $(document).ready(function(){
 	$("#btn-import").click(function(){
-			if (cabangID != '' && cabangID != ' ') {
 			post_import_user();
-				swal("bbb","Siss", "success");
-			}else{
-				swal("Oops","Silahkan Pilih Cabang", "error");
-			}
-		
-		
 	});
-
-	$("select[name=cabangID]").change(function(){
-		cabangID=$("select[name=cabangID]").val();
-	});
-
 	set_op_cabang();
 });
 
@@ -207,7 +179,7 @@ function upload_data_xlsx(){
 			} else {
 				show_tb_preview();
 				 $.each(datImport, function (key, val) {
-        records_tb [i] = [no,val.noIndukNeutron,val.namaDepan,val.namaBelakang,val.alamat,val.tgl_lahir,val.eMail,val.noKontak,val.namaSekolah,val.alamatSekolah,val.noKontakSekolah];
+        records_tb [i] = [no,val.namaDepan,val.namaBelakang,val.alamat,val.tgl_lahir,val.eMail,val.noKontak];
         no++;
          i++;
     		});
@@ -220,8 +192,8 @@ function upload_data_xlsx(){
 	}
 
 	function post_import_user(){
-		var url=base_url+"import_user/set_siswa_batch";
-		var datas={datImport:datImport,cabangID:cabangID};
+		var url=base_url+"import_user/set_guru_batch";
+		var datas={datImport:datImport};
 		$.ajax({
 			url:url,
 			data:datas,
@@ -274,7 +246,6 @@ function upload_data_xlsx(){
 		$("#div_reset").removeClass("hide");
 	}
 	function reset_form_xlsx() { 
-		var datImport='';
 		$("#name_tb").empty();
 		$("#record_priview tbody tr").remove();
 		$("#btn-import").attr("disabled", true);

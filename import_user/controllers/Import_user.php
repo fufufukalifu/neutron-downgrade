@@ -37,6 +37,23 @@
 		}
  	}
 
+ 	 public function f_import_guru()
+ 	{	
+		$data['judul_halaman'] = "Form Import Guru";
+		$data['files'] = array(
+			APPPATH . 'modules/Import_user/views/v-form_Import_guru.php',
+			);
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+		if ($hakAkses == 'admin') {
+			$this->parser->parse('admin/v-index-admin', $data);
+		} elseif ($hakAkses == 'guru') {
+			redirect(site_url('guru/dashboard/'));
+		} elseif ($hakAkses == 'siswa') {
+			redirect(site_url('welcome'));
+		} else {
+			redirect(site_url('login'));
+		}
+ 	}
  	public function get_cabang()
  	{
  		$arr_cabang=$this->Import_user_model->select_cabang();
@@ -89,7 +106,7 @@
  				'namaPengguna'=> $key["noIndukNeutron"],
  				'kataSandi'=>md5($kataSandi),
  				'eMail'=> $key["eMail"],
- 				'hakAkses'=>'guru',
+ 				'hakAkses'=>'siswa',
  				'uuid_user'=>$uuid);
 
  			$dat_siswa_excel[]=array(
@@ -119,15 +136,55 @@
 
  		// simpan data Siswa
  		$this->Import_user_model->myinsert_batch($dat_siswa,"tb_siswa");
- 		echo json_encode("berhasil masuk ke controller");
+ 		echo json_encode("Data siswa berhasil di tambahkan");
  	}
 
- 	public function set_pengguna_batch()
+ 	public function set_guru_batch()
  	{
- 		# code...
+ 		$post=$this->input->post();
+ 		$datArr=$post["datImport"];
+ 		$dat_siswa=array();
+ 		$dat_pengguna=array();
+ 		$dat_siswa=array();
+ 		foreach ($datArr as $key ) {
+ 			$parse_tgl=strtotime($key['tgl_lahir']);
+ 			$tgl=date("d",$parse_tgl);
+ 			$tgl_lahir=date("Y-m-d",$parse_tgl);
+ 			//data pengguna
+ 			$uuid=uniqid();
+ 			$dat_pengguna[]=array(
+ 				'namaPengguna'=> $key['namaDepan'],
+ 				'kataSandi'=>md5($key['namaDepan']),
+ 				'eMail'=> $key["eMail"],
+ 				'hakAkses'=>'guru',
+ 				'uuid_user'=>$uuid);
+
+ 			$dat_guru_excel[]=array(
+ 				'namaDepan'=>$key['namaDepan'],
+ 				'namaBelakang'=>$key['namaBelakang'],
+ 				'alamat' => $key['alamat'],
+ 				'tgl_lahir' => $tgl_lahir,
+ 				'noKontak' => $key['noKontak'],
+ 				'biografi' => $key['biografi'],
+ 				
+ 				);
+ 			$uuid_arr[]=array(
+ 				'uuid_user'=>$uuid);
+ 		}
+ 		// simpan data pengguna
+ 		$this->Import_user_model->myinsert_batch($dat_pengguna,"tb_pengguna");
+ 		//get id pengguna yg baru di insert
+ 		 $dat_pengguna_ID=$this->Import_user_model->myselect_batch($uuid_arr);
+ 		 $length_dat_pengguna_ID=count($dat_pengguna_ID);
+ 		 //merge array dat_siswa_excel dengan array dat_pengguna_ID
+ 		 for ($i=0; $i < $length_dat_pengguna_ID ; $i++) { 
+ 		 	$dat_guru[]=array_merge_recursive($dat_guru_excel[$i],$dat_pengguna_ID[$i]);
+ 		 }
+
+ 		// simpan data Siswa
+ 		$this->Import_user_model->myinsert_batch($dat_guru,"tb_guru");
+ 		echo json_encode("Data guru berhasil di tambahkan");
  	}
- 	public function set_ortu_batch()
- 	{
- 		# code...
- 	}
+
+
  } ?>
