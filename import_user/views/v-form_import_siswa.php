@@ -1,7 +1,9 @@
 <section id="main">
 	<div class="row">
 		<div class="col-md-12">
+		<!-- panel -->
 			<div class="panel panel-teal">
+				<!-- header panel -->
 				<div class="panel-heading">
 					<h3 class="panel-title">Export Data Excel Siswa</h3>
 					<!-- dropdown cabang -->
@@ -12,89 +14,90 @@
 					</div>
 					<!-- / dropdown cabang -->
 				</div>
+				<!-- /header panel -->
+				<!-- panel body -->
 				<div class="panel-body">
-					<div>
+					<div class="row">
 						<!-- div form input file excel -->
 						<div class="col-md-12">
 							<form class="form">
 								<div class="form-group">
-									<div class="input-group">
-										<!-- <button type="button" class="btn btn-sm btn-default">Pilih Cabang</button> -->
-										<!-- <input  class="form-control" type="file" name="dat_excel" id="xlf"> -->
-										<div class="col-sm-2  mt10	">
-											<select  class="form-control" name="cabangID" id="op_cabang">
-												<!-- <option value="10" selected="true">records per page</option> -->
-												<option >Pilih Cabang</option>
-											</select>
-										</div>
-										<div class="col-sm-6 mt10" id="div_input">
-											<label for="xlf" class="btn btn-sm btn-default">
-												Upload File Excel
-											</label>
-											<input id="xlf" style="display:none;" type="file" name="dat_excel" onchange="Validate_xlsx(this);">
-										</div>
-										<div class="col-sm-6 mt10 hide" id="div_reset">
-												<label class="btn btn-sm btn-danger " onclick="reset_file()" id="reset_file">Reset File Excel</label>
-										</div>
+									<div class="col-sm-2  mt10	">
+										<select  class="form-control" name="cabangID" id="op_cabang">
+											<option >Pilih Cabang</option>
+										</select>
+									</div>
+									<div class="col-sm-6 mt10" id="div_input">
+										<label for="xlf" class="btn btn-sm btn-default">
+											Upload File Excel
+										</label>
+										<input id="xlf" style="display:none;" type="file" name="dat_excel" onchange="Validate_xlsx(this);">
+									</div>
+									<div class="col-sm-6 mt10 hide" id="div_reset">
+										<label class="btn btn-sm btn-danger " onclick="reset_file()" id="reset_file">Reset File Excel</label>
 									</div>
 								</div>
 							</form>
 						</div>
-						<!-- div priview data exporter-->
-
-						<div class="col-md-12" id="empty_tabel">
+						<!-- info div  -->
+							<div class="col-md-12 mt10" id="empty_tabel">
 							<div class="panel panel-default" style="border: 1px dashed #82C8D4;">
 								<div class="panel-body">
 									<h3 class="text-center">Priview data excel</h3>
 								</div>
 							</div>
 						</div>
-						<!-- div tabel priview data excel -->
+						<!-- info div  -->
+						<!-- div priview data exporter-->
 						<div class="col-md-12" id="priview_tabel" hidden="true">
-							<h3 class="" id="name_tb"></h3>
-							<table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100% id="record_priview">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>No Induk neutron</th>
-										<th>Nama Depan</th>
-										<th>Nama Belakang</th>
-										<th>Alamat</th>
-										<th>Tanggal Lahr</th>
-										<th>Email</th>
-										<th>No Kontak</th>
-										<th>Nama Sekolah</th>
-										<th>Alamat Sekolah</th>
-										<th>No Kontak Sekolah</th>
-									</tr>
-								</thead>
-								<tbody>
-									
-								</tbody>
+						<h3 class="" id="name_tb"></h3>
+						<table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100% id="record_priview">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>No Induk neutron</th>
+									<th>Nama Depan</th>
+									<th>Nama Belakang</th>
+									<th>Alamat</th>
+									<th>Tanggal Lahr</th>
+									<th>Email</th>
+									<th>No Kontak</th>
+									<th>Nama Sekolah</th>
+									<th>Alamat Sekolah</th>
+									<th>No Kontak Sekolah</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
 							<tfoot>
 								<tr>
-										<th>No</th>
-										<th>No Induk neutron</th>
-										<th>Nama Depan</th>
-										<th>Nama Belakang</th>
-										<th>Alamat</th>
-										<th>Tanggal Lahr</th>
-										<th>Email</th>
-										<th>No Kontak</th>
-										<th>Nama Sekolah</th>
-										<th>Alamat Sekolah</th>
-										<th>No Kontak Sekolah</th>
-									</tr>
+									<th>No</th>
+									<th>No Induk neutron</th>
+									<th>Nama Depan</th>
+									<th>Nama Belakang</th>
+									<th>Alamat</th>
+									<th>Tanggal Lahr</th>
+									<th>Email</th>
+									<th>No Kontak</th>
+									<th>Nama Sekolah</th>
+									<th>Alamat Sekolah</th>
+									<th>No Kontak Sekolah</th>
+								</tr>
 							</tfoot>
-							</table>
+						</table>
 						</div>
-						<!-- div tabel priview data excel -->
+						<!-- //div priview data exporter -->
 					</div>
 				</div>
+				<!-- panel body -->
+				<!-- panel footer -->
 				<div class="panel-footer">
 					<button class="btn btn-sm btn-primary" id="btn-import" disabled="true">Import Data</button>
 				</div>
+				<!-- panel footer -->
 			</div>
+			<!-- /panel -->
 		</div>
 	</div>
 </section>
@@ -106,6 +109,7 @@
 	var datImport;
 	var cabangID='';
 	var valid_post=false;
+	var datExcel=' ';
 $(document).ready(function(){
 	$("#btn-import").click(function(){
 			if (cabangID != '' && cabangID != ' ') {
@@ -159,8 +163,14 @@ function upload_data_xlsx(){
 		dataType: "text",
 		success:function(Data){
 			var ob_data=JSON.parse(Data);
-			 read_data_xlsx(ob_data);
+			if (ob_data.status_upload===true) {
+				datExcel=ob_data;
+				read_data_xlsx(ob_data.url_file);
 			 valid_post=true;
+			} else {
+
+			}
+			
 		},
 		error:function(){
 			console.log("ada kesalahan");
@@ -287,6 +297,21 @@ function upload_data_xlsx(){
 	}
 
 	function reset_file() {
-		reset_form_xlsx();
+	
+		var url_file=datExcel.url_file;
+			console.log(url_file);
+		var url_unlink = base_url+"import_user/unlink_xlsx";
+		$.ajax({
+			url : url_unlink,
+			type: "post",
+			data: {url_file:url_file},
+			dataType: "text",
+			success:function(){
+				reset_form_xlsx();
+		},
+		});
+		
+
+
 	}
 </script>

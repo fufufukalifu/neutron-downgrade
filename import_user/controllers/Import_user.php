@@ -69,22 +69,25 @@
  		$config['encrypt_name'] = TRUE;
  		$new_name = time().$_FILES[$dat_excel]['name'];
  		$config['file_name'] = $new_name;
-
  		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
-
   		// pengecekan upload
  		if (!$this->upload->do_upload($dat_excel)) {
 			$nama_file="gagal";
  		} else {
  			 $file_data = $this->upload->data();
- 			$nama_file=$file_data['file_name'];
+ 			 $url_file =$file_data['file_name'];
+ 			$nama_file=$_FILES[$dat_excel]['name'];
  			$data["nama_file"]=$nama_file;
- 			$data["url_file"]=$_FILES[$dat_excel]['name'];
+ 			$data["url_file"]=$url_file;
  			$this->Import_user_model->in_file_excel($data);
+
+ 			$datExcel["nama_file"]=$nama_file;
+ 			$datExcel["url_file"]=$url_file;
+ 			$datExcel["status_upload"]=true;
  		}
- 		// $datCabang=$this->
- 		echo json_encode($nama_file);
+
+ 		echo json_encode($datExcel);
  	}
  	public function set_siswa_batch()
  	{
@@ -108,7 +111,6 @@
  				'eMail'=> $key["eMail"],
  				'hakAkses'=>'siswa',
  				'uuid_user'=>$uuid);
-
  			$dat_siswa_excel[]=array(
  				'namaDepan'=>$key['namaDepan'],
  				'namaBelakang'=>$key['namaBelakang'],
@@ -186,5 +188,55 @@
  		echo json_encode("Data guru berhasil di tambahkan");
  	}
 
+
+ 	public function unlink_xlsx()
+ 	{
+ 		$url_file=$this->input->post("url_file");
+ 		  unlink(FCPATH . "assets/excel/" . $url_file);
+ 		$config_del['mytable']="tb_bup_import_excel";
+ 		$config_del['key_condition']="url_file";
+ 		$config_del['val_condition']=$url_file;
+ 		$this->Import_user_model->del_one_record($config_del);
+ 	}
+
+ 	public function rollback_import()
+ 	{
+ 		$data['judul_halaman'] = "Rollback Import";
+		$data['files'] = array(
+			APPPATH . 'modules/Import_user/views/v-rollback_import.php',
+			);
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+		if ($hakAkses == 'admin') {
+			$this->parser->parse('admin/v-index-admin', $data);
+		} elseif ($hakAkses == 'guru') {
+			redirect(site_url('guru/dashboard/'));
+		} elseif ($hakAkses == 'siswa') {
+			redirect(site_url('welcome'));
+		} else {
+			redirect(site_url('login'));
+		}
+ 	}
+
+ 	public function validasi_rollback()
+ 	{	
+ 		$date=date("d");
+ 		$post=$this->input->post();
+ 		$penggunaID=$this->session->userdata['id'];
+ 		$post_kodevalidasi=md5($post["kode_validasi"]).$date;
+ 		$kode_validasi=$this->Import_user_model->get_katasandi($penggunaID)[0]->kataSandi.$date;
+ 		if ($post_kodevalidasi==$kode_validasi) {
+ 			$count_row=$this->Import_user_model->count_row_pengguna($post);
+ 			if ($count_row==0) {
+ 				$dat_retrun["msg"]="false2";
+
+ 			} else {
+	 			$dat_retrun["msg"]="true";
+	 			$x=$this->Import_user_model->del_import($post);
+ 			}
+ 		} else {
+ 			$dat_retrun["msg"]="false1";
+ 		}
+ 		echo json_encode($dat_retrun);
+ 	}
 
  } ?>

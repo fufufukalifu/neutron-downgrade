@@ -36,4 +36,42 @@
  {
  	$this->db->insert("tb_bup_import_excel",$data);
  }
+
+ public function del_one_record($config_del)
+ {
+ 	$mytable=$config_del["mytable"];
+ 	$key_condition=$config_del['key_condition'];
+ 	$val_condition=$config_del['val_condition'];
+	$this->db->where($key_condition, $val_condition);
+	$this->db->delete($mytable); 
+ }
+
+ public function get_katasandi($penggunaID)
+ {
+ 	$this->db->where("id",$penggunaID);
+ 	$this->db->select("kataSandi");
+ 	$this->db->from("tb_pengguna");
+ 	$query=$this->db->get();
+ 	return $query->result();
+ }
+
+ public function del_import($post)
+ {
+ 	$this->db->where('regTime >=', $post["tanggal_mulai"]);
+ 	$this->db->where('regTime <=', $post["tanggal_akhir"]);
+
+ 	$this->db->where("hakAkses",$post["hakakses"]);
+
+ 	$this->db->delete("tb_pengguna");
+ }
+
+ public function count_row_pengguna($post)
+ {
+ 	 	$this->db->where('regTime >=', $post["tanggal_mulai"]);
+ 	$this->db->where('regTime <=', $post["tanggal_akhir"]);
+ 	$this->db->where("hakAkses",$post["hakakses"]);
+ 	return $this->db->get("tb_pengguna")->num_rows();
+
+ }
+
  } ?>

@@ -89,7 +89,9 @@
 <!-- /Script ajax upload -->
 <script type="text/javascript">
 	var datImport;
+	var cabangID='';
 	var valid_post=false;
+	var datExcel=' ';
 $(document).ready(function(){
 	$("#btn-import").click(function(){
 			post_import_user();
@@ -131,7 +133,8 @@ function upload_data_xlsx(){
 		dataType: "text",
 		success:function(Data){
 			var ob_data=JSON.parse(Data);
-			 read_data_xlsx(ob_data);
+			datExcel=ob_data;
+			 read_data_xlsx(ob_data.url_file);
 			 valid_post=true;
 		},
 		error:function(){
@@ -246,6 +249,7 @@ function upload_data_xlsx(){
 		$("#div_reset").removeClass("hide");
 	}
 	function reset_form_xlsx() { 
+			var datImport='';
 		$("#name_tb").empty();
 		$("#record_priview tbody tr").remove();
 		$("#btn-import").attr("disabled", true);
@@ -258,6 +262,19 @@ function upload_data_xlsx(){
 	}
 
 	function reset_file() {
-		reset_form_xlsx();
+	
+		var url_file=datExcel.url_file;
+			console.log(url_file);
+		var url_unlink = base_url+"import_user/unlink_xlsx";
+		$.ajax({
+			url : url_unlink,
+			type: "post",
+			data: {url_file:url_file},
+			dataType: "text",
+			success:function(){
+				reset_form_xlsx();
+		},
+		});
 	}
+		
 </script>
