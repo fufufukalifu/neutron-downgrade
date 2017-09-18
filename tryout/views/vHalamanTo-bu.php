@@ -29,7 +29,6 @@
   margin-left: 27px;
   margin-top: 4px;
 }
-
 #flex-item {
   float:left;
   width: 48px;
@@ -37,10 +36,7 @@
   /*margin: 1px;*/
   padding: 2px;
   margin-top: 12px; 
-
 }
-
-
 #lihatStatus{
   /*position: fixed;*/
   /*top: 0;*/
@@ -64,59 +60,46 @@
   padding: 5px;
   /*position: absolute;*/
 }
-
 label > input{ /* HIDE RADIO */
   visibility: hidden;  
   position: absolute; /* Remove input from document flow */
 }
-
 label:hover{ /* HIDE RADIO */
   background-color: #63d3e9;
 }
-
 .terpilih{
   background-color: #63d3e9;
 }
-
 .modal-dialog {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
 }
-
 .modal-content {
   height: auto;
   height: 100%;
   min-height: 100%;
   border-radius: 0;
 }
-
 </style>
 <!-- START Body -->
 
 <body class="bgcolor-white">
   <div class="se-pre-con">
-    <!-- Mohon tunggu, sedang meload tryout... -->
   </div>
   <!-- START Template Main -->
   <script src="<?= base_url('assets/js/bjqs-1.10.js') ?>"></script>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
      $('#my-slideshow').bjqs({
-//                'height': 400,
-                // 'width': 600,
-                // 'responsive': false
-              });
+     });
    });
-
-
     $(window).load(function() {
     // Animate loader off screen
     $(".se-pre-con").fadeOut("slow");;
   });
 </script>
-
 
 
 
@@ -158,21 +141,8 @@ label:hover{ /* HIDE RADIO */
     <p class="title font-alt">Tryout Online 
     </p>
     <?php foreach ($topaket as $key): ?>
-     <div class="text-center"><div style="font-size:20px;"><?= $key['namato'] ?>/<?= $key['namapa'] ?></div></div>
+     <div class="text-center"><div style="font-size:20px;"><span class="text-info jenis_penilaian"><?= $key['jenis_penilaian'] ?></span>: <?= $key['namato'] ?>/<?= $key['namapa'] ?></div></div>
    <?php endforeach ?>
-
-   <!-- info untuk soal -->
-     <!-- <div class="col-md-12 animation animating pulse pesan-jawaban">
-      <div class="alert alert-success fade in">
-       <a type="button" class="close" onclick="close_info_jawaban()" aria-hidden="true">×</a>
-       <center>
-        <h4 class="semibold">Jawaban Anda</h4>
-        <h4 class="mb10 notif-jawaban" id="MathOutput">$${}$$</h4>
-        <h4 class="mb10 notif-jawaban" id="box" style="visibility:hidden"></h4>
-      </div>
-    </div> -->
-    <!-- info untuk soal -->
-
   </div>
 </section>
 <!--/ END page header -->
@@ -181,7 +151,7 @@ label:hover{ /* HIDE RADIO */
 <section class="section bgcolor-white">
  <div class="container-fluid">
   <div class="row">
-   <div class="col-md-10 col-md-offset-1">
+   <div class="col-md-12">
     <form action="<?= base_url('index.php/tryout/cekjawaban') ?>" method="post" id="hasil">
      <div class="col-md-8" style="margin-bottom:30">
 
@@ -197,14 +167,10 @@ label:hover{ /* HIDE RADIO */
              <!-- <h1>Selamat datang</h1> -->
              <div class="row">
               <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
-
               <div class="col-md-2"></div>
               <div class="col-md-6 text-right" style="margin-top:5">
-               <a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp
+               <a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>
                <a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a>&nbsp&nbsp&nbsp
-               <!-- JANGAN DIHAPUS, TOMBOL LIHAT JAWABAN -->
-               <!-- <a class="btn btn-sm btn-success" onclick="lihatJawaban('<?= $key['soalid']?>')">Lihat jawaban</a> -->
-               <!-- JANGAN DIHAPUS, TOMBOL LIHAT JAWABAN -->
              </div>
            </div>
          </div>
@@ -230,13 +196,11 @@ label:hover{ /* HIDE RADIO */
 
 
 
-<div class="col-md-11">
-             <?php $gambar=$key['gambar']; ?>
+             <div class="col-md-11">
+               <?php $gambar=$key['gambar']; ?>
                <?php if (!empty($gambar) && $gambar!="" && $gambar!=' ') { ?>  
-
                <img src="<?= base_url('./assets/image/soal/' . $gambar) ?>">   
                <?php } ?>
-
                <h5><?= $key['soal'] ?></h5>
                <br>
              </div>  
@@ -284,7 +248,7 @@ label:hover{ /* HIDE RADIO */
                  <?php if (empty($row['pilgam'])) {
                    echo '';
                  } else { ?>
-                 <img style='max-height: 90px' src="<?= base_url('./assets/image/jawaban/' . $row['pilgam']) ?>">
+                 <img src="<?= base_url('./assets/image/jawaban/' . $row['pilgam']) ?>">
                  <?php } ?>
                  <!-- INDEX PILIHAN KALO ADA GAMBAR-->
 
@@ -315,11 +279,11 @@ $nosoal++;
 </div>
 <div style="margin-left:40">
  <div class="col-md-6">
-  <button class="btn btn-info btn-block" id="btnPrev">Sebelumnya</button>
+  <button class="btn btn-info btn-block" id="btnPrev"><i class="ico ico-arrow-left2"></i> Soal Sebelumnya </button>
   <!--<button type="button" class="btn btn-primary btn-block">Selanjutnya</button>-->
 </div>
 <div class="col-md-6"> 
-  <button class="btn btn-info btn-block" id="btnNext">Selanjutnya</button>
+  <button class="btn btn-info btn-block" id="btnNext"> Soal Selanjutnya <i class="ico ico-arrow-right22"></i></button>
   <!--<button type="button" class="btn btn-teal btn-block">Sebelumnya</button>-->
 </div>
 </div>
@@ -332,7 +296,7 @@ $nosoal++;
    <div class="panel-heading">
     <div class="row">
      <!--<div class="text-center"><h4>Lembar Jawaban</h4></div>-->
-     <div class="text-center"> <h4><span id="timer"></span></h4></div>
+     <div class="text-center"> <h4>Sisa Waktu <span id="timer"></span></h4></div>
      <input type="text" hidden="true" id="durasi" value="" name="durasi" />
    </div>
  </div>
@@ -397,33 +361,25 @@ $nosoal++;
    $(".jwb" + id).html($('input[id="' + id + '"]:checked').val()[1]);
    $('a[alt="' + id + '"]').css({"background-color": "#5bc0de", "color": "#fff", "border": "none"});
  }
-
  function raguColor(id) {
    $('a[alt="' + id + '"]').css({"background-color": "#ffd66a", "color": "#fff", "border": "none"});
  }
-
-
  function bataljawab(idsoal,idpil,grouppil){
    clearRadioGroup(idsoal);
    clearpiljaw(idpil,grouppil);
  }
-
-
  function clearRadioGroup(GroupName)
  {
    var ele = document.getElementsByName(GroupName);
    for(var i=0;i<ele.length;i++)
     ele[i].checked = false;
 }
-
 function clearpiljaw(id,groupname){
  $(".jwb" + id).html("");
  $('a[alt="' + id + '"]').css({"background-color": "#fff", "color": "#00b1e1", "border": "1px solid #63d3e9"});
  $('label[alt="' + groupname + '"]').removeClass( "terpilih" );
 }
-
 function changeColor(data){
-  console.log(data);
   $('label[alt="' + data.soalid + '"]').removeClass( "terpilih" );
   var d = document.getElementById(data.value);
   d.className = "terpilih";
@@ -432,8 +388,6 @@ function changeColor(data){
    backup_jawaban = {id:data.soalid,pilihan:pilihan_jawaban};
    localStorage.setItem('soal-'+data.soalid, JSON.stringify(backup_jawaban));
  }
-
-
   // lihat jawaban yang sudah di jawab Sebelumnya
   function lihatJawaban(data){
    //ambil local storage berdasarkan id soal
@@ -443,12 +397,10 @@ function changeColor(data){
     // kalo ada masukin ke notif jawaban sebelumna
     backup = JSON.parse(retrievedObject);
     var pilihan = backup.pilihan;
-
     // kalo di str nya ada delimeter
     if(~pilihan.indexOf("$")){
       //kalo ada render ke mathjax
       backup_replace = pilihan.replace(/\$/g, '');
-
       // jalan kan fungsi render
       UpdateMath(backup_replace);
     }else{
@@ -460,32 +412,24 @@ function changeColor(data){
     swal("Anda Belum Menjawab Soal ini!");
   }
 }
-
 function close_info_jawaban(){
   $('.pesan-jawaban').toggle();
 }
-
 function allStorage() {
-
   var values = [],
   keys = Object.keys(localStorage),
   i = keys.length;
-
   while ( i-- ) {
     values.push( localStorage.getItem(keys[i]) ); 
   }
-
   return values;
 }
-
   // lihat jawaban yang sudah di jawab Sebelumnya
   function show_storage(data){
-    console.log(data);
     $.each( data, function( key, value ) {
      backup = JSON.parse(value);
      $('span.soal-'+backup.id).html("Jawaban Sebelumnya : "+backup.pilihan);
    });
   }
-
   show_storage(allStorage());
 </script>
