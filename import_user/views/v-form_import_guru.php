@@ -1,103 +1,85 @@
 <section id="main">
 	<div class="row">
 		<div class="col-md-12">
-		<!-- panel -->
 			<div class="panel panel-teal">
-				<!-- header panel -->
 				<div class="panel-heading">
-					<h3 class="panel-title">Export Data Excel Siswa</h3>
+					<h3 class="panel-title">Export Data Excel Guru</h3>
 					<!-- dropdown cabang -->
 					<div class="panel-toolbar text-right">
 						<div class="btn-group">
-							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
+							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_guru.xlsx" rel="nofollow">Template Excel Guru</a>
 						</div>
 					</div>
 					<!-- / dropdown cabang -->
 				</div>
-				<!-- /header panel -->
-				<!-- panel body -->
 				<div class="panel-body">
-					<div class="row">
+					<div>
 						<!-- div form input file excel -->
 						<div class="col-md-12">
 							<form class="form">
 								<div class="form-group">
-									<div class="col-sm-2  mt10	">
-										<select  class="form-control" name="cabangID" id="op_cabang">
-											<option >Pilih Cabang</option>
-										</select>
-									</div>
-									<div class="col-sm-6 mt10" id="div_input">
-										<label for="xlf" class="btn btn-sm btn-default">
-											Upload File Excel
-										</label>
-										<input id="xlf" style="display:none;" type="file" name="dat_excel" onchange="Validate_xlsx(this);">
-									</div>
-									<div class="col-sm-6 mt10 hide" id="div_reset">
-										<label class="btn btn-sm btn-danger " onclick="reset_file()" id="reset_file">Reset File Excel</label>
+									<div class="input-group">
+										<div class="col-sm-6 mt10" id="div_input">
+											<label for="xlf" class="btn btn-sm btn-default">
+												Upload File Excel
+											</label>
+											<input id="xlf" style="display:none;" type="file" name="dat_excel" onchange="Validate_xlsx(this);">
+										</div>
+										<div class="col-sm-6 mt10 hide" id="div_reset">
+												<label class="btn btn-sm btn-danger " onclick="reset_file()" id="reset_file">Reset File Excel</label>
+										</div>
 									</div>
 								</div>
 							</form>
 						</div>
-						<!-- info div  -->
-							<div class="col-md-12 mt10" id="empty_tabel">
+						<!-- div priview data exporter-->
+
+						<div class="col-md-12" id="empty_tabel">
 							<div class="panel panel-default" style="border: 1px dashed #82C8D4;">
 								<div class="panel-body">
 									<h3 class="text-center">Priview data excel</h3>
 								</div>
 							</div>
 						</div>
-						<!-- info div  -->
-						<!-- div priview data exporter-->
+						<!-- div tabel priview data excel -->
 						<div class="col-md-12" id="priview_tabel" hidden="true">
-						<h3 class="" id="name_tb"></h3>
-						<table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100% id="record_priview">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th>No Induk neutron</th>
-									<th>Nama Depan</th>
-									<th>Nama Belakang</th>
-									<th>Alamat</th>
-									<th>Tanggal Lahr</th>
-									<th>Email</th>
-									<th>No Kontak</th>
-									<th>Nama Sekolah</th>
-									<th>Alamat Sekolah</th>
-									<th>No Kontak Sekolah</th>
-								</tr>
-							</thead>
-							<tbody>
-
-							</tbody>
+							<h3 class="" id="name_tb"></h3>
+							<table class="table table-striped display responsive nowrap" style="font-size: 13px" width=100% id="record_priview">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Nama Depan</th>
+										<th>Nama Belakang</th>
+										<th>Alamat</th>
+										<th>Tanggal Lahr</th>
+										<th>Email</th>
+										<th>No Kontak</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
 							<tfoot>
 								<tr>
-									<th>No</th>
-									<th>No Induk neutron</th>
-									<th>Nama Depan</th>
-									<th>Nama Belakang</th>
-									<th>Alamat</th>
-									<th>Tanggal Lahr</th>
-									<th>Email</th>
-									<th>No Kontak</th>
-									<th>Nama Sekolah</th>
-									<th>Alamat Sekolah</th>
-									<th>No Kontak Sekolah</th>
-								</tr>
+										<th>No</th>
+										<th>Nama Depan</th>
+										<th>Nama Belakang</th>
+										<th>Alamat</th>
+										<th>Tanggal Lahr</th>
+										<th>Email</th>
+										<th>No Kontak</th>
+									</tr>
 							</tfoot>
-						</table>
+							</table>
 						</div>
-						<!-- //div priview data exporter -->
+						<!-- div tabel priview data excel -->
 					</div>
 				</div>
-				<!-- panel body -->
-				<!-- panel footer -->
 				<div class="panel-footer">
 					<button class="btn btn-sm btn-primary" id="btn-import" disabled="true">Import Data</button>
 				</div>
-				<!-- panel footer -->
 			</div>
-			<!-- /panel -->
 		</div>
 	</div>
 </section>
@@ -112,20 +94,8 @@
 	var datExcel=' ';
 $(document).ready(function(){
 	$("#btn-import").click(function(){
-			if (cabangID != '' && cabangID != ' ') {
 			post_import_user();
-			
-			}else{
-				swal("Oops","Silahkan Pilih Cabang", "error");
-			}
-		
-		
 	});
-
-	$("select[name=cabangID]").change(function(){
-		cabangID=$("select[name=cabangID]").val();
-	});
-
 	set_op_cabang();
 });
 
@@ -155,23 +125,18 @@ function set_op_cabang(){
 function upload_data_xlsx(){
 	console.log("masuk upload");
 	var url_upload=base_url+"import_user/upload_xlsx";
-	var keterangan = "siswa";
+	var keterangan = "guru";
 	$.ajaxFileUpload({
 		url : url_upload,
 		type: "post",
-		data: {keterangan:keterangan},
+		data:{ keterangan: keterangan},
 		fileElementId :"xlf",
 		dataType: "text",
 		success:function(Data){
 			var ob_data=JSON.parse(Data);
-			if (ob_data.status_upload===true) {
-				datExcel=ob_data;
-				read_data_xlsx(ob_data.url_file);
+			datExcel=ob_data;
+			 read_data_xlsx(ob_data.url_file);
 			 valid_post=true;
-			} else {
-
-			}
-			
 		},
 		error:function(){
 			console.log("ada kesalahan");
@@ -218,7 +183,7 @@ function upload_data_xlsx(){
 			} else {
 				show_tb_preview();
 				 $.each(datImport, function (key, val) {
-        records_tb [i] = [no,val.noIndukNeutron,val.namaDepan,val.namaBelakang,val.alamat,val.tgl_lahir,val.eMail,val.noKontak,val.namaSekolah,val.alamatSekolah,val.noKontakSekolah];
+        records_tb [i] = [no,val.namaDepan,val.namaBelakang,val.alamat,val.tgl_lahir,val.eMail,val.noKontak];
         no++;
          i++;
     		});
@@ -231,9 +196,9 @@ function upload_data_xlsx(){
 	}
 
 	function post_import_user(){
-		var url=base_url+"import_user/set_siswa_batch";
-		var uuid_excel=datExcel.uuid_excel;
-		var datas={datImport:datImport,cabangID:cabangID,uuid_excel:uuid_excel};
+		var url=base_url+"import_user/set_guru_batch";
+			var uuid_excel=datExcel.uuid_excel;
+		var datas={datImport:datImport,uuid_excel:uuid_excel};
 		$.ajax({
 			url:url,
 			data:datas,
@@ -286,7 +251,7 @@ function upload_data_xlsx(){
 		$("#div_reset").removeClass("hide");
 	}
 	function reset_form_xlsx() { 
-		var datImport='';
+			var datImport='';
 		$("#name_tb").empty();
 		$("#record_priview tbody tr").remove();
 		$("#btn-import").attr("disabled", true);
@@ -312,8 +277,6 @@ function upload_data_xlsx(){
 				reset_form_xlsx();
 		},
 		});
-		
-
-
 	}
+		
 </script>
