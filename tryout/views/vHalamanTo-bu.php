@@ -183,6 +183,7 @@ label:hover{ /* HIDE RADIO */
   <div class="row">
    <div class="col-md-10 col-md-offset-1">
     <form action="<?= base_url('index.php/tryout/cekjawaban') ?>" method="post" id="hasil">
+
      <div class="col-md-8" style="margin-bottom:30">
 
       <?php $i = 1; $nosoal = 1; $soal_bu = 0;?>

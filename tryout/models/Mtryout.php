@@ -144,7 +144,7 @@ class Mtryout extends MX_Controller {
     }
 
     public function dataPaket($id) {
-        $this->db->select('mm.id_paket, p.jenis_penilaian as jp');
+        $this->db->select('mm.id_paket');
         $this->db->from('tb_mm-tryoutpaket as mm');
         $this->db->join('tb_paket as p ',' p.id_paket = mm.`id_paket`');
         $this->db->where('mm.id', $id);
