@@ -72,21 +72,13 @@
         <?php else: ?>
 
           <table class="table" style="font-size: 13px">
-
             <thead>
-
              <tr>
-
               <th>ID Paket</th>
               <th width="10%">Aksi</th>
-
               <th>Nama Paket Soal</th>
-
               <th>Status</th>
-
-
             </tr>
-
           </thead>
 
 
@@ -113,25 +105,14 @@
                     class="btn btn-danger border-radius modal-on<?=$paketitem['id_paket']?>"
                     data-todo='<?=json_encode($paketitem)?>'><i class="fa fa-times"></i></a>
                   <?php endif ?>
-
                 </td>
-
                 <td><?=$paketitem['nm_paket'] ?></td>
-
                 <td>Belum Dikerjakan</td>
-
-                
-
               </tr>
-
             <?php endforeach ?>
-
           </tbody>
-
         </table>
-
       <?php endif ?>
-
     </div>
 
 
@@ -335,8 +316,9 @@
 
   function load_grafik(data) {
   // nilai =data.jmlh_benar/ data.jumlah_soal * 100;
-  if (data.jenis_penilaian == 'SMBPTN') {
-      nilai =(data.jmlh_benar * 4) + (data.jmlh_salah *(-1)) + (data.jmlh_kosong * 0);
+  if (data.jenis_penilaian == 'SBMPTN') {
+      // nilai =(data.jmlh_benar * 4) + (data.jmlh_salah *(-1)) + (data.jmlh_kosong * 0);
+      nilai =((data.jmlh_benar * 4) + (data.jmlh_salah *(-1)) + (data.jmlh_kosong * 0)) / ( data.jumlah_soal*4) * 100;
     }
   else {
       nilai =data.jmlh_benar/ data.jumlah_soal * 100;
