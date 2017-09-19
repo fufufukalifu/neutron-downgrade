@@ -24,7 +24,7 @@
 
           <div class="col-sm-4">
            <select class="form-control" id="select_to">
-            <option value="all">Semua Tryout</option>          
+            <option value="all">Semua Tryout</option>   
             <?php foreach ($to as $item): ?>
               <option value="<?=$item['id_tryout']?>"><?=$item['nm_tryout'] ?></option>
             <?php endforeach ?>
@@ -153,6 +153,7 @@ function prevPage() {
     function set_pagination_tb_paket() {
       url=base_url+"admincabang/pagination_daftar_paket";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
+      console.log(dataPaket);
       $.ajax({
         url:url,
         data:dataPaket,
@@ -183,6 +184,8 @@ function prevPage() {
       cabang = $('#select_cabang').val();
       tryout = $('#select_to').val();
       paket = $('#select_paket').val();
+
+      console.log(cabang);
 
       selectPagePaket();
       set_pagination_tb_paket();

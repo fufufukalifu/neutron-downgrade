@@ -235,7 +235,11 @@ class Tryout extends MX_Controller {
         // perubahan
         if (!empty($this->session->userdata['id_mm-tryoutpaketpembahasan'])) {
             $id = $this->session->userdata['id_mm-tryoutpaketpembahasan'];
-            $data = ['id_mm'=>$id, 'id_pengguna'=>$this->session->userdata('id')];
+            if ($this->session->userdata('HAKAKSES')=='ortu') {
+                $data = ['id_mm'=>$id, 'id_pengguna'=>$this->Mtryout->get_id_pengguna_by_ortu()];
+            } else {
+                $data = ['id_mm'=>$id, 'id_pengguna'=>$this->session->userdata('id')];
+            }
 
             $data['rekap_jawaban'] = json_decode($this->Mtryout->get_report_paket_by_mmid($data)->rekap_hasil_koreksi);
             $data['topaket'] = $this->Mtryout->datatopaket($id);
@@ -259,6 +263,7 @@ class Tryout extends MX_Controller {
 
             $this->load->view('v-pembahasanto.php', $data);
             $this->load->view('footerpembahasan', $data);
+       
         } else {
             $this->errorTest();
         }

@@ -424,7 +424,17 @@ public function get_id_siswa_by_ortu() {
         $query = $this->db->get(); 
         return $query->result()[0]; 
     }
+    // get id pengguna siswa by ortu
+    public function get_id_pengguna_by_ortu() {
+        $this->db->select('siswa.penggunaID');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('`tb_orang_tua` `ortu` ',' `siswa`.`id` = `ortu`.`siswaID`');
+        $this->db->join('`tb_pengguna` `pengguna` ',' `ortu`.`penggunaID` = `pengguna`.`id` ');
+        $this->db->where('pengguna.id', $this->session->userdata('id'));
 
+        $query = $this->db->get();
+        return $query->result()[0]->penggunaID;
+    }
 
 }
 

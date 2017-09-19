@@ -26,7 +26,7 @@
     <!-- Start Body modal -->
     <form  class="panel panel-default form-horizontal form-bordered form-topik"  method="post" >
      <div  class="form-group">
-      <label class="col-sm-3 control-label">Tingkat</label>
+      <label class="col-sm-3 control-label">Tingkats</label>
       <div class="col-sm-8">
 
        <!-- stkt = soal tingkat -->                          

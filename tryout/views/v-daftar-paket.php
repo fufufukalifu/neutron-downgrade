@@ -78,8 +78,11 @@
              <tr>
 
               <th>ID Paket</th>
-              <th width="10%">Aksi</th>
+              <?php if ($this->session->userdata('HAKAKSES')=='ortu') {
 
+                } else { ?>
+              <th width="10%">Aksi</th>
+              <?php } ?>
               <th>Nama Paket Soal</th>
 
               <th>Status</th>
@@ -97,6 +100,9 @@
               <tr>
 
                 <td><?=$paketitem['id_paket'] ?></td>
+                <?php if ($this->session->userdata('HAKAKSES')=='ortu') {
+
+                } else { ?>
                 <td>
 
 
@@ -115,6 +121,7 @@
                   <?php endif ?>
 
                 </td>
+                <?php } ?>
 
                 <td><?=$paketitem['nm_paket'] ?></td>
 

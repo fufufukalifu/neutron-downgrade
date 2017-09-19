@@ -492,10 +492,14 @@ public function laporanpaket(){
 		# get cabang sementara tidak di pakai karena laporan sesuai admincabang
 		// $data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
-	$id_cabang=$this->get_cabang()['id_cabang'];
-	$data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
+	// $id_cabang=$this->get_cabang()['id_cabang'];
+	// $data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
+	# get to
+		$data['to'] = $this->mtoback->get_To();
 	$hakAkses = $this->session->userdata['HAKAKSES'];
 	if ($hakAkses == 'admin_cabang') {
+		$id_cabang=$this->get_cabang()['id_cabang'];
+		$data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
 		$this->parser->parse('v-index-admincabang', $data);
 	} elseif ($hakAkses == 'admin') {
 		$data['cabang'] = $this->mcabang->get_all_cabang();
