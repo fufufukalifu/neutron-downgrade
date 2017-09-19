@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-        <div class="form-group">
+        <div class="form-group" id="cabang">
            <div class="row">
             <label class="col-sm-3 control-label">Cabang </label>
             <div class="col-sm-9">
@@ -71,6 +71,17 @@
 </section>
 <script type="text/javascript">
   $(document).ready(function(){
+    $("select[name=hakakses]").change(function() {
+       var hakakses=$("select[name=hakakses]").val();
+      if (hakakses=="guru") {
+        $("#cabang").hide(1000);
+      }else{
+         $("#cabang").show(1000);
+      }
+     
+    });
+    //event ketika btn rollback di klik
+    //melakukan pengecekan input
    $("#btn_rollback").click(function(){
     var cek_tanggal_mulai=$("input[name=tanggal_mulai]").val();
     var cek_tanggal_akhir=$("input[name=tanggal_akhir]").val();
@@ -173,7 +184,6 @@ var dateFormat = function () {
     while (val.length < len) val = "0" + val;
     return val;
   };
-
     // Regexes and supporting functions are cached through closure
     return function (date, mask, utc) {
       var dF = dateFormat;

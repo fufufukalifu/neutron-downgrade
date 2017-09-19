@@ -75,15 +75,20 @@
  		if (!$this->upload->do_upload($dat_excel)) {
 			$nama_file="gagal";
  		} else {
+ 			$keterangan=$this->input->post("keterangan");
  			 $file_data = $this->upload->data();
  			 $url_file =$file_data['file_name'];
  			$nama_file=$_FILES[$dat_excel]['name'];
+ 			$uuid=uniqid();
  			$data["nama_file"]=$nama_file;
  			$data["url_file"]=$url_file;
+ 			$data["uuid"]=$uuid;
+ 			$data["keterangan"]=$keterangan;
  			$this->Import_user_model->in_file_excel($data);
 
  			$datExcel["nama_file"]=$nama_file;
  			$datExcel["url_file"]=$url_file;
+ 			$datExcel["uuid_excel"]=$uuid;
  			$datExcel["status_upload"]=true;
  		}
 
@@ -94,6 +99,7 @@
  		$post=$this->input->post();
  		$datArr=$post["datImport"];
  		$cabangID=$post["cabangID"];
+ 		$uuid_excel=$post["uuid_excel"];
  		$dat_siswa=array();
  		$dat_pengguna=array();
  		$fake_uuid=12;
@@ -110,7 +116,8 @@
  				'kataSandi'=>md5($kataSandi),
  				'eMail'=> $key["eMail"],
  				'hakAkses'=>'siswa',
- 				'uuid_user'=>$uuid);
+ 				'uuid_user'=>$uuid,
+ 				'keterangan'=>"excel_".$uuid_excel);
  			$dat_siswa_excel[]=array(
  				'namaDepan'=>$key['namaDepan'],
  				'namaBelakang'=>$key['namaBelakang'],
@@ -145,21 +152,25 @@
  	{
  		$post=$this->input->post();
  		$datArr=$post["datImport"];
+ 		$uuid_excel=$post["uuid_excel"];
  		$dat_siswa=array();
  		$dat_pengguna=array();
  		$dat_siswa=array();
+
  		foreach ($datArr as $key ) {
  			$parse_tgl=strtotime($key['tgl_lahir']);
  			$tgl=date("d",$parse_tgl);
  			$tgl_lahir=date("Y-m-d",$parse_tgl);
+ 			$kataSandi=$key["no_karyawan"].$tgl;
  			//data pengguna
  			$uuid=uniqid();
  			$dat_pengguna[]=array(
- 				'namaPengguna'=> $key['namaDepan'],
- 				'kataSandi'=>md5($key['namaDepan']),
+ 				'namaPengguna'=> $key['no_karyawan'],
+ 				'kataSandi'=>md5($kataSandi),
  				'eMail'=> $key["eMail"],
  				'hakAkses'=>'guru',
- 				'uuid_user'=>$uuid);
+ 				'uuid_user'=>$uuid,
+ 				'keterangan'=>"excel_".$uuid_excel);
 
  			$dat_guru_excel[]=array(
  				'namaDepan'=>$key['namaDepan'],
@@ -217,6 +228,7 @@
 		}
  	}
 
+ 	// validasi rollback
  	public function validasi_rollback()
  	{	
  		$date=date("d");
@@ -231,7 +243,85 @@
 
  			} else {
 	 			$dat_retrun["msg"]="true";
-	 			$x=$this->Import_user_model->del_import($post);
+	 			rollback_pengguna($post);
+ 			}
+ 		} else {
+ 			$dat_retrun["msg"]="false1";
+ 		}
+ 		echo json_encode($dat_retrun);
+ 	}
+ 	//rollback pengguna by tanggal import
+ 	public function rollback_pengguna($post)
+ 	{
+ 		$this->Import_user_model->del_import($post);
+ 	}
+ 	//view table excel backup
+ 	public function xlsx_backUp()
+ 	{
+ 		$data['judul_halaman'] = "Excel Backup";
+		$data['files'] = array(
+			APPPATH . 'modules/Import_user/views/v-excel_bup.php',
+			);
+		$hakAkses = $this->session->userdata['HAKAKSES'];
+		if ($hakAkses == 'admin') {
+			$this->parser->parse('admin/v-index-admin', $data);
+		} elseif ($hakAkses == 'guru') {
+			redirect(site_url('guru/dashboard/'));
+		} elseif ($hakAkses == 'siswa') {
+			redirect(site_url('welcome'));
+		} else {
+			redirect(site_url('login'));
+		}
+ 	}
+ 	
+
+ 	//ajax list excel backup
+ 	public function ajax_xlsx()
+ 	{
+ 		$no=1;
+ 		$arr_xlsx=$this->Import_user_model->select_excel_bup();
+ 		foreach ($arr_xlsx as $key ) {
+ 			$url_file=$key->url_file;
+ 			$nama_file=$key->nama_file;
+ 			$param_rolback="'".$key->uuid_xlsx."','". $url_file ."'";
+ 			$param_del="'".$key->id."','". $url_file ."','".$nama_file ."'";
+ 			$row=array();
+ 			$row[]=$no;
+ 			$row[]=$key->tgl_import;
+ 			$row[]= $nama_file;
+ 			$row[]= $url_file;
+ 			$row[]= $key->keterangan;
+ 			$row[]='<button class="btn btn-sm btn-info"  onClick="info('.$key->uuid_xlsx.')"><i class="ico-info"></i>_lihat</button>
+ 			<button class="btn btn-sm btn-danger" onClick="rollback('.$param_rolback.')"><i class="ico-trash"></i>_Rollback</button>
+ 			<button class="btn btn-sm btn-warning" onClick="del_excel('.$param_del.')"><i class="ico-trash"></i>_DELETE Excel</button>
+ 						';
+ 			  $data[] = $row;
+ 			  $no++;
+ 		}
+ 		   $output = array(
+            
+            "data"=>$data,
+        );
+
+        echo json_encode( $output );
+ 	}
+
+ 	// rollback by file xlsx
+ 	public function rollback_xlsx()
+ 	{
+ 		$post=$this->input->post();
+ 		$uuid="excel_".$post["uuid"];
+ 		$post_kodevalidasi=md5($post["kodevalidasi"]);
+ 			$penggunaID=$this->session->userdata['id'];
+ 		$kode_validasi=$this->Import_user_model->get_katasandi($penggunaID)[0]->kataSandi;
+ 			if ($post_kodevalidasi==$kode_validasi) {
+ 			$count_row=$this->Import_user_model->count_row_pengguna_by_xlsx($uuid);
+ 			if ($count_row==0) {
+ 				$dat_retrun["msg"]="false2";
+
+ 			} else {
+	 			$dat_retrun["msg"]="true";
+	 		$this->Import_user_model->del_by_import_xlsx($uuid);
  			}
  		} else {
  			$dat_retrun["msg"]="false1";
@@ -239,4 +329,17 @@
  		echo json_encode($dat_retrun);
  	}
 
+ 	// del file backup excel 
+ 	public function del_bup_import_excel()
+ 	{
+ 		$post=$this->input->post();
+ 		$url_file=$post["url_file"];
+ 		$id=$post["id"];
+ 		$url_file=$this->input->post("url_file");
+ 		  unlink(FCPATH . "assets/excel/" . $url_file);
+ 		$this->Import_user_model->del_excel($id);
+ 		$dat_retrun="berhasil";
+ 			echo json_encode($dat_retrun);
+
+ 	}
  } ?>

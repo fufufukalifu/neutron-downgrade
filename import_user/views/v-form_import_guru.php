@@ -125,10 +125,11 @@ function set_op_cabang(){
 function upload_data_xlsx(){
 	console.log("masuk upload");
 	var url_upload=base_url+"import_user/upload_xlsx";
+	var keterangan = "guru";
 	$.ajaxFileUpload({
 		url : url_upload,
 		type: "post",
-		// data: datas,
+		data:{ keterangan: keterangan},
 		fileElementId :"xlf",
 		dataType: "text",
 		success:function(Data){
@@ -196,7 +197,8 @@ function upload_data_xlsx(){
 
 	function post_import_user(){
 		var url=base_url+"import_user/set_guru_batch";
-		var datas={datImport:datImport};
+			var uuid_excel=datExcel.uuid_excel;
+		var datas={datImport:datImport,uuid_excel:uuid_excel};
 		$.ajax({
 			url:url,
 			data:datas,

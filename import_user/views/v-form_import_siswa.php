@@ -114,7 +114,7 @@ $(document).ready(function(){
 	$("#btn-import").click(function(){
 			if (cabangID != '' && cabangID != ' ') {
 			post_import_user();
-				swal("bbb","Siss", "success");
+			
 			}else{
 				swal("Oops","Silahkan Pilih Cabang", "error");
 			}
@@ -155,10 +155,11 @@ function set_op_cabang(){
 function upload_data_xlsx(){
 	console.log("masuk upload");
 	var url_upload=base_url+"import_user/upload_xlsx";
+	var keterangan = "siswa";
 	$.ajaxFileUpload({
 		url : url_upload,
 		type: "post",
-		// data: datas,
+		data: {keterangan:keterangan},
 		fileElementId :"xlf",
 		dataType: "text",
 		success:function(Data){
@@ -231,7 +232,8 @@ function upload_data_xlsx(){
 
 	function post_import_user(){
 		var url=base_url+"import_user/set_siswa_batch";
-		var datas={datImport:datImport,cabangID:cabangID};
+		var uuid_excel=datExcel.uuid_excel;
+		var datas={datImport:datImport,cabangID:cabangID,uuid_excel:uuid_excel};
 		$.ajax({
 			url:url,
 			data:datas,
