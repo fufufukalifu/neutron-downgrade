@@ -210,6 +210,7 @@ class Tryout extends MX_Controller {
 
             $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket; 
             
+            
             $random = $this->Mtryout->dataPaketRandom($id_paket)[0]->random; 
 
             $data['paket'] = $this->Mtryout->durasipaket($id_paket); 
