@@ -552,12 +552,12 @@ JS aoutocomplate
             </a>
           </li>
           <li >
-            <a href="javascript:void(0)">
+            <a href="<?=base_url('import_user/f_import_guru')?>">
               <span class="text">Import Guru </span>
             </a>
           </li>
            <li >
-            <a href="javascript:void(0)">
+           <a href="<?=base_url('import_user/xlsx_backUp')?>">
               <span class="text">Back Up File Excel </span>
             </a>
           </li>
@@ -605,35 +605,7 @@ JS aoutocomplate
 </li>
 
 
-<!-- <li>
- <a href="javascript:void(0);" data-target="#mpengawas" data-toggle="submenu" data-parent=".topmenu">
-  <span class="figure"><i class="ico-clipboard"></i></span>
-  <span class="text">Pengawas</span>
-  <span class="arrow"></span>
-</a>
 
-<ul id="mpengawas" class="submenu collapse ">
-  <li class="submenu-header ellipsis">Pengawas</li>
-
-  <li >
-   <a href="<?= base_url('index.php/pengawas/formPengawas');?>">
-    <span class="text">Register Pengawas</span>
-  </a>
-</li>
-
-<li >
- <a href="<?= base_url('index.php/pengawas/listpengawas');?>" >
-  <span class="text">Daftar Pengawas</span>
-</a>
-</li>
-<li >
- <a href="<?= base_url('index.php/toback/listTo');?>">
-  <span class="text">Daftar Try Out</span>
-</a>
-</li>
-
-</ul>
-</li> -->
 
 
 

@@ -58,9 +58,9 @@
  public function del_import($post)
  {
  	$hakakses=$post["hakakses"];
- 	$this->db->where('tb_pengguna.regTime >=', $post["tanggal_mulai"]);
- 	$this->db->where('tb_pengguna.regTime <=', $post["tanggal_akhir"]);
- 	$this->db->where("tb_pengguna.hakAkses",$hakakses);
+ 	$this->db->where('regTime >=', $post["tanggal_mulai"]);
+ 	$this->db->where('regTime <=', $post["tanggal_akhir"]);
+ 	$this->db->where("hakAkses",$hakakses);
  	$this->db->delete("tb_pengguna");
  }
 

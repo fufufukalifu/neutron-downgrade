@@ -16,14 +16,14 @@
 
  	public function index()
  	{
- 		echo("okokkokoo");
+ 		f_import_siswa();
  	}
  	//view halaman import siswa
  	public function f_import_siswa()
  	{	
 		$data['judul_halaman'] = "Form Import Siswa";
 		$data['files'] = array(
-			APPPATH . 'modules/Import_user/views/v-form_Import_siswa.php',
+			APPPATH . 'modules/import_user/views/v-form_import_siswa.php',
 			);
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin') {
@@ -41,7 +41,7 @@
  	{	
 		$data['judul_halaman'] = "Form Import Guru";
 		$data['files'] = array(
-			APPPATH . 'modules/Import_user/views/v-form_Import_guru.php',
+			APPPATH . 'modules/import_user/views/v-form_import_guru.php',
 			);
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin') {
@@ -214,7 +214,7 @@
  	{
  		$data['judul_halaman'] = "Rollback Import";
 		$data['files'] = array(
-			APPPATH . 'modules/Import_user/views/v-rollback_import.php',
+			APPPATH . 'modules/import_user/views/v-rollback_import.php',
 			);
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin') {
@@ -243,24 +243,20 @@
 
  			} else {
 	 			$dat_retrun["msg"]="true";
-	 			rollback_pengguna($post);
+	 			$this->Import_user_model->del_import($post);
  			}
  		} else {
  			$dat_retrun["msg"]="false1";
  		}
  		echo json_encode($dat_retrun);
  	}
- 	//rollback pengguna by tanggal import
- 	public function rollback_pengguna($post)
- 	{
- 		$this->Import_user_model->del_import($post);
- 	}
+
  	//view table excel backup
  	public function xlsx_backUp()
  	{
  		$data['judul_halaman'] = "Excel Backup";
 		$data['files'] = array(
-			APPPATH . 'modules/Import_user/views/v-excel_bup.php',
+			APPPATH . 'modules/import_user/views/v-excel_bup.php',
 			);
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin') {

@@ -71,6 +71,9 @@
 </section>
 <script type="text/javascript">
   $(document).ready(function(){
+    //belum bisa digunakan 
+    //roolback siswa berdasarkan cabang
+     $("#cabang").hide();
     $("select[name=hakakses]").change(function() {
        var hakakses=$("select[name=hakakses]").val();
       if (hakakses=="guru") {
@@ -133,6 +136,7 @@ function konfirmasi_rollback(format_tgl_mulai,format_tgl_akhir) {
      type:"post",
      dataType:"text",
      success:function(Data){
+      console.log(Data);
       var ob_data=JSON.parse(Data);
       if (ob_data.msg==="true") {
        swal("Success","rollback berhasil","success");
