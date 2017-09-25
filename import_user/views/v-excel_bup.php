@@ -118,7 +118,6 @@ var tabel_xlsx ;
 				 var ob_data=JSON.parse(Data);
       if (ob_data.msg==="true") {
        swal("Success","rollback berhasil","success");
-       reset_form_rollback();
      } else if(ob_data.msg==="false2"){
        swal("oops","Data import tidak ditemukan!","error");
      }else{
@@ -158,4 +157,6 @@ var tabel_xlsx ;
  });
 		
 	}
+
+
 </script>

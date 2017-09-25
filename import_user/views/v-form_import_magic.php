@@ -5,7 +5,7 @@
 			<div class="panel panel-teal">
 				<!-- header panel -->
 				<div class="panel-heading">
-					<h3 class="panel-title">Export Data Excel Siswa</h3>
+					<h3 class="panel-title">Export Data Excel Magic</h3>
 					<!-- dropdown cabang -->
 					<div class="panel-toolbar text-right">
 						<div class="btn-group">
@@ -22,7 +22,7 @@
 						<div class="col-md-12">
 							<form class="form">
 								<div class="form-group">
-									<div class="col-sm-12  mb10" id="div_input">
+									<div class="col-sm-12 mt10" id="div_input">
 										<label for="xlf" class="btn btn-sm btn-default">
 											Upload File Excel
 										</label>
@@ -95,6 +95,7 @@ $(document).ready(function(){
 	$("#btn-import").click(function(){
 			post_import_user();
 	});
+
 });
 
 function upload_data_xlsx(){
@@ -115,9 +116,10 @@ function upload_data_xlsx(){
 			} else {
 
 			}
+			
 		},
 		error:function(){
-
+			console.log("ada kesalahan");
 		}
 	});
 }
@@ -161,7 +163,7 @@ function upload_data_xlsx(){
 			} else {
 				show_tb_preview();
 				 $.each(datImport, function (key, val) {
-        records_tb [i] = [no,val.noIndukNeutron,val.nama,val.tgl_lahir];
+        records_tb [i] = [no,val.noIndukNeutron,val.namaDepan,val.tgl_lahir];
         no++;
          i++;
     		});
@@ -174,10 +176,11 @@ function upload_data_xlsx(){
 	}
 
 	function post_import_user(){
-		var url=base_url+"import_user/set_siswa_batch";
+		var url=base_url+"import_user/set_magic_batch";
 		var uuid_excel=datExcel.uuid_excel;
 		var parse_datPost=JSON.stringify(datImport);
 		var datas={datImport:parse_datPost,uuid_excel:uuid_excel};
+		console.log(datas);
 		$.ajax({
 			url:url,
 			data:datas,
@@ -185,11 +188,12 @@ function upload_data_xlsx(){
 			dataType:"text",
 			success:function(Data){
 				console.log(Data);
-				// var ob_data=JSON.parse(Data);
-				// reset_form_xlsx();
-				// swal("berhasil!",ob_data, "success");
+				var ob_data=JSON.parse(Data);
+				reset_form_xlsx();
+				swal("berhasil!",ob_data, "success");
 			},
 			error:function(){
+				console.log("ada kesalahan");
 			}
 		});
 	}
@@ -239,10 +243,13 @@ function upload_data_xlsx(){
 		$("#div_reset").addClass("hide");
 		$("#div_input").removeClass("hide");
 		$("input[name=dat_excel]").val(null);
+
 	}
 
 	function reset_file() {
+	
 		var url_file=datExcel.url_file;
+			console.log(url_file);
 		var url_unlink = base_url+"import_user/unlink_xlsx";
 		$.ajax({
 			url : url_unlink,
@@ -253,5 +260,8 @@ function upload_data_xlsx(){
 				reset_form_xlsx();
 		},
 		});
+		
+
+
 	}
 </script>

@@ -97,42 +97,45 @@
  	public function set_siswa_batch()
  	{
  		$post=$this->input->post();
- 		$datArr=$post["datImport"];
- 		$cabangID=$post["cabangID"];
+ 		$datImport=$post["datImport"];
+ 		$datArr=json_decode($datImport);
  		$uuid_excel=$post["uuid_excel"];
  		$dat_siswa=array();
  		$dat_pengguna=array();
- 		$fake_uuid=12;
  		$dat_siswa=array();
  		foreach ($datArr as $key ) {
- 			$parse_tgl=strtotime($key['tgl_lahir']);
+ 			$parse_tgl=strtotime($key->tgl_lahir);
  			$tgl=date("d",$parse_tgl);
  			$tgl_lahir=date("Y-m-d",$parse_tgl);
  			//data pengguna
  			$uuid=uniqid();
- 			$kataSandi=$key["noIndukNeutron"].$tgl;
+ 			$kataSandi=$tgl_lahir;
  			$dat_pengguna[]=array(
- 				'namaPengguna'=> $key["noIndukNeutron"],
+ 				'namaPengguna'=> $key->noIndukNeutron,
  				'kataSandi'=>md5($kataSandi),
- 				'eMail'=> $key["eMail"],
  				'hakAkses'=>'siswa',
  				'uuid_user'=>$uuid,
  				'keterangan'=>"excel_".$uuid_excel);
+ 			//data siswa dari excel
  			$dat_siswa_excel[]=array(
- 				'namaDepan'=>$key['namaDepan'],
- 				'namaBelakang'=>$key['namaBelakang'],
+ 				'namaDepan'=>$key->nama,
  				'tgl_lahir' => $tgl_lahir,
- 				'alamat'=>$key['alamat'],
- 				'namaSekolah'=>$key['namaSekolah'],
- 				'alamatSekolah'=>$key['alamatSekolah'],
- 				'noKontakSekolah'=>$key['noKontakSekolah'],
-				'noIndukNeutron'=>$key['noIndukNeutron'],
-				'cabangID' => $cabangID,
-				'tingkatID' => $key["tingkatID"],
+				'noIndukNeutron'=>$key->noIndukNeutron,
+				'cabangID' => $key->cabangID,
+				'tingkatID' => $key->tingkatID,
  				);
+ 			//data pengguna ortu generate dari data siswa
+ 			$dat_penggunaortu[]=array(
+ 				'namaPengguna'=> "P-".$key->noIndukNeutron,
+ 				'kataSandi'=>md5($kataSandi),
+ 				'hakAkses'=>'ortu',
+ 				'uuid_user'=>$uuid,
+ 				'keterangan'=>"excel_".$uuid_excel);
+ 			);
  			$uuid_arr[]=array(
  				'uuid_user'=>$uuid);
  		}
+
  		// simpan data pengguna
  		$this->Import_user_model->myinsert_batch($dat_pengguna,"tb_pengguna");
  		//get id pengguna yg baru di insert
@@ -140,9 +143,11 @@
  		 $length_dat_pengguna_ID=count($dat_pengguna_ID);
  		 //merge array dat_siswa_excel dengan array dat_pengguna_ID
  		 for ($i=0; $i < $length_dat_pengguna_ID ; $i++) { 
+ 		 	//merge untuk mendapatkan pengguna ID
  		 	$dat_siswa[]=array_merge_recursive($dat_siswa_excel[$i],$dat_pengguna_ID[$i]);
+ 		 	$dat_pengguna_ortu[]=array_merge_recursive($dat_ortu_excel[$i],$dat_pengguna_ID[$i]);
  		 }
-
+ 		 // var_dump($dat_siswa);
  		// simpan data Siswa
  		$this->Import_user_model->myinsert_batch($dat_siswa,"tb_siswa");
  		echo json_encode("Data siswa berhasil di tambahkan");
@@ -156,7 +161,6 @@
  		$dat_siswa=array();
  		$dat_pengguna=array();
  		$dat_siswa=array();
-
  		foreach ($datArr as $key ) {
  			$parse_tgl=strtotime($key['tgl_lahir']);
  			$tgl=date("d",$parse_tgl);
@@ -198,7 +202,6 @@
  		$this->Import_user_model->myinsert_batch($dat_guru,"tb_guru");
  		echo json_encode("Data guru berhasil di tambahkan");
  	}
-
 
  	public function unlink_xlsx()
  	{
@@ -337,5 +340,56 @@
  		$dat_retrun="berhasil";
  			echo json_encode($dat_retrun);
 
+ 	}
+
+// CABANG	NIS CBT/USER ID	NAMA	PASSWORD CBT	KELAS
+
+
+ 	public function set_magic_batch()
+ 	{
+ 		$post=$this->input->post();
+ 		$datImport=$post["datImport"];
+ 		$datArr=json_decode($datImport);
+ 		$uuid_excel=$post["uuid_excel"];
+ 		$dat_siswa=array();
+ 		$dat_pengguna=array();
+ 		$dat_siswa=array();
+ 		foreach ($datArr as $key ) {
+ 			$parse_tgl=strtotime($key->tgl_lahir);
+ 			$tgl=date("d",$parse_tgl);
+ 			$tgl_lahir=date("Y-m-d",$parse_tgl);
+ 			//data pengguna
+ 			$uuid=uniqid();
+ 			$kataSandi=$tgl_lahir;
+ 			$dat_pengguna[]=array(
+ 				'namaPengguna'=> $key->noIndukNeutron,
+ 				'kataSandi'=>md5($kataSandi),
+ 				'hakAkses'=>'siswa',
+ 				'uuid_user'=>$uuid,
+ 				'keterangan'=>"excel_".$uuid_excel);
+ 			$dat_siswa_excel[]=array(
+ 				'namaDepan'=>$key->namaDepan,
+ 				'tgl_lahir' => $tgl_lahir,
+				'noIndukNeutron'=>$key->noIndukNeutron,
+				'cabangID' => $key->cabangID,
+				'tingkatID' => $key->tingkatID,
+ 				);
+ 			$uuid_arr[]=array(
+ 				'uuid_user'=>$uuid);
+ 		}
+
+ 		// simpan data pengguna
+ 		$this->Import_user_model->myinsert_batch($dat_pengguna,"tb_pengguna");
+ 		//get id pengguna yg baru di insert
+ 		 $dat_pengguna_ID=$this->Import_user_model->myselect_batch($uuid_arr);
+ 		 $length_dat_pengguna_ID=count($dat_pengguna_ID);
+ 		 //merge array dat_siswa_excel dengan array dat_pengguna_ID
+ 		 for ($i=0; $i < $length_dat_pengguna_ID ; $i++) { 
+ 		 	$dat_siswa[]=array_merge_recursive($dat_siswa_excel[$i],$dat_pengguna_ID[$i]);
+ 		 }
+ 		 // var_dump($dat_siswa);
+ 		// simpan data Siswa
+ 		$this->Import_user_model->myinsert_batch($dat_siswa,"tb_siswa");
+ 		echo json_encode("Data siswa berhasil di tambahkan");
  	}
  } ?>
