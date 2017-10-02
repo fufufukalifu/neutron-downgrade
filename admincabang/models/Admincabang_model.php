@@ -40,17 +40,16 @@ class Admincabang_model extends CI_model {
 		//cari report all
 	function cari_report_paket($data,$records_per_page='',$page='',$keySearch=''){
 		$this->db->order_by('tgl_pengerjaan','asc');
-
 		$this->db->like('namaPengguna',$keySearch);
-		$this->db->or_like('nm_paket',$keySearch);
-		$this->db->or_like('namaDepan',$keySearch);
-		$this->db->or_like('namaPengguna',$keySearch);
-		$this->db->or_like('namaBelakang',$keySearch);
-		$this->db->or_like('nama_lengkap',$keySearch);
-		$this->db->or_like('tgl_pengerjaan',$keySearch);
+		// $this->db->or_like('nm_paket',$keySearch);
+		// $this->db->like('namaDepan',$keySearch);
+		// // $this->db->like('namaPengguna',$keySearch);
+		// $this->db->or_like('namaBelakang',$keySearch);
+		// $this->db->or_like('nama_lengkap',$keySearch);
+		// $this->db->or_like('tgl_pengerjaan',$keySearch);
 	
 		if ($data['cabang']!="all") {
-			$this->db->where('id_cabang', $data['cabang']);
+			$this->db->where('id_cabang', $data['cabang']);		
 		}
 
 		if ($data['tryout']!="all") {
@@ -113,13 +112,13 @@ class Admincabang_model extends CI_model {
 		if ($data['paket']!="all") {
 			$this->db->where('id_paket', $data['paket']);
 		}
-				$this->db->like('namaPengguna',$keySearch);
-		$this->db->or_like('nm_paket',$keySearch);
-		$this->db->or_like('namaDepan',$keySearch);
-		$this->db->or_like('namaPengguna',$keySearch);
-		$this->db->or_like('namaBelakang',$keySearch);
-		$this->db->or_like('nama_lengkap',$keySearch);
-		$this->db->or_like('tgl_pengerjaan',$keySearch);
+		$this->db->like('namaPengguna',$keySearch);
+		// $this->db->or_like('nm_paket',$keySearch);
+		// $this->db->or_like('namaDepan',$keySearch);
+		// $this->db->or_like('namaPengguna',$keySearch);
+		// $this->db->or_like('namaBelakang',$keySearch);
+		// $this->db->or_like('nama_lengkap',$keySearch);
+		// $this->db->or_like('tgl_pengerjaan',$keySearch);
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
 		$query = $this->db->get('view_laporan_paket_TO');
@@ -365,6 +364,55 @@ class Admincabang_model extends CI_model {
 		$this->db->where('to.publish',1);
 		$query = $this->db->get();
         return $query->result_array();
+	}
+
+	function jumlah_cari_report_paket_per_cabang($data,$keySearch){
+		// if ($data['cabang']!="all") {
+			
+		// }
+
+		if ($data['tryout']!="all") {
+			$this->db->where('id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('id_paket', $data['paket']);
+		}
+				$this->db->like('namaPengguna',$keySearch);
+		$this->db->or_like('nm_paket',$keySearch);
+		$this->db->or_like('namaDepan',$keySearch);
+		$this->db->or_like('namaPengguna',$keySearch);
+		$this->db->or_like('namaBelakang',$keySearch);
+		$this->db->or_like('nama_lengkap',$keySearch);
+		$this->db->or_like('tgl_pengerjaan',$keySearch);
+		$this->db->where('id_cabang', $data['cabang']);
+
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('view_laporan_paket_TO');
+		return $query->num_rows();
+	}
+
+	function cari_report_paket_cabang($data,$records_per_page='',$page='',$keySearch=''){
+		$this->db->order_by('tgl_pengerjaan','asc');
+
+		$this->db->like('namaPengguna',$keySearch);
+		$this->db->or_like('nm_paket',$keySearch);
+		$this->db->or_like('namaDepan',$keySearch);
+		$this->db->or_like('namaPengguna',$keySearch);
+		$this->db->or_like('namaBelakang',$keySearch);
+		$this->db->or_like('nama_lengkap',$keySearch);
+		$this->db->or_like('tgl_pengerjaan',$keySearch);
+		// $this->db->where('id_cabang', $data['cabang']);
+
+		if ($data['tryout']!="all") {
+			$this->db->where('id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('id_paket', $data['paket']);
+		}
+			
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
+		return $query->result_array();
 	}
 }
 ?>

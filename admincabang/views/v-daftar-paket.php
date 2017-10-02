@@ -2,7 +2,7 @@
   <div class="col-md-12 kirim_token">
     <div class="panel panel-teal">
       <div class="panel-heading">
-        <h3 class="panel-title">Daftar Paket TO   </h3> 
+        <h3 class="panel-title">Daftar Paket TO  </h3> 
         <div class="panel-toolbar text-right">
           <div class="col-md-11">
            <div class="col-sm-4">
@@ -60,7 +60,7 @@
       <div class="col-md-10 mb10 mt10 pr0">
         <div class="input-group">
            <span class="input-group-addon btn" id="cariDat"><i class="ico-search"></i></span>
-           <input class="form-control" type="text" name="cariDat" placeholder="Cari Data">
+           <input class="form-control" type="text" name="cariDat" placeholder="Masukkan Username">
         </div>
       </div>
       <!-- div pencarian -->
@@ -176,6 +176,7 @@ function prevPage() {
     function set_pagination_tb_paket() {
       url=base_url+"admincabang/pagination_daftar_paket";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
+      console.log(dataPaket);
       $.ajax({
         url:url,
         data:dataPaket,

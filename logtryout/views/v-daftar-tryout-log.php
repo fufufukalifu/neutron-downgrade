@@ -58,7 +58,7 @@
       <div class="col-md-10 mb10 mt10 pr0">
         <div class="input-group">
            <span class="input-group-addon btn" id="cariDat"><i class="ico-search"></i></span>
-           <input class="form-control" type="text" name="cariDat" placeholder="Cari Data">
+           <input class="form-control" type="text" name="cariDat" placeholder="Masukkan Username">
         </div>
       </div>
       <!-- div pencarian -->

@@ -35,7 +35,8 @@ class Laporanortu_model extends CI_Model{
 
 		$kelas = $data['kelas'];
 		if ($data['kelas']!="all") {
-			$this->db->where("t.aliasTingkat LIKE '%$kelas%' ");
+			// $this->db->where("t.aliasTingkat LIKE '%$kelas%' ");
+			$this->db->where("t.id", $kelas);
 		}
 
 		$query = $this->db->get();
@@ -54,7 +55,7 @@ class Laporanortu_model extends CI_Model{
 
 	/*Mengambil semua kelas*/
 	function get_kelas($tingkat){
-		$this->db->select('*');
+		$this->db->select('id,aliasTingkat,namaTingkat');
 		$this->db->from('tb_tingkat');
 		// $this->db->where('status', 0);
 		$this->db->where("aliasTingkat LIKE '%$tingkat%' ");

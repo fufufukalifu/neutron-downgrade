@@ -14,11 +14,11 @@ class Logtryout_model extends CI_Model {
 
 		if ($keySearch != '' && $keySearch !=' ' ) {
 			$this->db->like('u.namaPengguna',$keySearch);
-			$this->db->or_like('p.nm_paket',$keySearch);
-			$this->db->or_like('s.namaDepan',$keySearch);
-			$this->db->or_like('u.namaPengguna',$keySearch);
-			$this->db->or_like('s.namaBelakang',$keySearch);
-			$this->db->or_like('waktu_mulai',$keySearch);
+			// $this->db->or_like('p.nm_paket',$keySearch);
+			// $this->db->or_like('s.namaDepan',$keySearch);
+			// $this->db->or_like('u.namaPengguna',$keySearch);
+			// $this->db->or_like('s.namaBelakang',$keySearch);
+			// $this->db->or_like('waktu_mulai',$keySearch);
 		}
 
 		// kalo filternya ada yang di pilih
@@ -52,6 +52,15 @@ class Logtryout_model extends CI_Model {
 		$this->db->join('tb_pengguna u','s.penggunaID = u.id');
 
 		$this->db->join('tb_cabang c', 'c.id = s.cabangID');
+
+		if ($data['keySearch'] != '' && $data['keySearch'] !=' ' ) {
+			$this->db->like('u.namaPengguna',$data['keySearch']);
+			// $this->db->or_like('p.nm_paket',$keySearch);
+			// $this->db->or_like('s.namaDepan',$keySearch);
+			// $this->db->or_like('u.namaPengguna',$keySearch);
+			// $this->db->or_like('s.namaBelakang',$keySearch);
+			// $this->db->or_like('waktu_mulai',$keySearch);
+		}
 
 		// kalo filternya ada yang di pilih
 		if ($data['cabang']!="all") {

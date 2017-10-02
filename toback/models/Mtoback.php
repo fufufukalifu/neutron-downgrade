@@ -13,7 +13,7 @@ class Mtoback extends CI_Model {
 		$this->db->insert('tb_tryout',$dat_to);
 		
 	}
-
+	// get to all
 	public function get_To()
 	{
 		$this->db->select('*');
@@ -21,6 +21,14 @@ class Mtoback extends CI_Model {
 		$query = $this->db->get();
         return $query->result_array();
 	}
+	// get to percabang
+	// public function get_To()
+	// {
+	// 	$this->db->select('*');
+	// 	$this->db->from('tb_tryout');
+	// 	$query = $this->db->get();
+ //        return $query->result_array();
+	// }
 	//add paket Ke TO
 	public function insert_addPaket($dat_paket)
 	{

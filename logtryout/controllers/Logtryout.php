@@ -9,7 +9,7 @@ class Logtryout extends MX_Controller {
 
 	}
 
-	function ajax_status_to($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0,$keySearch=''){
+	function ajax_status_to($cabang="all",$tryout="all",$paket="all",$records_per_page=10,$page=0,$keySearch='',$kelas="all"){
 
 				//data post
 		$records_per_page=$this->input->post('records_per_page');
@@ -82,7 +82,7 @@ public function pagination_tb_logtryout($cabang="all",$tryout="all",$paket="all"
 		$tryout=$this->input->post('tryout');
 		$paket=$this->input->post('paket');
 		$keySearch=$this->input->post('keySearch');
-		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket, 'keySearch'=>$keySearch];
 		$jumlah_data = $this->logtryout_model->jumlah_log_tryout($datas);
 
 		$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">

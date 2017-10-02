@@ -565,18 +565,21 @@ public function laporan_paket_filter($cabang="all",$tryout="all",$paket="all"){
 function pengerjaan(){
 		# get cabang
 		// $data['cabang'] = $this->mcabang->get_all_cabang();
-		# get to
-	$data['to'] = $this->mtoback->get_To();
 
 	$data['judul_halaman'] = "Pengerjaan Tryout";
 
 	if ($this->session->userdata('HAKAKSES')=='admin') {
+		# get to all
+		$data['to'] = $this->mtoback->get_To();
 			$data['files'] = array(
 		APPPATH . 'modules/logtryout/views/v-daftar-tryout-log-admin.php',
 		);
 	$this->parser->parse('admin/v-index-admin', $data);
 			# code...
 	}else{
+		# get to all
+		$id_cabang=$this->get_cabang()['id_cabang'];
+		$data['to']=$this->admincabang_model->get_to_cabang($id_cabang);
 			$data['files'] = array(
 		APPPATH . 'modules/logtryout/views/v-daftar-tryout-log.php',
 		);

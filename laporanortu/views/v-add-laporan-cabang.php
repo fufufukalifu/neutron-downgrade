@@ -22,12 +22,16 @@
     <div class="panel panel-teal">
       <div class="panel-heading">
         <h3 class="panel-title">Daftar Laporan </h3> 
+
         <div class="panel-toolbar text-right">
           <div class="col-md-11">
 
-            <div class="col-sm-4">
-             <select class="form-control" name="cabang">
-              <option value="all">Semua Cabang</option>
+            <div class="col-sm-4" id="cabang">
+             <select class="form-control" id="select_cabang">
+             <!--  <option value="all">Semua Cabang</option>
+              <?php foreach ($cabang as $item): ?>
+                <option value="<?=$item->id ?>"><?=$item->namaCabang ?></option>
+              <?php endforeach ?> -->
             </select>
           </div>
 
@@ -104,9 +108,36 @@
 
 <script type="text/javascript">
   var dataTableReport;
+  var cabang= "all";
   $(document).ready(function(){
-    var cabang = $('select[name=cabang]').val();
-    dataTableReport = $('.daftarreport').DataTable({
+    function get_cabang(){
+      var url_get_cabang=base_url+"admincabang/get_idCabang";
+      $.ajax({
+        url:url_get_cabang,
+        dataType:"text",
+        type:"post",
+        success:function(Data){
+          var ob_cabang = JSON.parse(Data);
+          cabang=ob_cabang.id_cabang;
+          console.log(ob_cabang.namaCabang);
+          // info cabang
+          $("#select_cabang").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
+          $("#select_cabang").attr("disabled","true");
+           // <option value="all">Semua Cabang</option>
+           set_tb_laporan(cabang);
+        },
+        error:function(){
+
+        }
+      });
+
+    }
+    get_cabang();  
+
+  });
+
+function set_tb_laporan(cabang) {
+  dataTableReport = $('.daftarreport').DataTable({
       "ajax": {
         "url": base_url+"laporanortu/addlaporanortu_ajax/"+cabang,
         "type": "POST"
@@ -115,37 +146,12 @@
       "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
       "bDestroy": true,
     });
-
-    get_cabang();  
-
-  });
-
-  function get_cabang(){
-    var url_get_cabang=base_url+"laporanortu/get_cabang";
-    $.ajax({
-      url:url_get_cabang,
-      dataType:"json",
-      type:"post",
-      success:function(data){
-       $('select[name=cabang]').html('<option value="all">Semua Cabang </option>');
-
-       $.each(data, function(i, data){
-        $('select[name=cabang]').append("<option value='"+data.id+"'>"+data.namaCabang+"</option>");
-      });
-
-     },
-     error:function(){
-
-     }
-   });
-
-  }
-
+}
 
 // CABANG KETIKA DI CHANGE
 $('select[name=cabang]').change(function(){
 
-  cabang = $('select[name=cabang]').val();
+  cabang = $('#select_cabang]').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 
@@ -165,7 +171,7 @@ $('select[name=cabang]').change(function(){
 
 // TINGKAT KETIKA DI CHANGE
 $('select[name=tingkat_pel]').change(function(){
-  cabang = $('select[name=cabang]').val();
+  cabang = $('#select_cabang').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 
@@ -194,7 +200,7 @@ function load_kelas(tingkat){
    $('select[name=kelas]').html('<option value="all">-- Pilih Kelas  --</option>');
 
    $.each(data, function(i, data){
-    $('select[name=kelas]').append("<option value='"+data.aliasTingkat+"'>"+data.aliasTingkat+"</option>");
+    $('select[name=kelas]').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
   });
  }
 
@@ -204,7 +210,7 @@ function load_kelas(tingkat){
 // KELAS KETIKA DI CHANGE
 $('select[name=kelas]').change(function(){
 
-  cabang = $('select[name=cabang]').val();
+  cabang = $('#select_cabang').val();
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 

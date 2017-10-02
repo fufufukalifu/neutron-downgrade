@@ -46,8 +46,11 @@ class Laporanortu extends MX_Controller {
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
+			$id_pengguna=$this->session->userdata["id"];
+			$idcabang = $this->admincabang_model->get_idCabang_adminCabang($id_pengguna)[0]['id_cabang'];
+			$data['cabang'] = 
 			$data['files'] = array(
-				APPPATH . 'modules/laporanortu/views/v-daftar-laporan.php',
+				APPPATH . 'modules/laporanortu/views/v-daftar-laporan-cabang.php',
 				);
 			$this->parser->parse('admincabang/v-index-admincabang', $data);
 		} elseif ($hakAkses == 'admin') {
@@ -165,7 +168,7 @@ class Laporanortu extends MX_Controller {
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
 			$data['files'] = array(
-				APPPATH . 'modules/laporanortu/views/v-add-laporan.php',
+				APPPATH . 'modules/laporanortu/views/v-add-laporan-cabang.php',
 				);
 			$this->parser->parse('admincabang/v-index-admincabang', $data);
 		} elseif ($hakAkses == 'admin') {
