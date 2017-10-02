@@ -23,9 +23,9 @@
 
           <div class="col-sm-4">
            <select class="form-control" id="select_to">
-            <option value="all">Semua Tryout</option>          
+            <option value="all">Semua Tryout</option> 
             <?php foreach ($to as $item): ?>
-              <option value="<?=$item['id_tryout']?>"><?=$item['nm_tryout'] ?></option>
+              <option value="<?=$item['id_tryout'] ?>"><?=$item['nm_tryout'] ?></option>
             <?php endforeach ?>
           </select>
         </div>
@@ -79,6 +79,8 @@
           <th>Kosong</th>
           <th>Nilai</th>
           <th>Waktu Mengerjakan</th>
+          <th>Aksi</th>
+
         </tr>
       </thead>
 
@@ -151,7 +153,6 @@ function prevPage() {
     get_cabang();
     mySelect = $('select[name=cabang]').val();
     function set_tb_paket() { 
-      console.log(cabang);
       url=base_url+"admincabang/laporanto";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
       $.ajax({
@@ -353,12 +354,40 @@ function pdf() {
   cabang = $('#select_cabang').val();
   tryout = $('#select_to').val();
   paket = $('#select_paket').val();
-  console.log(cabang);
   if (cabang != "all" && tryout != "all" && paket != "all") {
     url = base_url+"admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
     window.open(url, '_blank');
   }else{
     sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
   }
+}
+
+function drop_report(datas){
+  url = base_url+"admincabang/drop_report";
+
+  swal({
+    title: "Yakin akan hapus report?",
+    text: "Anda tidak dapat membatalkan ini.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Ya,Tetap hapus!",
+    closeOnConfirm: false
+  },
+  function(){
+    $.ajax({
+      dataType:"text",
+      data:{id_report:datas},
+      type:"POST",
+      url:url,
+      success:function(){
+        swal("Terhapus!", "Data report berhasil dihapus.", "success");
+        dataTablePaket.ajax.reload(null,false);
+      },
+      error:function(){
+        sweetAlert("Oops...", "Data gagal terhapus!", "error");
+      }
+    });
+  });
 }
 </script>

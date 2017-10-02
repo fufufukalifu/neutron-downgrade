@@ -131,7 +131,9 @@ class Ortuback extends MX_Controller {
         }else{
             $id_pengguna = $this->session->userdata('USERNAME'); 
             // update status read menjadi 1
+            if ($UUID!="") {
             $this->msiswa->update_read_siswa($UUID);
+            }
  
         } 
 		$namadepan = $this->Ortuback_model->namasiswa($id_pengguna)[0]['namaDepan'];
@@ -163,7 +165,7 @@ class Ortuback extends MX_Controller {
 		$report_umum = $this->Ortuback_model->get_report_umum($id_pengguna);
 
 		// cek reportnya null atau tidak?
-		if ($report_nilai!='') {
+		if ($get_report_nilai!='') {
 			$data['namaortu'] = $report_nilai[0]['namaOrangTua'];
 
 			$n=1;

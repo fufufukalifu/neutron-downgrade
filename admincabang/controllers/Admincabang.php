@@ -137,6 +137,7 @@ class Admincabang extends MX_Controller {
 				<td>'.$sumKosong.'</td>
 				<td>'.number_format($nilai,2).'</td>
 				<td>'.$item['tgl_pengerjaan'].'</td>
+				<td><a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a></td>
 			</tr>';
 			$no++;
 		}
@@ -495,13 +496,15 @@ public function laporanpaket(){
 	// $id_cabang=$this->get_cabang()['id_cabang'];
 	// $data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
 	# get to
-		$data['to'] = $this->mtoback->get_To();
+
 	$hakAkses = $this->session->userdata['HAKAKSES'];
 	if ($hakAkses == 'admin_cabang') {
 		$id_cabang=$this->get_cabang()['id_cabang'];
 		$data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
 		$this->parser->parse('v-index-admincabang', $data);
 	} elseif ($hakAkses == 'admin') {
+		$data['to'] = $this->mtoback->get_To();
+		
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		$data['files'] = array(
 			APPPATH . 'modules/admincabang/views/v-daftar-paket-admin.php',
@@ -566,10 +569,20 @@ function pengerjaan(){
 	$data['to'] = $this->mtoback->get_To();
 
 	$data['judul_halaman'] = "Pengerjaan Tryout";
-	$data['files'] = array(
+
+	if ($this->session->userdata('HAKAKSES')=='admin') {
+			$data['files'] = array(
+		APPPATH . 'modules/logtryout/views/v-daftar-tryout-log-admin.php',
+		);
+	$this->parser->parse('admin/v-index-admin', $data);
+			# code...
+	}else{
+			$data['files'] = array(
 		APPPATH . 'modules/logtryout/views/v-daftar-tryout-log.php',
 		);
 	$this->parser->parse('v-index-admincabang', $data);
+
+	}
 }
 	// LAPORAN PENGERJAAN TO //
 

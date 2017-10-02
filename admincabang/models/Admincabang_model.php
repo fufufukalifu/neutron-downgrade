@@ -358,7 +358,7 @@ class Admincabang_model extends CI_model {
 	public function get_to_cabang($id_cabang='')
 	{
 		$this->db->select('*');
-		$this->db->from('tb_tryout to')->order_by('to.id_tryout','DESC');
+		$this->db->from('tb_tryout to')->group_by('to.id_tryout');
 		$this->db->join('tb_hakakses-to hto',"to.id_tryout=hto.id_tryout");
 		$this->db->join("tb_siswa siswa","siswa.id=hto.id_siswa");
 		$this->db->where('siswa.cabangID',$id_cabang);
