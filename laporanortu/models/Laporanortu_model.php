@@ -105,7 +105,7 @@ class Laporanortu_model extends CI_Model{
 
 		$kelas = $data['kelas'];
 		if ($data['kelas']!="all") {
-			$this->db->where("t.aliasTingkat LIKE '%$kelas%' ");
+			$this->db->where("t.id", $kelas);
 		}
 
 		$jenis = $data['jenis'];

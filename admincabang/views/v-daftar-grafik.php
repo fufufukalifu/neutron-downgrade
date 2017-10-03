@@ -24,11 +24,15 @@
         </div>
 
         <div class="col-sm-4">
-         <select class="form-control" id="cabang_select">
-          <option value="all">Semua Cabang</option>
-          <?php foreach ($cabang as $item): ?>
-            <option value="<?=$item->id?>"><?=$item->namaCabang?></option>
-          <?php endforeach ?>
+         <select class="form-control" id="cabang_select" disabled="true">
+          <?php if ($this->session->userdata('HAKAKSES')=='admin_cabang'): ?>
+            <option value="<?=$id_cabang?>"><?=$cabang?></option>
+          <?php else : ?>
+            <option value="all">Semua Cabang</option>
+            <?php foreach ($cabang as $item): ?>
+              <option value="<?=$item->id?>"><?=$item->namaCabang?></option>
+            <?php endforeach ?>
+          <?php endif; ?>
         </select>
       </div>
 

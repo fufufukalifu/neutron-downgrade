@@ -38,8 +38,6 @@ class Admincabang extends MX_Controller {
 	public function infograph() {
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
-		# get to
-		$data['to'] = $this->mtoback->get_To();
 
 /*
 		$idto=132;
@@ -71,6 +69,10 @@ class Admincabang extends MX_Controller {
 
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin_cabang') {
+			$id_cabang=$this->get_cabang()['id_cabang'];
+			$data['id_cabang'] = $this->get_cabang()['id_cabang'];
+			$data['cabang'] = $this->get_cabang()['namaCabang'];
+			$data['to'] = $this->admincabang_model->get_to_cabang($id_cabang);
 			$this->parser->parse('v-index-admincabang', $data);
 		} elseif ($hakAkses == 'guru') {
 			redirect(site_url('guru/dashboard/'));

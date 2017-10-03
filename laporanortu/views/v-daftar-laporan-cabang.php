@@ -102,17 +102,6 @@
 var dataTableReport;
 $(document).ready(function(){
   var cabang = $('select[name=cabang]').val();
-
-  dataTableReport = $('.daftarreport').DataTable({
-              "ajax": {
-                "url": base_url+"laporanortu/laporanortu_ajax/"+cabang,
-                "type": "POST"
-              },
-              "emptyTable": "Tidak Ada Data Pesan",
-              "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-              "bDestroy": true,
-            });
-
   get_cabang();
 
  });
@@ -125,17 +114,28 @@ $(document).ready(function(){
         success:function(Data){
           var ob_cabang = JSON.parse(Data);
           cabang=ob_cabang.id_cabang;
-          console.log(ob_cabang.namaCabang);
           // info cabang
           $("select[name=cabang]").append('<option value="'+cabang+'">'+ob_cabang.namaCabang+'</option>');
           $("select[name=cabang]").attr("disabled","true");
-           // <option value="all">Semua Cabang</option>
+          set_tb_laporan(cabang);
         },
         error:function(){
 
         }
       });
 
+    }
+
+    function set_tb_laporan(cabang) {
+       dataTableReport = $('.daftarreport').DataTable({
+              "ajax": {
+                "url": base_url+"laporanortu/laporanortu_ajax/"+cabang,
+                "type": "POST"
+              },
+              "emptyTable": "Tidak Ada Data Pesan",
+              "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
+              "bDestroy": true,
+            });
     }
 // CABANG KETIKA DI CHANGE
 $('select[name=cabang]').change(function(){
@@ -193,7 +193,7 @@ function load_kelas(tingkat){
    $('select[name=kelas]').html('<option value="all">-- Pilih Kelas  --</option>');
 
    $.each(data, function(i, data){
-    $('select[name=kelas]').append("<option value='"+data.aliasTingkat+"'>"+data.aliasTingkat+"</option>");
+    $('select[name=kelas]').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
   });
  }
 

@@ -194,7 +194,7 @@ function load_kelas(tingkat){
    $('select[name=kelas]').html('<option value="all">-- Pilih Kelas  --</option>');
 
    $.each(data, function(i, data){
-    $('select[name=kelas]').append("<option value='"+data.aliasTingkat+"'>"+data.aliasTingkat+"</option>");
+    $('select[name=kelas]').append("<option value='"+data.id+"'>"+data.aliasTingkat+"</option>");
   });
  }
 
