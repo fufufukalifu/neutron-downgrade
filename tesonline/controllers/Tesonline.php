@@ -39,8 +39,8 @@ public function index() {
         APPPATH . 'modules/tesonline/views/v-test-show-tingkat.php',
 //        APPPATH . 'modules/homepage/views/v-footer.php',
         APPPATH . 'modules/testimoni/views/v-footer.php',
-        );
-    $data['tingkat'] = $this->load->mtingkat->gettingkat();
+        ); 
+    $data['tingkat'] = $this->load->mtingkat->gettingkat_latihan();
     $this->parser->parse('templating/index', $data);
 }
 

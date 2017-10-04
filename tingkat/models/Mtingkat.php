@@ -36,8 +36,14 @@ class MTingkat extends CI_Model {
 
 	}
 
-	
-
+	// get tingkat untuk tes online
+	public function gettingkat_latihan() {
+		$this->db->select( '*' )->from( 'tb_tingkat' );
+		$this->db->where( 'status', 1 );
+		$this->db->limit(3);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
 
 	public function getmapelbytingkatid($tingkatid) {
