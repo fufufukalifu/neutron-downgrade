@@ -3,7 +3,7 @@
 class Laporanortu_model extends CI_Model{
 
 	//get report all
-	function get_report_ortu($data){
+	function get_report_ortu($data,$records_per_page='',$page=''){
 		$this->db->order_by('p.id','desc');
 		$this->db->select('p.namaPengguna,
 			o.siswaID,
@@ -17,7 +17,7 @@ class Laporanortu_model extends CI_Model{
 			o.id as id_ortu,
 			');
 
-		$this->db->from('tb_orang_tua o');
+		// $this->db->from('tb_orang_tua o');
 		$this->db->join('tb_siswa s' , 'o.siswaID=s.id');
 		$this->db->join('tb_tingkat t' , 's.tingkatID=t.id');
 		$this->db->join('tb_cabang c' , 's.cabangID = c.id');
@@ -39,7 +39,7 @@ class Laporanortu_model extends CI_Model{
 			$this->db->where("t.id", $kelas);
 		}
 
-		$query = $this->db->get();
+		$query = $this->db->get('tb_orang_tua o',$records_per_page,$page);
 		return $query->result_array();
 	}
 

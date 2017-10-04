@@ -187,40 +187,56 @@ class Laporanortu extends MX_Controller {
 	}
 
 	//laporan ortu ajax
-	public function addlaporanortu_ajax($cabang="all",$tingkat="all",$kelas="all"){
+	public function addlaporanortu_ajax($cabang="all",$tingkat="all",$kelas="all",$records_per_page=10,$page=0){
+		//data post
+		$records_per_page=$this->input->post('records_per_page');
+		$page=$this->input->post('page');
+		$cabang=$this->input->post('cabang');
+		$tryout=$this->input->post('tingkat');
+		$paket=$this->input->post('kel');
+		$keySearch=$this->input->post('keySearch');
+		//data post
+
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get to
+		$data['to'] = $this->mtoback->get_To();
 
-		# get tingkat
-		$data['tingkat'] = $this->Laporanortu_model->get_all_tingkat();
-
-		$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
-
-		$all_report = $this->Laporanortu_model->get_report_ortu($datas);
-
-		$data = array();
-		$n=1;
-		foreach ( $all_report as $item ) {
-		
-			$row = array();
-			$row[] = $n;
-			$row[] = $item ['namaOrangTua'];
-			$row[] = $item ['namaDepan']." ".$item ['namaBelakang'];
-			$row[] = $item ['namaPengguna'];
-			$row[] = "<textarea name='isi' class='pesan' style='width:300px; height:200px;'></textarea>";
-			$row[] = "<span class='checkbox custom-checkbox custom-checkbox-inverse'>
-			<input type='checkbox' name="."report".$n." id="."report".$item['id_ortu']." value=".$item['id_ortu'].">
-			<label for="."report".$item['id_ortu'].">&nbsp;&nbsp;</label></span>";
-			
-			$data[] = $row;
-			$n++;
+		if ($keySearch != '' && $keySearch !=' ' ) {
+			$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
+			$all_report = $this->Laporanortu_model->get_report_ortu($datas,$records_per_page,$page);
+			// $all_report = $this->admincabang_model->cari_report_paket($datas,$records_per_page,$page,$keySearch);
+		} else {
+			$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
+			$all_report = $this->Laporanortu_model->get_report_ortu($datas,$records_per_page,$page);
 		}
 
-		$output = array(
-			"data"=>$data,
-			);
+		$data = array();
+		$tb_report=null;
+		$no=$page+1;
 
-		echo json_encode( $output );
+		if($all_report){
+			foreach ( $all_report as $item ) {
+				$tb_report.=	'<tr>
+				<td>'.$no.'</td>	
+				<td>'.$item ['namaOrangTua'].'</td>
+				<td>'.$item ['namaDepan']." ".$item ['namaBelakang'].'</td>
+				<td>'.$item ['namaPengguna'].'</td>
+				<td><textarea name="isi" class="pesan" style="width:300px; height:200px;"></textarea></td>
+				<td><span class="checkbox custom-checkbox custom-checkbox-inverse">
+					<input type="checkbox" name='."report".$n.' id='."report".$item['id_ortu'].' value='.$item['id_ortu'].'>
+					<label for='."report".$item['id_ortu'].'>&nbsp;&nbsp;</label></span></td>
+				
+			</tr>';
+			$no++;
+			}
+		}else{
+			$tb_report=	"<tr><td colspan=11>Tidak Ada Data</td></tr>";
+		}
+
+		// <td><a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a></td>
+
+		echo json_encode( $tb_report );
 	}
 
 	// function get kelas
@@ -237,6 +253,63 @@ class Laporanortu extends MX_Controller {
 	  ->set_output( json_encode( $this->Laporanortu_model->get_cabang() ) ) ;
 	}
 
+	public function pagination_daftar_all_report($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0,$keySearch='')
+	{
+		//data post
+		// $records_per_page=$this->input->post('records_per_page');
+		// $page=$this->input->post('page');
+		//data post
+		# get cabang
+	$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get to
+	$data['to'] = $this->mtoback->get_To();
+	$cabang=$this->input->post('cabang');
+	$tryout=$this->input->post('tryout');
+	$paket=$this->input->post('paket');
+	$keySearch=$this->input->post('keySearch');
+	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+	if ($keySearch != '' && $keySearch !=' ' ) {
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$jumlah_data = $this->admincabang_model->jumlah_cari_report_paket($datas,$keySearch);
+	} else {
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
+	}
+
+
+	$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+				</a></li>';
+
+	$pagePagination=1;
+
+	$sumPagination=($jumlah_data/$records_per_page);
+
+	for ($i=0; $i < $sumPagination; $i++) { 
+		if ($pagePagination<=7) {
+			$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+		}else{
+			$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+		}
+
+		$pagePagination++;
+	}
+
+	if ($pagePagination>7) {
+		$pagination.='<li class="" id="page-next">
+		<a href="javascript:void(0)" onclick="nextPage()" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+		</a>
+	</li>';
+	}
+
+	if ($pagePagination<3) {
+		$pagination='';
+	}
+
+
+	echo json_encode($pagination);
+	}
 
 }
 
