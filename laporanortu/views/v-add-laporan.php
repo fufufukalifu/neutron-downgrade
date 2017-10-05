@@ -112,6 +112,7 @@
 
             </tbody>
           </table>
+          <a class="btn btn-primary send_laporan">Kirim</a>
             <!-- div pagination daftar token -->
             <div class="col-md-12">
               <ul class="pagination pagination-report">
@@ -136,7 +137,7 @@
   var mySelect;
   var url;
   var dataReport;
-  var records_per_page=50;
+  var records_per_page=10;
   var page=0;
   var pagination_report;
   var pageVal=0;
@@ -150,56 +151,20 @@
   var keySearch='';
   // next page
   function nextPage() {
-    selectPagePaket(next);
+    selectPageReport(next);
   }
   // prev page
   function prevPage() {
-    selectPagePaket(prev);
+    selectPageReport(prev);
   }
     
   $(document).ready(function(){
-    var cabang = $('select[name=cabang]').val();
+    // var cabang = $('select[name=cabang]').val();
     get_cabang();  
     mySelect = $('select[name=cabang]').val();
-    function set_tb_report() { 
-      url=base_url+"laporanortu/addlaporanortu_ajax/"+cabang;
-      dataReport={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tingkat:tingkat,kelas:kelas,keySearch:keySearch};
-      console.log(dataReport)
-      $.ajax({
-        url:url,
-        data:dataReport,
-        dataType:"text",
-        type:"post",
-        success:function(Data)
-        {
-          tb_report = JSON.parse(Data);
-          $('#record_daftar_report').append(tb_report);
-        },
-        error:function(){
-
-        },
-      });
-    }
-    function set_pagination_tb_report() {
-      url=base_url+"laporanortu/pagination_daftar_all_report";
-      dataReport={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tingkat:tryout,paket:paket,keySearch:keySearch};
-      console.log(dataPaket);
-      $.ajax({
-        url:url,
-        data:dataPaket,
-        dataType:"text",
-        type:"post",
-        success:function(Data)
-        {
-       $('.pagination-report').empty();
-          pagination_report = JSON.parse(Data);
-          $('.pagination-report').append(pagination_report);
-        },
-        error:function(){
-
-        },
-      });
-    }
+    set_tb_report();
+    set_pagination_tb_report();
+    
   });
 
   // get cabang
@@ -232,17 +197,8 @@ $('select[name=cabang]').change(function(){
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 
-  url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
-
-  dataTableReport = $('.daftarreport').DataTable({
-    "ajax": {
-      "url": url,
-      "type": "POST"
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
+  selectPageReport();
+  set_pagination_tb_report();
 });
 
 
@@ -252,18 +208,8 @@ $('select[name=tingkat_pel]').change(function(){
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 
-  url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
-
-  dataTableReport = $('.daftarreport').DataTable({
-    "ajax": {
-      "url": url,
-      "type": "POST"
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
-
+  selectPageReport();
+  set_pagination_tb_report();
   load_kelas(tingkat);
 
 });
@@ -291,17 +237,8 @@ $('select[name=kelas]').change(function(){
   tingkat = $('select[name=tingkat_pel]').val();
   kelas = $('select[name=kelas]').val();
 
-  url = base_url+"laporanortu/addlaporanortu_ajax/"+cabang+"/"+tingkat+"/"+kelas;
-
-  dataTableReport = $('.daftarreport').DataTable({
-    "ajax": {
-      "url": url,
-      "type": "POST"
-    },
-    "emptyTable": "Tidak Ada Data Pesan",
-    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entries",
-    "bDestroy": true,
-  });
+  selectPageReport();
+  set_pagination_tb_report();
 });
 
 
@@ -393,5 +330,147 @@ function reload(){
   dataTableReport.ajax.reload(null,false); 
 }
 
+function set_tb_report() { 
+      url=base_url+"laporanortu/addlaporanortu_ajax";
+      dataReport={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tingkat:tingkat,kelas:kelas,keySearch:keySearch};
+      console.log(dataReport);
+      $.ajax({
+        url:url,
+        data:dataReport,
+        dataType:"text",
+        type:"post",
+        success:function(Data)
+        {
+          tb_report = JSON.parse(Data);
+          $('#record_daftar_report').append(tb_report);
+        },
+        error:function(){
+
+        },
+      });
+    }
+
+function set_pagination_tb_report() {
+      url=base_url+"laporanortu/pagination_daftar_all_report";
+      dataReport={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tingkat:tingkat,kelas:kelas,keySearch:keySearch};
+      console.log(dataReport);
+      $.ajax({
+        url:url,
+        data:dataReport,
+        dataType:"text",
+        type:"post",
+        success:function(Data)
+        {
+       $('.pagination-report').empty();
+          pagination_report = JSON.parse(Data);
+          $('.pagination-report').append(pagination_report);
+        },
+        error:function(){
+
+        },
+      });
+}
+
+function selectPageReport(pageVal='0') {
+  $('#record_daftar_report').empty();
+  page=pageVal;
+  pageSelek=page*records_per_page;
+  url=base_url+"laporanortu/addlaporanortu_ajax";
+  dataReport={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tingkat:tingkat,kelas:kelas,keySearch:keySearch};
+  $.ajax({
+    url:url,
+    data:dataReport,
+    dataType:"text",
+    type:"post",
+    success:function(Data)
+    {
+      tb_report = JSON.parse(Data);
+      $('#record_daftar_report').append(tb_report);
+    },
+    error:function(){
+      // sweetAlert("Oops...", e, "error");
+    },
+  });
+
+  //meridian adalah nilai tengah padination
+ $('#page-'+meridian).removeClass('active');
+  var newMeridian=page+1;
+  var loop;
+  var hidePage;
+  var showPage;
+  if (newMeridian<=4) {
+        $("#page-prev").addClass('hide');
+    //banyak pagination yg akan di tampilkan dan sisembunyikan
+    loop=meridian-newMeridian;
+    // start id pagination yg akan ditampilkan
+    var idPaginationshow =1;
+    // start id pagination yg akan sembunyikan
+    var idPaginationhide =9;
+    prev=1;
+    next=7;
+    //lakukan pengulangan sebanyak loop
+    for (var i = 0; i < loop; i++) {
+      hidePagination='#page-'+idPaginationhide;
+      showPagination='#page-'+idPaginationshow;
+      //pagination yg di hide
+      $(showPagination).removeClass('hide');
+      //pagination baru yg ditampilkan
+      $(hidePagination).addClass('hide');
+      idPaginationshow++;
+      idPaginationhide--;
+    }
+  }else if( newMeridian>meridian){
+    $("#page-prev").removeClass('hide');
+        //banyak pagination yg akan di tampilkan dan sisembunyikan
+        loop=newMeridian-meridian;
+        // start id pagination yg akan ditampilkan
+        var idPaginationshow =newMeridian+3;
+        // start id pagination yg akan sembunyikan
+        var idPaginationhide =meridian-3;
+        //lakukan pengulangan sebanyak loop
+        for (var i = 0; i < loop; i++) {
+          hidePagination='#page-'+idPaginationhide;
+          showPagination='#page-'+idPaginationshow;
+          //pagination yg di hide
+          $(showPagination).removeClass('hide');
+          //pagination baru yg ditampilkan
+          $(hidePagination).addClass('hide');
+                idPaginationshow--;
+          idPaginationhide++;
+        }
+  }else{
+
+    //banyak pagination yg akan di tampilkan dan sisembunyikan
+    loop=meridian-newMeridian;
+    // start id pagination yg akan ditampilkan
+    var idPaginationshow =newMeridian-3;
+    // start id pagination yg akan sembunyikan
+    var idPaginationhide =meridian+3;
+    //lakukan pengulangan sebanyak loop
+    for (var i = 0; i < loop; i++) {
+      hidePagination='#page-'+idPaginationhide;
+      showPagination='#page-'+idPaginationshow;
+      //pagination yg di hide
+      $(showPagination).removeClass('hide');
+      //pagination baru yg ditampilkan
+      $(hidePagination).addClass('hide');
+            idPaginationshow++;
+      idPaginationhide--;
+    }
+  } 
+   prev=newMeridian-2;
+   next=newMeridian;
+   meridian=newMeridian;
+   $('#page-'+meridian).addClass('active');
+
+}
+
+$('#cariDat').click(function(e){
+      //get value dari input name cariDat
+      keySearch=$('[name=cariDat]').val();
+      selectPageReport();
+      set_pagination_tb_report();
+      //
+    });
 
 </script>

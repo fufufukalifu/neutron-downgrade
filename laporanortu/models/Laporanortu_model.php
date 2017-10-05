@@ -43,6 +43,47 @@ class Laporanortu_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function cari_report_ortu($data,$records_per_page='',$page='',$keySearch=''){
+		$this->db->order_by('p.id','desc');
+		$this->db->like('o.namaOrangTua',$keySearch);
+		$this->db->select('p.namaPengguna,
+			o.siswaID,
+			s.penggunaID,
+			c.namaCabang,
+			s.namaBelakang,
+			s.namaDepan,
+			o.namaOrangTua,
+			s.tingkatID,
+			t.aliasTingkat,
+			o.id as id_ortu,
+			');
+
+		// $this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s' , 'o.siswaID=s.id');
+		$this->db->join('tb_tingkat t' , 's.tingkatID=t.id');
+		$this->db->join('tb_cabang c' , 's.cabangID = c.id');
+		$this->db->join('tb_pengguna p' , 's.penggunaID = p.id');
+
+
+		if ($data['cabang']!="all") {
+			$this->db->where('c.id', $data['cabang']);
+		}
+
+		$tingkat = $data['tingkat'];
+		if ($data['tingkat']!="all") {
+			$this->db->where("t.aliasTingkat LIKE '%$tingkat%' ");
+		}
+
+		$kelas = $data['kelas'];
+		if ($data['kelas']!="all") {
+			// $this->db->where("t.aliasTingkat LIKE '%$kelas%' ");
+			$this->db->where("t.id", $kelas);
+		}
+
+		$query = $this->db->get('tb_orang_tua o',$records_per_page,$page);
+		return $query->result_array();
+	}
+
 	/*Mengambil semua tingkat*/
 	function get_all_tingkat(){
 		$this->db->select('*');
@@ -162,6 +203,46 @@ class Laporanortu_model extends CI_Model{
 	    return $query->result_array();
 	}
 	
+	function jumlah_report_ortu($data){
+		$this->db->order_by('p.id','desc');
+		$this->db->select('p.namaPengguna,
+			o.siswaID,
+			s.penggunaID,
+			c.namaCabang,
+			s.namaBelakang,
+			s.namaDepan,
+			o.namaOrangTua,
+			s.tingkatID,
+			t.aliasTingkat,
+			o.id as id_ortu,
+			');
+
+		// $this->db->from('tb_orang_tua o');
+		$this->db->join('tb_siswa s' , 'o.siswaID=s.id');
+		$this->db->join('tb_tingkat t' , 's.tingkatID=t.id');
+		$this->db->join('tb_cabang c' , 's.cabangID = c.id');
+		$this->db->join('tb_pengguna p' , 's.penggunaID = p.id');
+
+
+		if ($data['cabang']!="all") {
+			$this->db->where('c.id', $data['cabang']);
+		}
+
+		$tingkat = $data['tingkat'];
+		if ($data['tingkat']!="all") {
+			$this->db->where("t.aliasTingkat LIKE '%$tingkat%' ");
+		}
+
+		$kelas = $data['kelas'];
+		if ($data['kelas']!="all") {
+			// $this->db->where("t.aliasTingkat LIKE '%$kelas%' ");
+			$this->db->where("t.id", $kelas);
+		}
+
+		$query = $this->db->get('tb_orang_tua o');
+		return $query->num_rows();
+	}
+
 
 }
 ?>

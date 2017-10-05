@@ -187,24 +187,25 @@ class Laporanortu extends MX_Controller {
 	}
 
 	//laporan ortu ajax
-	public function addlaporanortu_ajax($cabang="all",$tingkat="all",$kelas="all",$records_per_page=10,$page=0){
+	public function addlaporanortu_ajax($records_per_page=10,$page=0,$cabang="all",$tingkat="all",$kelas="all",$keySearch=''){
 		//data post
 		$records_per_page=$this->input->post('records_per_page');
 		$page=$this->input->post('page');
 		$cabang=$this->input->post('cabang');
-		$tryout=$this->input->post('tingkat');
-		$paket=$this->input->post('kel');
+		$tingkat=$this->input->post('tingkat');
+		$kelas=$this->input->post('kelas');
 		$keySearch=$this->input->post('keySearch');
 		//data post
+		// echo json_encode($cabang);
 
 		# get cabang
 		$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
-		$data['to'] = $this->mtoback->get_To();
+		// $data['to'] = $this->mtoback->get_To();
 
 		if ($keySearch != '' && $keySearch !=' ' ) {
 			$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
-			$all_report = $this->Laporanortu_model->get_report_ortu($datas,$records_per_page,$page);
+			$all_report = $this->Laporanortu_model->cari_report_ortu($datas,$records_per_page,$page,$keySearch);
 			// $all_report = $this->admincabang_model->cari_report_paket($datas,$records_per_page,$page,$keySearch);
 		} else {
 			$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
@@ -214,7 +215,7 @@ class Laporanortu extends MX_Controller {
 		$data = array();
 		$tb_report=null;
 		$no=$page+1;
-
+		$n=1;
 		if($all_report){
 			foreach ( $all_report as $item ) {
 				$tb_report.=	'<tr>
@@ -228,6 +229,7 @@ class Laporanortu extends MX_Controller {
 					<label for='."report".$item['id_ortu'].'>&nbsp;&nbsp;</label></span></td>
 				
 			</tr>';
+			
 			$no++;
 			}
 		}else{
@@ -253,7 +255,7 @@ class Laporanortu extends MX_Controller {
 	  ->set_output( json_encode( $this->Laporanortu_model->get_cabang() ) ) ;
 	}
 
-	public function pagination_daftar_all_report($cabang="all",$tryout="all",$paket="all",$records_per_page=100,$page=0,$keySearch='')
+	public function pagination_daftar_all_report($records_per_page=100,$page=0,$cabang="all",$tingkat="all",$kelas="all",$keySearch='')
 	{
 		//data post
 		// $records_per_page=$this->input->post('records_per_page');
@@ -262,19 +264,19 @@ class Laporanortu extends MX_Controller {
 		# get cabang
 	$data['cabang'] = $this->mcabang->get_all_cabang();
 		# get to
-	$data['to'] = $this->mtoback->get_To();
+	// $data['to'] = $this->mtoback->get_To();
 	$cabang=$this->input->post('cabang');
-	$tryout=$this->input->post('tryout');
-	$paket=$this->input->post('paket');
+	$tingkat=$this->input->post('tingkat');
+	$kelas=$this->input->post('kelas');
 	$keySearch=$this->input->post('keySearch');
-	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-	if ($keySearch != '' && $keySearch !=' ' ) {
-		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$jumlah_data = $this->admincabang_model->jumlah_cari_report_paket($datas,$keySearch);
-	} else {
-		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-		$jumlah_data = $this->admincabang_model->jumlah_report_paket($datas);
-	}
+	// $datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+	// if ($keySearch != '' && $keySearch !=' ' ) {
+	// 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+	// 	$jumlah_data = $this->admincabang_model->jumlah_cari_report_paket($datas,$keySearch);
+	// } else {
+		$datas = ['cabang'=>$cabang,'tingkat'=>$tingkat,'kelas'=>$kelas];
+		$jumlah_data = $this->Laporanortu_model->jumlah_report_ortu($datas);
+	// }
 
 
 	$pagination='<li class="hide" id="page-prev"><a href="javascript:void(0)" onclick="prevPage()" aria-label="Previous">
@@ -287,9 +289,9 @@ class Laporanortu extends MX_Controller {
 
 	for ($i=0; $i < $sumPagination; $i++) { 
 		if ($pagePagination<=7) {
-			$pagination.='<li ><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
+			$pagination.='<li ><a href="javascript:void(0)" onclick="selectPageReport('.$i.')" id="page-'.$pagePagination.'">'.$pagePagination.'</a></li>';
 		}else{
-			$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPagePaket('.$i.')" >'.$pagePagination.'</a></li>';
+			$pagination.='<li class="hide" id="page-'.$pagePagination.'"><a href="javascript:void(0)" onclick="selectPageReport('.$i.')" >'.$pagePagination.'</a></li>';
 		}
 
 		$pagePagination++;
