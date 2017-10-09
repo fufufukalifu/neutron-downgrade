@@ -2,14 +2,14 @@
 	<div class="row">
 		<div class="col-md-12">
 		<!-- panel -->
-			<div class="panel panel-teal">
+			<div class="panel panel-inverse">
 				<!-- header panel -->
 				<div class="panel-heading">
 					<h3 class="panel-title">Export Data Excel Magic</h3>
 					<!-- dropdown cabang -->
 					<div class="panel-toolbar text-right">
 						<div class="btn-group">
-							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
+							<a  class="btn btn-sm btn-teal btn-outline" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
 						</div>
 					</div>
 					<!-- / dropdown cabang -->
@@ -163,7 +163,7 @@ function upload_data_xlsx(){
 			} else {
 				show_tb_preview();
 				 $.each(datImport, function (key, val) {
-        records_tb [i] = [no,val.noIndukNeutron,val.namaDepan,val.tgl_lahir];
+        records_tb [i] = [no,val.noIndukNeutron,val.nama,val.tgl_lahir];
         no++;
          i++;
     		});
