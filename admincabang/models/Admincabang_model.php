@@ -66,7 +66,7 @@ class Admincabang_model extends CI_model {
 
 	function get_report_paket_pdf($data){
 		$this->db->order_by('namaDepan','asc');
-	
+		$this->db->limit(15);
 		if ($data['cabang']!="all") {
 			$this->db->where('id_cabang', $data['cabang']);
 		}
@@ -80,6 +80,7 @@ class Admincabang_model extends CI_model {
 
 		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
 		$query = $this->db->get('view_laporan_paket_TO');
+
 		return $query->result_array();
 	}
 

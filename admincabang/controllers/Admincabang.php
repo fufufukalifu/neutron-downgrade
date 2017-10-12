@@ -130,9 +130,8 @@ class Admincabang extends MX_Controller {
 				$tb_paket.=	'<tr>
 				<td>'.$no.'</td>	
 				<td>'.$item ['namaPengguna'].'</td>
-				<td>'.$item ['nm_paket'].'</td>
-				<td>'.$item ['namaCabang'].'</td>
 				<td>'.$nama.'</td>
+				<td>'.$item ['nm_paket'].'</td>
 				<td>'.$jumlahSoal.'</td>							
 				<td>'.$sumBenar.'</td>
 				<td>'.$sumSalah.'</td>
@@ -206,33 +205,6 @@ if ($pagePagination<3) {
 
 echo json_encode($pagination);
 }
-	// // laporan paket
-	// public function laporanpaket(){
-	// 	$data['judul_halaman'] = "Laporan Paket TO";
-	// 	$data['files'] = array(
-	// 		APPPATH . 'modules/admincabang/views/v-daftar-paket.php',
-	// 		);
-	// 	# get cabang
-	// 	$data['cabang'] = $this->mcabang->get_all_cabang();
-	// 	# get to
-	// 	$data['to'] = $this->mtoback->get_To();
-	// 	$hakAkses = $this->session->userdata['HAKAKSES'];
-	// 	if ($hakAkses == 'admin_cabang') {
-	// 		$this->parser->parse('v-index-admincabang', $data);
-	// 	} elseif ($hakAkses == 'admin') {
-	// 		$data['files'] = array(
-	// 			APPPATH . 'modules/admincabang/views/v-daftar-paket-admin.php',
-	// 			);
-	// 		$this->parser->parse('admin/v-index-admin', $data);
-	// 	} elseif ($hakAkses == 'guru') {
-	// 		redirect(site_url('guru/dashboard/'));
-	// 	} elseif ($hakAkses == 'siswa') {
-	// 		redirect(site_url('welcome'));
-	// 	} else {
-	// 		redirect(site_url('login'));
-	// 	}
-	// }
-
     // function get paket
 public function get_paket( $to_id ) {
 	$data = $this->output
@@ -240,6 +212,7 @@ public function get_paket( $to_id ) {
 	->set_output( json_encode( $this->admincabang_model->get_paket( $to_id ) ) );
 }
 
+// laporan pdf per paket
 public function laporanPDF($cabang="all",$tryout="all",$paket="all")
 {
 	$this->load->library('Pdf');
@@ -306,31 +279,95 @@ public function laporanPDF($cabang="all",$tryout="all",$paket="all")
 	}
 
 }
-
-public function testPDF($cabang="all",$tryout="all",$paket="all")
+// laporan pdf per to
+public function laporanPDF_to($cabang="all",$tryout="all",$paket="all")
 {
 	$this->load->library('Pdf');
-
 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-
-	$all_report = $this->admincabang_model->get_report_paket($datas);
-
-	$datArr = array();
-
+	$all_report = $this->admincabang_model->get_report_paket_pdf($datas);		
+	$data['all_report'] = array();
+	$no=0;
+	$sumNilai=0;
+	$maxNilai=0;
+	$minNilai=100;
 	foreach ( $all_report as $item ) {
-		$row = array();
-		$row[] = $item ['id_report'];
-		$row[] = $item ['namaPengguna'];
-		$row[] = $item ['nm_paket'];
-		$row[] = $item ['namaCabang'];
+		$no++;
+		$sumBenar=$item ['jmlh_benar'];
+		$sumSalah=$item ['jmlh_salah'];
+		$sumKosong=$item ['jmlh_kosong'];
+			//hitung jumlah soal
+		$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+						// cek jika pembagi 0
+		if ($jumlahSoal != 0) {
+				//hitung nilai
+			$nilai=$sumBenar/$jumlahSoal*100;
+		}
 
+		$paket=$item ['nm_paket'];
+		$cabang=$item ['namaCabang'];
 
-		$datArr[] = $row;
+		$data['all_report'][]=array(
+			'no'=>$no,
+			'jumlah_soal'=>$jumlahSoal,
+			'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
+			'jumlah_soal'=>$jumlahSoal,
+			'nilai'=>number_format($nilai,2),
+			'tgl_pengerjaan'=>$item ['tgl_pengerjaan']
+			);
+
+		//sum Nilai
+		$sumNilai += $nilai;
+			//set Max nilai
+		if ($maxNilai<$nilai) {
+			$maxNilai=$nilai;
+		}
+			//set Min nilai
+		if($minNilai>$nilai){
+			$minNilai=$nilai;
+		}
+
 	}
+		//hitung rata2 nilai
+	$avg=$sumNilai/$no;
+		//format rata2 max 2 digit di belakang koma
+	$formattedAvg = number_format($avg,2);
+	$data['avg']=$formattedAvg;
+	$data['jumlahSiswa']=$no;
+	$data['maxNilai']=number_format($maxNilai,2);
+	$data['minNilai']=number_format($minNilai,2);
+	$data['paket'] = $paket;
+	$data['cabang'] =$cabang;
+	// if ($cabang !="all" && $tryout !="all" && $paket !="all") {
+	// 	$this->parser->parse('v-laporan_to.php',$data);
+	// }else{
+	// 	redirect(site_url('admincabang/laporanpaket'));
+	// }
 
-	$data['all_report']=$datArr;
-	$this->parser->parse('v-laporanPDF-to.php',$data);
 }
+// public function testPDF($cabang="all",$tryout="all",$paket="all")
+// {
+// 	$this->load->library('Pdf');
+
+// 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+
+// 	$all_report = $this->admincabang_model->get_report_paket($datas);
+
+// 	$datArr = array();
+
+// 	foreach ( $all_report as $item ) {
+// 		$row = array();
+// 		$row[] = $item ['id_report'];
+// 		$row[] = $item ['namaPengguna'];
+// 		$row[] = $item ['nm_paket'];
+// 		$row[] = $item ['namaCabang'];
+
+
+// 		$datArr[] = $row;
+// 	}
+
+// 	$data['all_report']=$datArr;
+// 	$this->parser->parse('v-laporanPDF-to.php',$data);
+// }
 
 function drop_report(){
 	if ($this->input->post()) {

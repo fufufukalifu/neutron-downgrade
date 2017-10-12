@@ -2,7 +2,7 @@
   <div class="col-md-12 kirim_token">
     <div class="panel panel-teal">
       <div class="panel-heading">
-        <h3 class="panel-title">Daftar Paket TO  </h3> 
+        <h3 class="panel-title">Daftar Paket TO</h3> 
         <div class="panel-toolbar text-right">
           <div class="col-md-11">
            <div class="col-sm-4">
@@ -38,6 +38,7 @@
         </div>
       </div>
       <button class="btn btn-sm btn-inverse col-sm-1" onclick="pdf()">PDF</button>
+      <button class="btn btn-sm btn-outline btn-inverse col-sm-1" onclick="pdf_rto()">PDF</button>
     </div>
 
   </div>
@@ -69,10 +70,9 @@
       <thead>
         <tr>
           <th>No</th>
-          <th>Username</th>
-          <th>Nama Paket</th>
-          <th>Cabang</th>
+          <th>Nis CBT</th>
           <th>Nama SIswa</th>
+           <th>Nama Paket</th>
           <th>Jumlah Soal</th>
           <th>Benar</th>
           <th>Salah</th>
@@ -152,6 +152,8 @@ function prevPage() {
     }
     get_cabang();
     mySelect = $('select[name=cabang]').val();
+
+    //set data laporan paket to
     function set_tb_paket() { 
       url=base_url+"admincabang/laporanto";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
@@ -176,7 +178,6 @@ function prevPage() {
     function set_pagination_tb_paket() {
       url=base_url+"admincabang/pagination_daftar_paket";
       dataPaket={records_per_page:records_per_page,page:pageSelek,cabang:cabang,tryout:tryout,paket:paket,keySearch:keySearch};
-      console.log(dataPaket);
       $.ajax({
         url:url,
         data:dataPaket,
@@ -194,7 +195,6 @@ function prevPage() {
       });
     }
     
-
       // even untuk jumlah record per halaman
     $("[name=records_per_page]").change(function(){
       records_per_page =$('[name=records_per_page]').val();
@@ -349,7 +349,7 @@ function load_paket(id_to){
 }
 
 
-
+// laporan pdf per paket
 function pdf() {
   /// TOMBOL PDF KETIKA DI KLIK
   cabang = $('#select_cabang').val();
@@ -362,6 +362,20 @@ function pdf() {
     sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
   }
 }
+
+//laporan pdf per to
+function pdf_rto() {
+  cabang = $('#select_cabang').val();
+  tryout = $('#select_to').val();
+  if (cabang != "all" && tryout != "all") {
+    url = base_url+"admincabang/laporanPDF_to/"+cabang+"/"+tryout;
+    window.open(url, '_blank');
+  }else{
+    sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
+  }
+}
+
+
 
 function drop_report(datas){
   url = base_url+"admincabang/drop_report";

@@ -269,6 +269,25 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 <!-- Priew -->
 
+<!-- MODAL EDITOR -->
+<div class="modal fade" id="m-editor" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center text-danger"></h2>
+      </div>
+      <div class="modal-body">
+        <textarea class="editor1 " name="m_editor" id="editor3" cols="60" rows="10"  ></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="javascript:void(0)" type="button" class="btn btn-default" onclick="send_val()">OK</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END MODAL EDITOR -->
 <!-- Start Modal salah upload gambar -->
 <div class="modal fade" id="warningupload" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -596,10 +615,14 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
   <!-- Start input jawaban A -->
   <div class="form-group">
-    <label class="control-label col-sm-2">Pilihan A</label>
+    <label class="control-label col-sm-2"><a href="javascript:void(0);"  type="button" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban A')" >Pilihan A</a></label>
     <!-- Start input text A -->
     <div class="col-sm-8 piltext">
-     <textarea name="a" id="pilA"  class="form-control"></textarea>
+      
+     <textarea name="a" id="pilA"  class="form-control hide"></textarea>
+     <div  class="form-control" id="view-a" style="background:#E2DFDF">
+       <==Klik
+     </div>
    </div>
    <!-- END input text A -->
 
@@ -634,10 +657,13 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 <!-- Start input jawaban B -->
 <div class="form-group">
-  <label class="control-label col-sm-2">Pilihan B</label>
+  <label class="control-label col-sm-2"><a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban B')">Pilihan B</a></label>
   <!-- Start input text B -->
   <div class="col-sm-8 piltext">
-   <textarea name="b" class="form-control"></textarea>
+   <textarea name="b" class="form-control hide"></textarea>
+    <div  class="form-control" id="view-b" style="background:#E2DFDF">
+       <==Klik
+     </div>
  </div>
  <!-- END input text B -->
  <div class="col-sm-8 pilgambar" hidden="true">
@@ -679,10 +705,13 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 <!-- Start input jawaban C -->
 <div class="form-group">
-  <label class="control-label col-sm-2">Pilihan C</label>
+  <label class="control-label col-sm-2"><a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban C')">Pilihan C</a></label>
   <!-- Start input text C -->
   <div class="col-sm-8 piltext" >
-   <textarea name="c" class="form-control"></textarea>
+   <textarea name="c" class="form-control hide"></textarea>
+     <div  class="form-control" id="view-c" style="background:#E2DFDF">
+       <==Klik
+     </div>
  </div>
  <!-- END input text C -->
  <!-- Start input gambar C -->
@@ -714,10 +743,13 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 <!-- Start input jawaban D -->
 <div class="form-group">
-  <label class="control-label col-sm-2">Pilihan D</label>
+  <label class="control-label col-sm-2"><a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban D')">Pilihan D</a> </label>
   <!-- Start input text D -->
   <div class="col-sm-8 piltext" >
-   <textarea name="d" class="form-control"></textarea>
+   <textarea name="d" class="form-control hide"></textarea>
+     <div  class="form-control" id="view-d" style="background:#E2DFDF">
+       <==Klik
+     </div>
  </div>
  <!-- END input text D -->
 
@@ -754,14 +786,16 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 
 <div class="form-group" id="pilihan">
 
-  <label class="control-label col-sm-2">Pilihan E</label>
+  <label class="control-label col-sm-2"><a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban E')">Pilihan E</a></label>
 
   <!-- Start input text E -->
 
   <div class="col-sm-8 piltext" >
 
-   <textarea name="e" class="form-control"></textarea>
-
+   <textarea name="e" class="form-control hide"></textarea>
+      <div  class="form-control" id="view-e" style="background:#E2DFDF">
+       <==Klik
+     </div>
  </div>
 
  <!-- END input text E -->
@@ -1185,10 +1219,6 @@ true">
           </div>
 
 
-
-
-
-
           <script>
 
         // Replace the <textarea id="editor1"> with a CKEditor
@@ -1197,6 +1227,7 @@ true">
 
         CKEDITOR.replace( 'editor1' );
         CKEDITOR.replace( 'editor2' );
+        CKEDITOR.replace( 'editor3' );
 
       </script>
 
@@ -1226,11 +1257,14 @@ true">
             $("#text").click(function(){
               $(".piltext").show();
               $(".pilgambar").hide();
+              $(".btn-pilihan").attr("disabled",false); 
             });
 
             $("#gambar").click(function(){
               $(".pilgambar").show();
-              $(".piltext").hide();     
+              $(".piltext").hide();   
+              $(".btn-pilihan").attr("disabled",true); 
+               // $("#test").off('click'); 
             });
             //END  event untuk pilihan jenis input  
 
@@ -1932,11 +1966,54 @@ function ValidateAudioInput(oInput){
       }
     }); 
 
-  })();       
+  })();
+  var ckeditor_type;
+  var pilihanA 
+  //show modal ck editor
+  function my_editor(data) {
+    ckeditor_type=data;
+    $('#m-editor').modal('show');
+    $('#m-editor h2').html("Editor "+ckeditor_type);
+    var val_editor;
+    if(ckeditor_type=="Pilihan Jawaban A") {
+     val_editor=$("textarea[name=a]").val();
+    } else if(ckeditor_type=="Pilihan Jawaban B") {
+     val_editor=$("textarea[name=b]").val();
+    } else if(ckeditor_type=="Pilihan Jawaban C") {
+     val_editor=$("textarea[name=c]").val();
+    } else if(ckeditor_type=="Pilihan Jawaban D") {
+     val_editor=$("textarea[name=d]").val();
+    } else if(ckeditor_type=="Pilihan Jawaban E") {
+     val_editor=$("textarea[name=e]").val();
+    } 
+    // set value ckeditor3
+    CKEDITOR.instances.editor3.setData(val_editor);
+  } 
+  // send value CKeditor untuk pilihan jawaban
+  function send_val() {
+    var val_editor= CKEDITOR.instances.editor3.getData();
+    $('#m-editor').modal('hide');
+    if(ckeditor_type=="Pilihan Jawaban A") {
+      $("textarea[name=a]").val(val_editor);
+      $("#view-a").html(val_editor);
+    } else if(ckeditor_type=="Pilihan Jawaban B") {
+      $("textarea[name=b]").val(val_editor);
+      $("#view-b").html(val_editor);
+    } else if(ckeditor_type=="Pilihan Jawaban C") {
+      $("textarea[name=c]").val(val_editor);
+      $("#view-c").html(val_editor);
+    } else if(ckeditor_type=="Pilihan Jawaban D") {
+      $("textarea[name=d]").val(val_editor);
+      $("#view-d").html(val_editor);
+    } else if(ckeditor_type=="Pilihan Jawaban E") {
+      $("textarea[name=e]").val(val_editor);
+      $("#view-e").html(val_editor);
+    } 
+}  
 </script>
 <!-- ## PROGRES BAR -->
 
 </section>
 
 
-        <!--/ END Template Main -->
+        <!--/ END Template Main
