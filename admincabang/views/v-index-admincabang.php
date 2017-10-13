@@ -181,7 +181,7 @@
  </a>
  <ul class="dropdown-menu" role="menu">
   <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
-  <li><a href="<?=base_url('index.php/guru/pengaturanProfileguru');?>"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
+  <li><a href="javascript:void(0);" onclick="show_f_updt_pswd()"><span class="icon"><i class="ico-cog4"></i></span>Ubah Katasandi</a></li>
   <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
   <li class="divider"></li>
   <li><a href="<?=base_url('index.php/logout');?>"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
@@ -309,11 +309,117 @@
 <!-- START To Top Scroller -->
 <a href="#" class="totop animation" data-toggle="waypoints totop" data-showanim="bounceIn" data-hideanim="bounceOut" data-offset="50%"><i class="ico-angle-up"></i></a>
 <!--/ END To Top Scroller -->
+<!-- MODAL Form Ubah katasandi -->
+<div class="modal fade" id="m-udt_pswd" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center">Ubah Katsandi</h2>
+      </div>
+      <div class="">
+       <form class="modal-body form-horizontal" action="javascript:void:(0)" id="form_updt_pswd">
+         <div class="form-group" id="old_pswd">
+          <label class="col-sm-3 control-label">Katasandi Lama</label>
+          <div class="col-sm-9" >
+            <input type="password" class="form-control" name="old_pswd">
+              <span class="text-danger" hidden="true" id="wr_pswd">*Katasandi Salah!</span>
+          </div>
 
+        </div>
+         <div class="form-group" id="new_pswd">
+          <label class="col-sm-3 control-label">Katasandi Baru</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="new_pswd">
+            <span class="text-danger" hidden="true" id="wr_ln_pswd">*Katasandi minimal 8 karakter!</span>
+          </div>
+        </div>
+        <div class="form-group" id="konfirm_pswd">
+          <label class="col-sm-3 control-label">Ulangi Katasanadi</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="konfirm_pswd">
+          </div>
+        </div>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="javascript:void(0)" type="button" class="btn btn-primary" disabled id="save_pswd">Simpan</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </section>
 <!--/ END Template Main -->
 
 <script>
+  $(document).ready(function(){
+    // event
+    $("input[name=konfirm_pswd]").on('keyup',function(e){
+      var new_pswd=$("input[name=new_pswd]").val();
+      var konfirm_pswd=$("input[name=konfirm_pswd]").val();
+        if (new_pswd==konfirm_pswd) {
+          $("#konfirm_pswd").removeClass("has-error");
+          $("#konfirm_pswd").addClass("has-success");
+          $("#save_pswd").attr("disabled",false);
+        } else {
+          $("#konfirm_pswd").removeClass("has-success");
+          $("#konfirm_pswd").addClass("has-error");
+          $("#save_pswd").attr("disabled",true);
+
+        }
+      });
+    $("input[name=new_pswd]").on('keyup',function(e){
+      var pass = $("input[name=new_pswd]").val();
+      var lengthCahar=pass.length;
+       $("input[name=konfirm_pswd]").val('');
+       $("#konfirm_pswd").removeClass("has-success");
+       $("#konfirm_pswd").removeClass("has-error");
+       $("#save_pswd").attr("disabled",true);
+      if (lengthCahar>7) {
+       $("#new_pswd").removeClass("has-error");
+       $("#new_pswd").addClass("has-success");
+        $("#wr_ln_pswd").attr("hidden",true);
+     } else {
+      $("#new_pswd").removeClass("has-success");
+      $("#new_pswd").addClass("has-error");
+        $("#wr_ln_pswd").removeAttr("hidden");
+      }
+    });
+    $("#save_pswd").click(function(){
+      var old_pswd=$("input[name=old_pswd]").val();
+      var new_pswd=$("input[name=new_pswd]").val();
+      var url_post=base_url+"admincabang/cek_katasandi";
+      console.log(url_post);
+      $.ajax({
+        url:url_post,
+        data:{old_pswd:old_pswd,new_pswd:new_pswd},
+        type:"post",
+        dataType:"text",
+        success:function (Data) {
+          console.log(Data);
+          var ob_Data=JSON.parse(Data);
+          if (ob_Data==true) {
+            swal("Success","Katasandi berhasil diubah","success");
+            reset_form();
+          } else {
+            $("#old_pswd").addClass("has-error");
+            $("#wr_pswd").removeAttr("hidden");
+          }
+        },
+        });
+     });
+    // Event 
+  });
+  function reset_form() {
+   $("#form_updt_pswd")[0].reset();
+   $("#old_pswd").removeClass("has-error");
+   $("#wr_pswd").attr("hidden",true);
+    $("#new_pswd").removeClass("has-success");
+   $("#konfirm_pswd").removeClass("has-success");
+     $("#m-udt_pswd").modal("hide");
+
+  }
   function show_filter_tryout(){
     $('#filter_tryout_pencarian_modal').modal('show');
   }
@@ -339,6 +445,11 @@ function load_paket_modal(id_to){
   });
  }
 });
+}
+// menampilkan form modal ubah pswd
+function show_f_updt_pswd() {
+  $("#m-udt_pswd").modal("show");
+ 
 }
 
 </script>

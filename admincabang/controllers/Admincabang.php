@@ -692,5 +692,46 @@ public function get_id_cbg_laporan()
 	$data["namaCabang"]=$arrPengguna[0]["namaCabang"];
 	echo json_encode($data);
 }
+
+// halaman seting akun => ubah email dan ubah katasandi
+public function profil_cabang()
+{
+# get cabang
+	$data['cabang'] = $this->mcabang->get_all_cabang();
+		# get to
+	$data['to'] = $this->mtoback->get_To();
+
+	$data['judul_halaman'] = "Setting Akun Admin Cabang";
+	$data['files'] = array(
+		APPPATH . 'modules/admincabang/views/v-setting_akun_cabang.php',
+	);
+
+	$hakAkses = $this->session->userdata['HAKAKSES'];
+	if ($hakAkses == 'admin_cabang') {
+		$this->parser->parse('v-index-admincabang', $data);
+	} elseif ($hakAkses == 'guru') {
+		redirect(site_url('guru/dashboard/'));
+	} elseif ($hakAkses == 'siswa') {
+		redirect(site_url('welcome'));
+	} else {
+		redirect(site_url('login'));
+	}
+	}
+
+	public function cek_katasandi()
+	{
+		$post=$this->input->post();
+		$old_pswd=md5($post["old_pswd"]);
+		$new_pswd=md5($post["new_pswd"]);
+		$id_pengguna=$this->session->userdata['id'];
+		$pswd=$this->admincabang_model->get_pswd($id_pengguna)[0]->kataSandi;
+		if ($old_pswd==$pswd) {
+			$this->admincabang_model->updt_pswd($id_pengguna,$new_pswd);
+			$msg=true;
+		} else {
+			$msg=false;
+		}
+		echo json_encode($msg);
+	}
 }
 ?>

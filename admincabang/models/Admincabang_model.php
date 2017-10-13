@@ -415,5 +415,21 @@ class Admincabang_model extends CI_model {
 		$query = $this->db->get('view_laporan_paket_TO',$records_per_page,$page);
 		return $query->result_array();
 	}
+
+	public function get_pswd($id='')
+	{
+		$this->db->select("kataSandi");
+		$this->db->from("tb_pengguna");
+		$this->db->where("id",$id);
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	public function updt_pswd($id_pengguna,$new_pswd)
+	{
+		$this->db->set("kataSandi",$new_pswd);
+    $this->db->where('id', $id_pengguna);
+    $this->db->update('tb_pengguna');
+	}
 }
 ?>

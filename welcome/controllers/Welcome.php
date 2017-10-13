@@ -37,8 +37,8 @@ class Welcome extends MX_Controller {
             APPPATH.'modules/welcome/views/v-container-graph.php',
             APPPATH.'modules/testimoni/views/v-footer.php',
             );
-        
-        if ($this->session->userdata('HAKAKSES')=='ortu') {
+        $hakAkses=$this->session->userdata('HAKAKSES');
+        if ($hakAkses=='ortu') {
             $id_pengguna= $this->session->userdata['id'];
             $namaDepan=$this->mortu->get_siswa($id_pengguna)[0]['namaDepan'];
             $namaBelakang=$this->mortu->get_siswa($id_pengguna)[0]['namaBelakang'];
@@ -47,15 +47,20 @@ class Welcome extends MX_Controller {
 
             $data['count_pesan'] = $this->Ortuback_model->get_count($id_pengguna);
             $data['datLapor'] = $this->Ortuback_model->get_daftar_pesan($id_pengguna);
-        } else {
+        }else if($hakAkses=='siswa'){
+            $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
+            $data['pesan'] = $this->msiswa->get_pesan();
 
+            $this->parser->parse( 'templating/index', $data );
+        }else if($hakAkses=='admin_cabang'){
+            redirect("admincabang");
+        }else if($hakAkses=='admin'){
+            redirect("admin");
+        }if($hakAkses=='guru'){
+            redirect("guru/dashboardelse ");
         }
 
 
-        $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
-        $data['pesan'] = $this->msiswa->get_pesan();
-
-        $this->parser->parse( 'templating/index', $data );
 
 
     }

@@ -943,9 +943,8 @@ class Banksoal extends MX_Controller {
         if ($hakAkses=='admin') {
             // jika admin
             $this->parser->parse('admin/v-index-admin', $data);
-            } elseif( $hakAkses=='admin_cabang' ){
-          $this->parser->parse('admincabang/v-index-admincabang', $data);
-            
+        } elseif( $hakAkses=='admin_cabang' ){
+             redirect(site_url('admincabang'));
         } elseif($hakAkses=='guru'){
           // jika guru
           // notification
@@ -962,7 +961,7 @@ class Banksoal extends MX_Controller {
             }
           $data['notif_pertanyaan_mentor'] = $this->mkonsultasi->get_notif_pertanyaan_to_teacher(substr_replace($mapel_id, "", -1));
           $this->parser->parse('templating/index-b-guru', $data);   
-        }else{
+        }elseif($hakAkses=='siswa'){
           // jika siswa redirect ke welcome
           redirect(site_url('welcome'));
         }
