@@ -1,18 +1,6 @@
 <?php
 class Siswa extends MX_Controller {
 
-    function get_status_login(){
-        $log_in = $this->session->userdata('loggedin');
-        return $log_in;        
-    }
-
-    function get_hak_akses(){
-        $hak_akses = $this->session->userdata('HAKAKSES');        
-        return $hak_akses;        
-    }
-
-
-
     public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
@@ -32,30 +20,6 @@ class Siswa extends MX_Controller {
     //         redirect($this->session->userdata('HAKAKSES'));
     // }
     $this->sessionchecker->checkloggedin();
-}
-
-
-
-public function profilesetting() {
-    if ($this->get_status_login()) {
-        $data = array(
-            'judul_halaman' => 'Neon - Pengaturan Akun',
-            'judul_header'  => 'Pengaturan Akun',
-            'judul_header2' => 'Pengaturan Akun'
-            );
-
-        $data['files'] = array( 
-            APPPATH.'modules/homepage/views/v-header-login.php',
-            APPPATH.'modules/siswa/views/headersiswa.php',
-            APPPATH.'modules/siswa/views/vPengaturanProfile.php',
-            APPPATH.'modules/testimoni/views/v-footer.php',
-            );
-
-        $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/index', $data );
-    }else{
-        redirect('login');
-    }
 }
 
 public function index() {      
@@ -96,6 +60,38 @@ public function index() {
         redirect('login');
     }        
 }
+    function get_status_login(){
+        $log_in = $this->session->userdata('loggedin');
+        return $log_in;        
+    }
+
+    function get_hak_akses(){
+        $hak_akses = $this->session->userdata('HAKAKSES');        
+        return $hak_akses;        
+    }
+public function profilesetting() {
+    if ($this->get_status_login()) {
+        $data = array(
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+            'judul_header'  => 'Pengaturan Akun',
+            'judul_header2' => 'Pengaturan Akun'
+            );
+
+        $data['files'] = array( 
+            APPPATH.'modules/homepage/views/v-header-login.php',
+            APPPATH.'modules/siswa/views/headersiswa.php',
+            APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            APPPATH.'modules/testimoni/views/v-footer.php',
+            );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/index', $data );
+    }else{
+        redirect('login');
+    }
+}
+
+
 
     //menampilkan halaman pengaturan profile
 public function PengaturanProfile() {
@@ -781,7 +777,7 @@ function ajax_get_report_latihan(){
         $row[] = $list_item['jmlh_benar'];
         $row[] = $list_item['jmlh_salah'];
         $row[] = $list_item['jmlh_kosong'];
-        $row[] = $list_item['skore'];
+        $row[] = round($list_item['skore'] ,1,PHP_ROUND_HALF_EVEN);
         $row[] = $list_item['tgl_pengerjaan'];
         
         // $row[] ='<a class="btn btn-sm btn-success latihan-'.$list_item['id_latihan'].'"  
@@ -1116,6 +1112,8 @@ public function get_kk_siswa($value='')
     }
     echo json_encode($optionKk);
 }
+
+
 
 }
 ?>

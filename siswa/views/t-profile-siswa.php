@@ -1,4 +1,3 @@
-
 <div class="row">
     <!-- WELCOME -->
   <div class="col-md-12">
@@ -176,6 +175,23 @@
 <!-- LAPORAN SEMUA PAKET TRYOUT -->
 
 <!-- LAPORAN SEMUA LATIHAN -->
+<div class="col-md-4">
+  <div class="note note-rounded note-info mb15 mr10">
+  Soal Mudah: <br>
+  Poin = jumlah benar * (jumlah soal * 10) / durasi pengerjaan / 60)</div>
+</div>
+<div class="col-md-4">
+  <div class="note note-rounded note-warning mb15 mr10">
+    Soal Sedang : <br>
+Poin = jumlah benar * (jumlahsoal * 20) / durasi pengerjaan / 60)
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="note note-rounded note-danger mb15 mr10">
+    Soal Sulit : <br>
+Poin = jumlah benar * (jumlahsoal * 30) / durasi pengerjaan / 60)
+  </div>
+</div>
 <div class="col-md-12">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -185,15 +201,13 @@
       <table class="rlatihan table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
         <thead>
           <tr>
-
-
             <th>no</th>
             <th>Nama Latihan</th>
             <th>Jumlah Soal</th>
             <th>Benar</th>
             <th>Salah</th>
             <th>Kosong</th>
-            <th>Nilai</th>
+            <th data-toggle="tooltip" data-placement="top" title="Tooltip on top">Poin</th>
             <th>Waktu Mengerjakan</th>
             <!-- <th>Aksi</th>  -->
           </tr>
