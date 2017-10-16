@@ -138,8 +138,17 @@ class Admincabang extends MX_Controller {
 				<td>'.$sumKosong.'</td>
 				<td>'.number_format($nilai,2).'</td>
 				<td>'.$item['tgl_pengerjaan'].'</td>
-				<td><a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a></td>
-			</tr>';
+				';
+				if ( $jumlahSoal == $sumKosong  ) {
+				$tb_paket.='
+					<td><a class="btn btn-sm btn-danger"  title="Hapus" onclick="drop_report('."'".$item['id_report']."'".')"><i class="ico-remove"></i></a></td>
+					</tr>
+				';
+				} else {
+					$tb_paket.='<td>-</td> </tr>';
+				}
+				
+
 			$no++;
 		}
 	}else{

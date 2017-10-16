@@ -177,19 +177,19 @@
 <!-- LAPORAN SEMUA LATIHAN -->
 <div class="col-md-4">
   <div class="note note-rounded note-info mb15 mr10">
-  Soal Mudah: <br>
-  Poin = jumlah benar * (jumlah soal * 10) / durasi pengerjaan / 60)</div>
+    Soal Mudah: <br>
+    Poin = jumlah benar * (jumlah soal * 10) / durasi pengerjaan / 60)</div>
 </div>
 <div class="col-md-4">
   <div class="note note-rounded note-warning mb15 mr10">
     Soal Sedang : <br>
-Poin = jumlah benar * (jumlahsoal * 20) / durasi pengerjaan / 60)
+    Poin = jumlah benar * (jumlahsoal * 20) / durasi pengerjaan / 60)
   </div>
 </div>
 <div class="col-md-4">
   <div class="note note-rounded note-danger mb15 mr10">
     Soal Sulit : <br>
-Poin = jumlah benar * (jumlahsoal * 30) / durasi pengerjaan / 60)
+    Poin = jumlah benar * (jumlahsoal * 30) / durasi pengerjaan / 60)
   </div>
 </div>
 <div class="col-md-12">

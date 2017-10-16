@@ -354,69 +354,106 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <!-- Priview Soal-->
-    <div class="modal fade " id="modalpriview" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-
-       <!-- Start Panel Priview -->
+    <!-- preview Soal-->
+    <div class="modal fade " id="modalpreview" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document" style="width:60%; ">
+       <!-- Start Panel preview -->
        <div class="panel panel-teal">
         <!-- Start heading -->
         <div class="panel-heading ">
           <div class="panel-toolbar">
-           <h4 class="modal-title ">Priview Soal</h4>
+           <h4 class="modal-title ">preview Soal</h4>
          </div>
          <div class="panel-toolbar text-right">
            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
          </div>
        </div>
        <!-- End heading -->
-       <!-- Start body priview -->
+       <!-- Start body preview -->
        <div class="panel-body ">
        <div  class="hidden-audio" >
           <audio class="col-sm-12" id="prevAudio" src="<?=base_url();?>assets/audio/soal/<?=$banksoal['audio'];?>" type="audio/mpeg" controls >
           </audio>
        </div>
        <hr>
-        <label class="">Sumber :</label> <a id="prevSumber"  ></a> <br>
-        <label> judul  :</label> <a id="prevJudul" ></a> <br>
-        <label>Soal   : </label>
-        <!-- img -->
-        <div class="col-sm-12">
-          <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img" src="" alt="" />
-        </div>
-        <!-- img -->
-        <div class="prevSoal col-sm-12">
-                
-            <p class="a" id="MathPreview2" ></p>
-            <div class="a" id="MathBuffer2" style=" 
-            visibility:hidden; position:absolute; top:0; left: 0"></div>
-        </div>
-        <!-- pilihan jawaban -->
-        <div class="col-sm-12">
-          <ol type="A">
-            <li id="a"></li>
-            <li id="b"></li>
-            <li id="c"></li>
-            <li id="d"></li>
-            <li id="e"></li>
-          </ol>
-        </div>
-        <!-- jawaban -->
-        <div class="col-sm-12"> 
-          <label>Jawaban : </label> <a id="prevJawaban"></a>
-        </div>
+        <label class="ml10">Sumber :</label> <a id="prevSumber"  ></a> <br>
+          <label class="ml10">judul  :</label> <a id="prevJudul" ></a> <br>
+          <label class="ml10">Soal   : </label>
+          <div class="panel row ml10 mr10 mt5 mb2 pt5">
+            <!-- img -->
+            <div class="col-sm-12 pt5">
+              <div class="text-center" >
+                <img id="previewSoal2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/soal/<?=$banksoal['gambar_soal'];?>" alt="" />
+              </div>
+            </div>
+            <!-- img -->
+            <div class=" prevSoal col-sm-12 mt10">
+              <div class="a" id="MathPreview2" ></div>
+              <div class="a" id="MathBuffer2" style=" 
+              visibility:hidden; position:absolute; top:0; left: 0"></div>
+            </div>
+          </div>
+          <!-- pilihan jawaban -->
+          <div class="col-sm-12" >
+            <!-- preview pilihan jawaban TEXT -->
+            <!-- pp_text= preview pilihan text -->
+            <ol type="A" id="pp_text">
+              <li class="panel pl10 plr10 pt10 pb10" id="a"></li>
+              <li class="panel pl10 plr10 pt10 pb10" id="b"></li>
+              <li class="panel pl10 plr10 pt10 pb10" id="c"></li>
+              <li class="panel pl10 plr10 pt10 pb10" id="d"></li>
+              <li class="panel pl10 plr10 pt10 pb10" id="e"></li>
+            </ol>
+            <!-- / preview pilihan jawaban TEXT -->
+            <!-- preview pilihan jawaban Gambar -->
+            <!-- pp_text= preview pilihan img/gambar -->
+            <div class="row" id="pp_img">
+              <div class="col-sm-4">
+                <ol type="A" >
+                  <li class=" pl10 pt10 pb10">
+                    <img id="previewA2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['0']['gambar'];?>" alt="" width="" />
+                  </li>
+                  <li class=" pl10 pt10 pb10">
+                    <img id="previewB2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['1']['gambar'];?>" alt="" width="" />
+                  </li>
+                </ol>
+              </div>
+              <div class="col-sm-4">
+                <ol type="A" start="3">
+                  <li class=" pl10 pt10 pb10">
+                    <img id="previewC2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['2']['gambar'];?>" alt="" width="" />
+                  </li>
+                  <li class=" pl10 pt10 pb10">
+                    <img id="previewD2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['3']['gambar'];?>" alt="" width="" />
+                  </li>
+                </ol>
+              </div>
+              <div class="col-sm-4">
+                <ol type="A" start="5">
+                  <li class="pl10 pt10 pb10">
+                    <img id="previewE2" style="max-width: 200px; max-height: 125px;  " class="img-thumbnail" src="<?=base_url();?>assets/image/jawaban/<?=$piljawaban['4']['gambar'];?>" alt="" width="" />
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <!-- preview pilihan jawaban Gambar -->
+          </div>
 
-      </div>
-      <!-- END body priview -->
-
-      <!-- Start footer priview -->
-      <div class="panel-footer hidden-xs">
-       <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
+          <!-- jawaban -->
+          <div class="col-sm-12"> 
+            <hr>
+            <label>Jawaban : </label> <a id="prevJawaban"></a>
+          </div>
+        </div>
+        <!-- END body preview -->
+        <!-- Start footer preview -->
+        <div class="panel-footer hidden-xs">
+          <button type="submit" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Keluar</button>
      </div>
-     <!-- end footer priview -->
+     <!-- end footer preview -->
 
    </div>
-   <!-- END panel Priview -->
+   <!-- END panel preview -->
 
  </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -647,13 +684,12 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <!-- Start input jawaban A -->
 <div class="form-group">
   <label class="control-label col-sm-2">
-    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban A')">Pilihan A</a>
+    <a href="javascript:void(0);" type="button" class="btn btn-sm btn-inverse btn-pilihan" data-toggle="tooltip" data-placement="top" title="Klik" onclick="my_editor('Pilihan Jawaban A')" >Pilihan A</a>
   </label>
   <!-- Start input text A -->
   <div class="col-sm-8 piltext">
-    
     <textarea name="a"  class="form-control hide" > <?=$piljawaban['0']['jawaban'];?></textarea>
-     <div  class="form-control" id="view-a" style="background:#E2DFDF">
+     <div  class="panel pl10 pt10 pr10 pb10 mb0" id="view-a" style="background:#F1EEEE; min-height: 40px;" data-toggle="tooltip" data-placement="top" title="Klik Pilihan A">
        <?=$piljawaban['0']['jawaban'];?>
      </div>
   </div>
@@ -691,12 +727,12 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <!-- Start input jawaban B -->
 <div class="form-group">
   <label class="control-label col-sm-2">
-    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban B')">Pilihan B</a>
+    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" data-toggle="tooltip" data-placement="top" title="Klik" onclick="my_editor('Pilihan Jawaban B')">Pilihan B</a>
   </label>
   <!-- Start input text B -->
   <div class="col-sm-8 piltext">
     <textarea name="b" class="form-control hide"> <?=$piljawaban['1']['jawaban'];?></textarea>
-     <div  class="form-control" id="view-b" style="background:#E2DFDF">
+      <div class="panel pl10 pt10 pr10 pb10 mb0" style="background:#F1EEEE; min-height: 40px;" id="view-b" data-toggle="tooltip" data-placement="top" title="Klik Pilihan B">
        <?=$piljawaban['1']['jawaban'];?>
      </div>
   </div>
@@ -732,12 +768,12 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <!-- Start input jawaban C -->
 <div class="form-group">
   <label class="control-label col-sm-2">
-    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban C')">Pilihan C</a>
+    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban C')" data-toggle="tooltip" data-placement="top" title="Klik">Pilihan C</a>
   </label>
   <!-- Start input text C -->
   <div class="col-sm-8 piltext" >
     <textarea name="c" class="form-control hide"> <?=$piljawaban['2']['jawaban'];?></textarea>
-     <div  class="form-control" id="view-c" style="background:#E2DFDF">
+     <div   class="panel pl10 pt10 pr10 pb10 mb0" style="background:#F1EEEE; min-height: 40px;" id="view-c" data-toggle="tooltip" data-placement="top" title="Klik Pilihan C">
        <?=$piljawaban['2']['jawaban'];?>
      </div>
   </div>
@@ -775,12 +811,12 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <!-- Start input jawaban D -->
 <div class="form-group">
   <label class="control-label col-sm-2">
-    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban D')">Pilihan D</a>
+    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban D')" data-toggle="tooltip" data-placement="top" title="Klik">Pilihan D</a>
   </label>
   <!-- Start input text D -->
   <div class="col-sm-8 piltext" >
     <textarea name="d" class="form-control hide"> <?=$piljawaban['3']['jawaban'];?></textarea>
-     <div  class="form-control" id="view-d" style="background:#E2DFDF">
+     <div   class="panel pl10 pt10 pr10 pb10 mb0" style="background:#F1EEEE; min-height: 40px;" id="view-d" data-toggle="tooltip" data-placement="top" title="Klik Pilihan D">
        <?=$piljawaban['3']['jawaban'];?>
      </div>
   </div>
@@ -818,12 +854,12 @@ Preview2.callback.autoReset = true;  // make sure it can run more than once
 <!-- Start input jawaban E -->
 <div class="form-group" id="pilihan">
   <label class="control-label col-sm-2">
-    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban E')">Pilihan E</a>
+    <a href="javascript:void(0);" class="btn btn-sm btn-inverse btn-pilihan" onclick="my_editor('Pilihan Jawaban E')" data-toggle="tooltip" data-placement="top" title="Klik">Pilihan E</a>
   </label>
   <!-- Start input text E -->
   <div class="col-sm-8 piltext" >
     <textarea name="e" class="form-control hide"> <?=$piljawaban['4']['jawaban'];?></textarea>
-     <div  class="form-control" id="view-e" style="background:#E2DFDF">
+     <div   class="panel pl10 pt10 pr10 pb10 mb0" style="background:#F1EEEE; min-height: 40px;" id="view-e" data-toggle="tooltip" data-placement="top" title="Silahkan Klik Pilihan E">
        <?=$piljawaban['4']['jawaban'];?>
      </div>
   </div>
@@ -1071,9 +1107,9 @@ true">
       <!-- End Form Pembahasan -->
     </div>
     <div class="panel-footer">
-      <div class="col-md-2">
+      <div class="col-md-4">
         <button type="submit" class="btn btn-primary">Simpan</button>
-        <a class="btn btn-info" onclick="priview()">Preview</a>
+         <button type="button" class="btn btn-info" onclick="preview()">Preview</button>
       </div>
       <div class="col-md-5"><br><br>
         <div class="indicator show">
@@ -1107,7 +1143,7 @@ true">
       <script type="text/javascript">
 
         $(document).ready(function(){
-
+           $("#pp_img").hide();
             //set opton dropdown mp
             loadPelajaran($('#oldtkt').val());
             // #########################
@@ -1191,12 +1227,19 @@ true">
             $("#text").click(function(){
               $(".piltext").show();
               $(".pilgambar").hide();
-              $(".btn-pilihan").attr("disabled",false); 
+              $(".btn-pilihan").attr("disabled",false);
+                //hide preview pilihan text
+              $("#pp_img").hide();
+              $("#pp_text").show(); 
             });
             $("#gambar").click(function(){
               $(".pilgambar").show();
               $(".piltext").hide();   
-              $(".btn-pilihan").attr("disabled",true);   
+              $(".btn-pilihan").attr("disabled",true);
+                 //disable btn editor pilihan jawaban 
+              $(".btn-pilihan").attr("disabled",true);
+              $("#pp_text").hide();
+              $("#pp_img").show();   
             });
             //END  event untuk pilihan jenis input  
             // Strat  event untuk jumlah pilihan  
@@ -1243,10 +1286,10 @@ true">
       });
     </script>
 
-    <!-- Start script untuk priview gambar soal -->
+    <!-- Start script untuk preview gambar soal -->
     <script type="text/javascript">
       $(function () {
-            // Start event priview gambar Soal
+            // Start event preview gambar Soal
             $('#fileSoal').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1271,8 +1314,8 @@ true">
                 $('#filesizeSoal').text(Math.round(file.size/1024));
               },
             }
-            // End event priview gambar soal
-             // Start event priview gambar Audio
+            // End event preview gambar soal
+             // Start event preview gambar Audio
              $('#fileAudio').on('change',function () {
                $('.hidden-audio').show();
                var file = this.files[0];
@@ -1298,8 +1341,8 @@ true">
                 $('#filesizeAudio').text(Math.round(file.size/1024));
               },
             }
-            // End event priview gambar Audio
-             // Start event priview gambar Pembahasan
+            // End event preview gambar Audio
+             // Start event preview gambar Pembahasan
 
              $('#filePembahasan').on('change',function () {
               var file = this.files[0];
@@ -1325,9 +1368,9 @@ true">
               },
             }
 
-            // End event priview gambar Soal
+            // End event preview gambar Soal
 
-            // Start event priview gambar pilihan A
+            // Start event preview gambar pilihan A
             $('#fileA').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1345,6 +1388,8 @@ true">
             var viewerA = {
               load : function(e){
                 $('#previewA').attr('src', e.target.result);
+                //untuk di preview soal
+                $('#previewA2').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameA').text(file.name);
@@ -1352,9 +1397,9 @@ true">
                 $('#filesizeA').text(Math.round(file.size/1024));
               },
             }
-            // End event priview gambar pilihan A
+            // End event preview gambar pilihan A
 
-            // Start event priview gambar pilihan B
+            // Start event preview gambar pilihan B
             $('#fileB').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1371,6 +1416,8 @@ true">
             var viewerB = {
               load : function(e){
                 $('#previewB').attr('src', e.target.result);
+                   //untuk di preview soal
+                $('#previewB2').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameB').text(file.name);
@@ -1379,9 +1426,9 @@ true">
               },
             }
 
-            // End event priview gambar pilihan B
+            // End event preview gambar pilihan B
 
-            // Start event priview gambar pilihan C
+            // Start event preview gambar pilihan C
             $('#fileC').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1398,6 +1445,8 @@ true">
             var viewerC = {
               load : function(e){
                 $('#previewC').attr('src', e.target.result);
+                //untuk di preview soal
+                $('#previewC2').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameC').text(file.name);
@@ -1406,9 +1455,9 @@ true">
               },
             }
 
-            // End event priview gambar pilihan C
+            // End event preview gambar pilihan C
 
-            // Start event priview gambar pilihan D
+            // Start event preview gambar pilihan D
             $('#fileD').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1425,6 +1474,8 @@ true">
             var viewerD = {
               load : function(e){
                 $('#previewD').attr('src', e.target.result);
+                //untuk di preview soal
+                $('#previewD2').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameD').text(file.name);
@@ -1433,9 +1484,9 @@ true">
               },
             }
 
-            // End event priview gambar pilihan D
+            // End event preview gambar pilihan D
 
-            // Start event priview gambar pilihan E
+            // Start event preview gambar pilihan E
             $('#fileE').on('change',function () {
               var file = this.files[0];
               var reader = new FileReader();
@@ -1452,6 +1503,8 @@ true">
             var viewerE = {
               load : function(e){
                 $('#previewE').attr('src', e.target.result);
+                //untuk di preview soal
+                $('#previewE2').attr('src', e.target.result);
               },
               setProperties : function(file){
                 $('#filenameE').text(file.name);
@@ -1460,11 +1513,11 @@ true">
               },
             }
 
-            // End event priview gambar pilihan E
+            // End event preview gambar pilihan E
 
           });
         </script>
-        <!-- End script untuk priview gambar soal -->
+        <!-- End script untuk preview gambar soal -->
         <!-- start script js validation extension -->
         <script type="text/javascript">
          var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
@@ -1917,7 +1970,7 @@ function ValidateInputVideo(oInput) {
       });
     }
 
-    //reset priview image pilihan jawaban A
+    //reset preview image pilihan jawaban A
     function resetImgA() {
        $("input[name=gambar1]").val("");
             $("#previewA").attr('src', "");
@@ -1925,7 +1978,7 @@ function ValidateInputVideo(oInput) {
             $('#filetypeA').text("");
             $('#filesizeA').text("");
     }
-    //reset priview image pilihan jawaban B
+    //reset preview image pilihan jawaban B
     function resetImgB() {
        $("input[name=gambar2]").val("");
             $("#previewB").attr('src', "");
@@ -1934,7 +1987,7 @@ function ValidateInputVideo(oInput) {
             $('#filesizeB').text("");
     }
 
-    //reset priview image pilihan jawaban C
+    //reset preview image pilihan jawaban C
         function resetImgC() {
        $("input[name=gambar3]").val("");
             $("#previewC").attr('src', "");
@@ -1942,7 +1995,7 @@ function ValidateInputVideo(oInput) {
             $('#filetypeC').text("");
             $('#filesizeC').text("");
     }
- //reset priview image pilihan jawaban D
+ //reset preview image pilihan jawaban D
         function resetImgD() {
        $("input[name=gambar4]").val("");
             $("#previewD").attr('src', "");
@@ -1950,7 +2003,7 @@ function ValidateInputVideo(oInput) {
             $('#filetypeD').text("");
             $('#filesizeD').text("");
     }
-     //reset priview image pilihan jawaban E
+     //reset preview image pilihan jawaban E
         function resetImgE() {
        $("input[name=gambar5]").val("");
             $("#previewE").attr('src', "");
@@ -1989,8 +2042,8 @@ function ValidateInputVideo(oInput) {
 
       <script type="text/javascript">
 
-    // priview soal sebelum di upload
-    function priview() {
+    // preview soal sebelum di upload
+    function preview() {
           Preview2.Update();
       var tingkat = $('select#tingkat').text();
       var judul = $("input[name=judul]").val();
@@ -2009,7 +2062,7 @@ function ValidateInputVideo(oInput) {
       $('li#d').text(d);
       $('li#e').text(e);
       $('a#prevJawaban').text(jawaban);
-        $('#modalpriview').modal('show'); // show bootstrap modal
+        $('#modalpreview').modal('show'); // show bootstrap modal
 
       }
       var ckeditor_type;
