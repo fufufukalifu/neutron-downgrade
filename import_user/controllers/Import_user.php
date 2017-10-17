@@ -425,6 +425,17 @@ public function f_import_magic()
 		}
  	}
 
+
+ 	public function test_nis($value='')
+ 	{
+ 		$test_nis="31-450-049";
+ 		echo "NO CBT: ".$test_nis ."<br>";
+ 		echo "==========================<br>";
+ 		echo "Tingkat ".substr($test_nis,0,2)."<br>";
+ 		echo "Cabang ".substr($test_nis,3,3) ."<br>";
+ 		echo "NO Siswa ".substr($test_nis,7,3) ."<br>";
+ 	}
+
  	public function set_magic_batch()
  	{
  		$post=$this->input->post();
@@ -438,6 +449,9 @@ public function f_import_magic()
  			$parse_tgl=strtotime($key->tgl_lahir);
  			$tgl=date("d",$parse_tgl);
  			$tgl_lahir=date("Y-m-d",$parse_tgl);
+ 			$noIndukNeutron=$key->noIndukNeutron;
+ 			$cabangID=substr($noIndukNeutron,3,3);
+ 			$tingkatID=substr($noIndukNeutron,0,2);
  			//data pengguna
  			$uuid=uniqid();
  			$kataSandi=$tgl_lahir;
@@ -450,14 +464,13 @@ public function f_import_magic()
  			$dat_siswa_excel[]=array(
  				'namaDepan'=>$key->nama,
  				'tgl_lahir' => $tgl_lahir,
-				'noIndukNeutron'=>$key->noIndukNeutron,
-				'cabangID' => $key->cabangID,
-				'tingkatID' => $key->tingkatID,
+				'noIndukNeutron'=>$noIndukNeutron,
+				'cabangID' => $cabangID,
+				'tingkatID' => $tingkatID,
  				);
  			$uuid_arr[]=array(
  				'uuid_user'=>$uuid);
- 		}
-
+ 		} 		
  		// simpan data pengguna
  		$this->Import_user_model->myinsert_batch($dat_pengguna,"tb_pengguna");
  		//get id pengguna yg baru di insert
@@ -565,5 +578,6 @@ public function f_import_magic()
 
  		fclose($fp);
  	}
+
 
  } ?>

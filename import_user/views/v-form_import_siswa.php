@@ -2,14 +2,14 @@
 	<div class="row">
 		<div class="col-md-12">
 		<!-- panel -->
-			<div class="panel panel-teal">
+			<div class="panel panel-inverse">
 				<!-- header panel -->
 				<div class="panel-heading">
-					<h3 class="panel-title">Export Data Excel Siswa</h3>
+					<h3 class="panel-title">Export Data Excel Magic</h3>
 					<!-- dropdown cabang -->
 					<div class="panel-toolbar text-right">
 						<div class="btn-group">
-							<a  class="btn btn-sm btn-default" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
+							<a  class="btn btn-sm btn-teal btn-outline" href="<?=base_url()?>assets/excel/template/template_siswa.xlsx" rel="nofollow">Template Excel Siswa</a>
 						</div>
 					</div>
 					<!-- / dropdown cabang -->
@@ -22,7 +22,7 @@
 						<div class="col-md-12">
 							<form class="form">
 								<div class="form-group">
-									<div class="col-sm-12  mb10" id="div_input">
+									<div class="col-sm-12 mt10" id="div_input">
 										<label for="xlf" class="btn btn-sm btn-default">
 											Upload File Excel
 										</label>
@@ -95,6 +95,7 @@ $(document).ready(function(){
 	$("#btn-import").click(function(){
 			post_import_user();
 	});
+
 });
 
 function upload_data_xlsx(){
@@ -112,12 +113,11 @@ function upload_data_xlsx(){
 				datExcel=ob_data;
 				read_data_xlsx(ob_data.url_file);
 			 valid_post=true;
-			} else {
-
-			}
+			} 
+			
 		},
 		error:function(){
-
+		
 		}
 	});
 }
@@ -174,7 +174,7 @@ function upload_data_xlsx(){
 	}
 
 	function post_import_user(){
-		var url=base_url+"import_user/set_siswa_batch";
+		var url=base_url+"import_user/set_magic_batch";
 		var uuid_excel=datExcel.uuid_excel;
 		var parse_datPost=JSON.stringify(datImport);
 		var datas={datImport:parse_datPost,uuid_excel:uuid_excel};
@@ -185,11 +185,12 @@ function upload_data_xlsx(){
 			dataType:"text",
 			success:function(Data){
 				console.log(Data);
-				// var ob_data=JSON.parse(Data);
-				// reset_form_xlsx();
-				// swal("berhasil!",ob_data, "success");
+				var ob_data=JSON.parse(Data);
+				reset_form_xlsx();
+				swal("berhasil!",ob_data, "success");
 			},
 			error:function(){
+				
 			}
 		});
 	}
@@ -239,6 +240,7 @@ function upload_data_xlsx(){
 		$("#div_reset").addClass("hide");
 		$("#div_input").removeClass("hide");
 		$("input[name=dat_excel]").val(null);
+
 	}
 
 	function reset_file() {
