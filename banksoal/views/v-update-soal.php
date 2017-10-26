@@ -2056,11 +2056,11 @@ function ValidateInputVideo(oInput) {
       var e  =$("textarea[name=e]").val();
       $("#prevSumber").text(sumber);
       $("#prevJudul").text(judul);
-      $('li#a').text(a);
-      $('li#b').text(b);
-      $('li#c').text(c);
-      $('li#d').text(d);
-      $('li#e').text(e);
+      $('li#a').html(a);
+      $('li#b').html(b);
+      $('li#c').html(c);
+      $('li#d').html(d);
+      $('li#e').html(e);
       $('a#prevJawaban').text(jawaban);
         $('#modalpreview').modal('show'); // show bootstrap modal
 

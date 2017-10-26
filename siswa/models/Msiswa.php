@@ -99,10 +99,13 @@ class Msiswa extends CI_Model {
 
     #query get siswa belum to
     public function get_siswa_blm_ikutan_to_pagination($data) {
-        $this->db->select('s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,tkt.`aliasTingkat`,p.`namaPengguna`');
+       $kurikulum_id= $data['kurikulum_id'];
+       $tingkat_id=$data['tingkatID'];
+        $this->db->select('s.`id`, s.`namaDepan`,s.`namaBelakang`,c.`namaCabang`,tkt.`aliasTingkat`,p.`namaPengguna`,kk.`nama_kurikulum`');
         $this->db->join('tb_cabang c', 's.`cabangID` = c.id','left');
         $this->db->join('tb_pengguna p', 's.penggunaID = p.id');
         $this->db->join('tb_tingkat tkt', 'tkt.id = s.tingkatID');
+        $this->db->join('tb_kurikulum kk','kk.id = s.kurikulum_id');
 
         // kalo user melakukan search secara keseluruhan
 
@@ -116,6 +119,8 @@ class Msiswa extends CI_Model {
                 OR c.`namaCabang` LIKE '.$search_all.' 
                 ) ');
         }
+
+
 
         // kalo user melakukan search single.
         $result = 'true' === $data['search_single'];
@@ -141,6 +146,12 @@ class Msiswa extends CI_Model {
 
         $this->db->where('s.id NOT IN(SELECT ss.`id` FROM tb_siswa ss JOIN `tb_hakakses-to` ho ON ho.`id_siswa` = ss.`id` WHERE ho.`id_tryout` = '.$data['id_to'].') AND s.`status`=1
             ');
+        if ($kurikulum_id != "all") {
+           $this->db->where("s.`kurikulum_id`",$kurikulum_id);
+        }
+        if ($tingkat_id != "all") {
+           $this->db->where("s.`tingkatID`",$tingkat_id);
+        }
         $query = $this->db->get('tb_siswa s', $data['records_per_page'], $data['page_select']);
         return $query->result_array();
     }

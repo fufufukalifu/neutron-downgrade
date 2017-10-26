@@ -425,17 +425,6 @@ public function f_import_magic()
 		}
  	}
 
-
- 	public function test_nis($value='')
- 	{
- 		$test_nis="31-450-049";
- 		echo "NO CBT: ".$test_nis ."<br>";
- 		echo "==========================<br>";
- 		echo "Tingkat ".substr($test_nis,0,2)."<br>";
- 		echo "Cabang ".substr($test_nis,3,3) ."<br>";
- 		echo "NO Siswa ".substr($test_nis,7,3) ."<br>";
- 	}
-
  	public function set_magic_batch()
  	{
  		$post=$this->input->post();
@@ -467,6 +456,7 @@ public function f_import_magic()
 				'noIndukNeutron'=>$noIndukNeutron,
 				'cabangID' => $cabangID,
 				'tingkatID' => $tingkatID,
+				'kurikulum_id'=>$key->kurikulum_id,
  				);
  			$uuid_arr[]=array(
  				'uuid_user'=>$uuid);

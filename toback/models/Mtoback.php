@@ -244,5 +244,31 @@ class Mtoback extends CI_Model {
 		
 	}
 
+	public function get_kurikulum()
+	{
+		$this->db->select("id,nama_kurikulum");
+		$this->db->from("tb_kurikulum");
+		$this->db->where("status",1);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_tingkat()
+	{
+		$this->db->select("id,aliasTingkat");
+		$this->db->from("tb_tingkat");
+		$this->db->where("status",2);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_cabang(){
+		$this->db->select("id,namaCabang");
+		$this->db->from("tb_cabang");
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	
 }
 ?>

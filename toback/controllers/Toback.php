@@ -647,6 +647,7 @@ class Toback extends MX_Controller{
 					<td>'.$list_siswa ['namaDepan']." ".$list_siswa['namaBelakang'].'</td>
 					<td>'.$cabang.'</td>
 					<td>'.$list_siswa ['aliasTingkat'].'</td>
+					<td>'.$list_siswa ['nama_kurikulum'].'</td>
 				</tr>';
 
 				$no++;
@@ -698,6 +699,28 @@ echo json_encode($pagination);
 
 }
 ## fungsi paginatioin
+
+//option kurikulum untuk filter siswa di add bundle paket
+public function option_kurikulum($value='')
+{
+	$kurikulum_arr=$this->Mtoback->get_kurikulum();
+	$pagination='<option value="all">Kurikulum</option>';
+	foreach ($kurikulum_arr as $key ) {
+		$pagination.='<option value="'.$key->id.'">'.$key->nama_kurikulum.'</option>';
+	}
+	echo json_encode($pagination);
+}
+
+public function option_tingkat($value='')
+{
+	$tingkat_arr=$this->Mtoback->get_tingkat();
+	$pagination='<option value="all">Semua Tingkat</option>';
+	foreach ($tingkat_arr as $key ) {
+		$pagination.='<option value="'.$key->id.'">'.$key->aliasTingkat.'</option>';
+	}
+	echo json_encode($pagination);
+}
+
 
 }
 ?>

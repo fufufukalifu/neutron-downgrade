@@ -56,7 +56,7 @@
          <ul class="nav nav-tabs">
           <li class="active"><a href="#paket" data-toggle="tab">Paket</a></li>
           <li><a href="#siswa" data-toggle="tab">Siswa</a></li>
-          <li><a href="#pengawas" data-toggle="tab">Pengawas</a></li>
+          <li><a href="#pengawas" data-toggle="tab" class="hide">Pengawas</a></li>
         </ul>
       </div>
       <!-- Star Tab Content -->
@@ -132,6 +132,7 @@
      <th>Nama Siswa</th>
      <th>Cabang</th>
      <th>Tingkat</th>
+     <th>Kurikulum</th>
    </tr>
  </thead>
  <tbody id="tbsiswa">
@@ -143,7 +144,19 @@
    <th><input class="form-control" name="nama_pengguna_search"type="text" placeholder="Nama Pengguna" /></th>
    <th><input class="form-control" name="nama_siswa_search"type="text" placeholder="Nama Siswa" /></th>
    <th><input class="form-control" name="cabang_search"type="text" placeholder="Cabang" /></th>
-   <th><input class="form-control" name="tingkat_search"type="text" placeholder="Tingkat" /></th>
+   <th>
+    <!-- <input class="form-control" name="tingkat_search"type="text" placeholder="Tingkat" /> -->
+      <div  class="form-group">
+        <select  class="form-control" name="tingkat_id_1">   
+        </select>
+      </div>
+  </th>
+  <th>
+      <div  class="form-group">
+        <select  class="form-control" name="kurikulum_id_1">   
+        </select>
+      </div>
+  </th>
  </tfoot>
 </table>
 <div class="col-md-12">
@@ -227,7 +240,7 @@
      <ul class="nav nav-tabs">
       <li class="active"><a href="#paketadd" data-toggle="tab">Paket</a></li>
       <li><a href="#siswaadd" data-toggle="tab">Siswa</a></li>
-      <li><a href="#pengawasadd" data-toggle="tab">pengawas</a></li>
+      <li><a href="#pengawasadd" data-toggle="tab" class="hide">pengawas</a></li>
     </ul>
   </div>
 
@@ -365,9 +378,32 @@
  var tblist_pengawasAdd;
  var idTo =$('#id_to').val();
  var listsoal;
+ //kurikulum untuk siswa yg belum TO
+ var kurikulumID_1="all";
+ //kurikulum untuk siswa yg akan TO
+  var kurikulumID_2="all";
+   //tingkat untuk siswa yg belum TO
+ var tingkatID_1="all";
+ //tingkat untuk siswa yg akan TO
+  var tingkatID_2="all";
 
 // Script for getting the dynamic values from database using jQuery and AJAX
 $(document).ready(function() {
+//load kurikulum
+add_kurikulum();
+//load optio tingkat
+add_tingkat();
+//event onchange kurikulum
+ $("select[name=kurikulum_id_1]").change(function(){
+  kurikulumID_1= $("select[name=kurikulum_id_1]").val();
+  selectPage(0);
+ });
+ //event onchange tingkat
+ $("select[name=tingkat_id_1]").change(function(){
+  tingkatID_1= $("select[name=tingkat_id_1]").val();
+  selectPage(0);
+  console.log(tingkatID_1);
+ });
 //check all paket
 $('input[name=checkall]').click(function(){
   if(this.checked) {
@@ -728,7 +764,9 @@ function set_tb_siswa(){
    key_search:properties.key_search,
    search_single:properties.search_single,
    key_single:properties.key_single,
-   key_word:properties.key_word
+   key_word:properties.key_word,
+   kurikulum_id:kurikulumID_1,
+   tingkatID:tingkatID_1
  };
 
  url=base_url+"toback/ajax_pagination_siswa_nonto/"+idTo;
@@ -803,7 +841,9 @@ function selectPage(pageVal='0') {
    search_single:properties.search_single,
    key_single:properties.key_single,
    key_word:properties.key_word,
-   key_search:properties.key_search
+   key_search:properties.key_search,
+   kurikulum_id:kurikulumID_1,
+   tingkatID:tingkatID_1
  };
  $('#tbsiswa').empty();
 
@@ -986,8 +1026,36 @@ $('[name=tingkat_search]').on('keyup', function (e) {
     pagination_siswa();
   }
 });
+//add option kurikulum 
+function add_kurikulum(){
+  console.log("inininininini");
+  var url_post = base_url+"toback/option_kurikulum";
+  $.ajax({
+    url:url_post,
+    type: "post",
+    dataType:"text",
+    success:function(dat_retrun){
+      console.log(dat_retrun);
+      var ob_data= JSON.parse(dat_retrun);
+      $("select[name=kurikulum_id_1]").append(ob_data);
+    },
+  });
+}
+//add option tinkat
+function add_tingkat(){
+  var url_post = base_url+"toback/option_tingkat";
+  $.ajax({
+    url:url_post,
+    type: "post",
+    dataType:"text",
+    success:function(dat_retrun){
+      console.log(dat_retrun);
+      var ob_data= JSON.parse(dat_retrun);
+      $("select[name=tingkat_id_1]").append(ob_data);
+    },
+  });
+}
 // PENCARIAN SINGLE
-
 pagination_siswa();
 set_tb_siswa();
 </script>
