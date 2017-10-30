@@ -470,7 +470,7 @@ public function f_import_magic()
  		 for ($i=0; $i < $length_dat_pengguna_ID ; $i++) { 
  		 	$dat_siswa[]=array_merge_recursive($dat_siswa_excel[$i],$dat_pengguna_ID[$i]);
  		 }
- 		 // var_dump($dat_siswa);
+ 		 var_dump($dat_siswa);
  		// simpan data Siswa
  		$this->Import_user_model->myinsert_batch($dat_siswa,"tb_siswa");
  		echo json_encode("Data siswa berhasil di tambahkan");

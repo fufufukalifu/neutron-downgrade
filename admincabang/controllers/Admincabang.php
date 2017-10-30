@@ -237,6 +237,7 @@ public function laporanPDF($cabang="all",$tryout="all",$paket="all")
 		$sumBenar=$item ['jmlh_benar'];
 		$sumSalah=$item ['jmlh_salah'];
 		$sumKosong=$item ['jmlh_kosong'];
+		$nama=$item ['namaDepan']." ".$item ['namaBelakang'];
 			//hitung jumlah soal
 		$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
 						// cek jika pembagi 0
@@ -249,8 +250,9 @@ public function laporanPDF($cabang="all",$tryout="all",$paket="all")
 		$cabang=$item ['namaCabang'];
 		$data['all_report'][]=array(
 			'no'=>$no,
+			'noIndukNeutron'=>$item['noIndukNeutron'],
 			'jumlah_soal'=>$jumlahSoal,
-			'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
+			'nama'=>substr($nama,0,10),
 			'jmlh_benar'=>$item ['jmlh_benar'],
 			'jmlh_salah'=>$item ['jmlh_salah'],
 			'jmlh_kosong'=>$item ['jmlh_kosong'],
@@ -346,11 +348,11 @@ public function laporanPDF_to($cabang="all",$tryout="all",$paket="all")
 	$data['minNilai']=number_format($minNilai,2);
 	$data['paket'] = $paket;
 	$data['cabang'] =$cabang;
-	// if ($cabang !="all" && $tryout !="all" && $paket !="all") {
-	// 	$this->parser->parse('v-laporan_to.php',$data);
-	// }else{
-	// 	redirect(site_url('admincabang/laporanpaket'));
-	// }
+	if ($cabang !="all" && $tryout !="all" && $paket !="all") {
+		$this->parser->parse('v-laporan_to.php',$data);
+	}else{
+		redirect(site_url('admincabang/laporanpaket'));
+	}
 
 }
 // public function testPDF($cabang="all",$tryout="all",$paket="all")

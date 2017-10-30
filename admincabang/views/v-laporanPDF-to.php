@@ -37,7 +37,7 @@ class MYPDF extends TCPDF {
 
 	// Colored table
 	public function ColoredTable($header,$data) {
-		$w = array(10, 50, 25, 25, 25, 25,25);
+		$w = array(10,25, 25, 25, 25, 25, 25,25);
 		   $this->DrawHeader($header, $w);
 		$fill = 0;
 		foreach($data as $row) {
@@ -45,12 +45,13 @@ class MYPDF extends TCPDF {
 			$num_pages = $this->getNumPages();
       $this->startTransaction();
 			$this->Cell($w[0], 6, $row['no'], 'LR', 0, 'L', $fill);
-			$this->Cell($w[1], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
-			$this->Cell($w[2], 6, ($row['jumlah_soal']), 'LR', 0, 'C', $fill);
-			$this->Cell($w[3], 6, ($row['jmlh_benar']), 'LR', 0, 'C', $fill);
-			$this->Cell($w[4], 6, ($row['jmlh_salah']), 'LR', 0, 'C', $fill);
-			$this->Cell($w[5], 6, ($row['jmlh_kosong']), 'LR', 0, 'C', $fill);
-			$this->Cell($w[6], 6, ($row['nilai']), 'LR', 0, 'C', $fill);
+			$this->Cell($w[1], 6, ($row['noIndukNeutron']), 'LR', 0, 'LR', $fill);
+			$this->Cell($w[2], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
+			$this->Cell($w[3], 6, ($row['jumlah_soal']), 'LR', 0, 'C', $fill);
+			$this->Cell($w[4], 6, ($row['jmlh_benar']), 'LR', 0, 'C', $fill);
+			$this->Cell($w[5], 6, ($row['jmlh_salah']), 'LR', 0, 'C', $fill);
+			$this->Cell($w[6], 6, ($row['jmlh_kosong']), 'LR', 0, 'C', $fill);
+			$this->Cell($w[7], 6, ($row['nilai']), 'LR', 0, 'C', $fill);
 			$this->Ln();
 			 //If old number of pages is less than the new number of pages,
             //we hit an automatic page break, and need to rollback.
@@ -68,12 +69,13 @@ class MYPDF extends TCPDF {
 				$this->DrawHeader($header, $w);
       	//Re-do the row.
 				$this->Cell($w[0], 6, $row['no'], 'LR', 0, 'L', $fill);
-				$this->Cell($w[1], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
-				$this->Cell($w[2], 6, ($row['jumlah_soal']), 'LR', 0, 'C', $fill);
-				$this->Cell($w[3], 6, ($row['jmlh_benar']), 'LR', 0, 'C', $fill);
-				$this->Cell($w[4], 6, ($row['jmlh_salah']), 'LR', 0, 'C', $fill);
-				$this->Cell($w[5], 6, ($row['jmlh_kosong']), 'LR', 0, 'C', $fill);
-				$this->Cell($w[6], 6, ($row['nilai']), 'LR', 0, 'C', $fill);
+				$this->Cell($w[1], 6, ($row['noIndukNeutron']), 'LR', 0, 'LR', $fill);
+				$this->Cell($w[2], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
+				$this->Cell($w[3], 6, ($row['jumlah_soal']), 'LR', 0, 'C', $fill);
+				$this->Cell($w[4], 6, ($row['jmlh_benar']), 'LR', 0, 'C', $fill);
+				$this->Cell($w[5], 6, ($row['jmlh_salah']), 'LR', 0, 'C', $fill);
+				$this->Cell($w[6], 6, ($row['jmlh_kosong']), 'LR', 0, 'C', $fill);
+				$this->Cell($w[7], 6, ($row['nilai']), 'LR', 0, 'C', $fill);
 				$this->Ln();
 			}
 			else
@@ -135,15 +137,15 @@ $pdf->SetFont('helvetica', '', 9);
 $pdf->AddPage();
 
 // column titles
-$header = array('No','Nama Siswa','Jumlah Soal',' 
-	Jumlah Benar',' Jumlah Salah',' Jumlah Kosong','Total nilai');
+$header = array('No','No CBT','Nama Siswa','Jumlah Soal',' 
+	Benar',' Salah',' Kosong',' nilai');
 
 //vardump
 // var_dump($all_report);
 
 // data loading
 //judul tabel
-$nameTbl='<h1>Hasil TryOUT Paket '.$paket.'</h1>';
+$nameTbl='<h1>Hasil TryOUT Paket '.$paket.'</h1> <br>';
 $pdf->writeHTML($nameTbl,false, false, false, false, '');
 // print colored table
 $pdf->ColoredTable($header, $all_report);
