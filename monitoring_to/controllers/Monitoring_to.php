@@ -18,7 +18,7 @@
  	{
  		$data['judul_halaman'] = "List Siswa TO";
 		$data['files'] = array(
-			APPPATH . 'modules/Monitoring_to/views/v-monitoring_to.php',
+			APPPATH . 'modules/monitoring_to/views/v-monitoring_to.php',
 			);
 		$hakAkses = $this->session->userdata['HAKAKSES'];
 		if ($hakAkses == 'admin') {
@@ -114,6 +114,48 @@
  		$per_page= $post["per_page"];
  		$sum_record=$this->Monitoring_to_model->get_siswa_to($post,$type_return);
  		$sum_page =ceil($sum_record/$per_page);
+ 		
  		echo json_encode($sum_page);
+ 	}
+ 	//get info pengerjaan to
+ 	//info jumlah siswa yg sudah atau belum mengerjakan tryout di suatu cabang
+ 	public function info_pengerjaan()
+ 	{
+ 		$post=$this->input->post();
+ 		$post["kurikulum"]="all";
+ 		$post["tingkat"]="all";
+ 		$post["paket"]="all";
+ 		$post["keysearch"]=null;
+
+ 		$id_tryout=$post["tryout"];
+ 		$arr_paket=$this->Monitoring_to_model->get_paket_to($id_tryout);
+
+ 		$info=null;
+ 		$no=0;
+ 		foreach ($arr_paket as $key) {
+ 		$no++;
+ 		//status pengerjaan = 1 = siswa yg sudah mengerjakan
+ 		$post["status_pengerjaan"]=1;
+ 		//untuk ememilih jenis retrun
+ 		// sum =  me retrun jumlah record
+ 		$type_return="sum";
+ 		//menmpung jumlah siswa yg mengikuti tryout
+ 		$sum_sdh_mengerjakan=$this->Monitoring_to_model->get_siswa_to($post,$type_return);
+ 		// ubah status pegerjaan jadi 0
+ 		$post["status_pengerjaan"]=0;
+ 		//menmpung jumlah siswa yg belum mengerjakan tryout
+ 		$sum_blm_mengerjakan=$this->Monitoring_to_model->get_siswa_to($post,$type_return);
+ 		$sum_siswa_to=$sum_sdh_mengerjakan+$sum_blm_mengerjakan;
+ 		$info.='<tr>
+ 			<td>'.$no.'</td>
+ 			<td>'.$key->nm_paket.'</td>
+ 			<td>'.$sum_siswa_to.'</td>
+ 			<td>'.$sum_sdh_mengerjakan.'</td>
+ 			<td>'.$sum_blm_mengerjakan.'</td>
+ 		</tr>
+ 		';
+ 		}
+
+ 		echo json_encode($info);
  	}
  } ?>

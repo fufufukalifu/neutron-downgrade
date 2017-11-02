@@ -13,8 +13,7 @@
  		$tryout_id=$post["tryout"];
  		$paket_id=$post["paket"];
  		$status_pengerjaan = $post["status_pengerjaan"];
- 		$per_page = $post["per_page"];
- 		$page = $post["page"];
+
  		$keysearch = $post["keysearch"]; 
  		# main query
  		$this->db->select(" s.`id`,p.`namaPengguna`, s.`namaDepan`,s.`namaBelakang`,tkt.`aliasTingkat`,kk.`nama_kurikulum`,c.`namaCabang`,tryo.`nm_tryout`,s.`noIndukNeutron`,paket.`nm_paket`");
@@ -53,6 +52,8 @@
  		if ($type_return=="sum") {
  			return $query = $this->db->get('tb_siswa s')->num_rows();
  		}else{
+ 			$per_page = $post["per_page"];
+ 			$page = $post["page"];
 		 return $query = $this->db->get('tb_siswa s',$per_page,$page)->result();    
  		}
  	}
@@ -91,6 +92,18 @@
 		$this->db->join("`tb_siswa` s","s.`id` = hto.`id_siswa`");
 		$this->db->join("`tb_cabang` c","s.`cabangID` = c.id");
 		$this->db->where("s.`noIndukNeutron` is NOT NULL", NULL, FALSE);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_paket_to($id_tryout)
+	{
+		$this->db->distinct("p.id_paket");
+		$this->db->select("p.id_paket,p.nm_paket");
+		$this->db->from("tb_paket p");
+		$this->db->join("tb_mm-tryoutpaket mto","mto.id_paket = p.id_paket");
+		$this->db->join("tb_tryout tryo","tryo.id_tryout = mto.id_tryout");
+		$this->db->where("tryo.id_tryout",$id_tryout);
 		$query = $this->db->get();
 		return $query->result();
 	}

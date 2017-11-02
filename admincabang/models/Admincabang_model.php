@@ -431,5 +431,46 @@ class Admincabang_model extends CI_model {
     $this->db->where('id', $id_pengguna);
     $this->db->update('tb_pengguna');
 	}
+
+
+	function get_report_to_pdf($data){
+		// order by jangan di ubah jika ada perubahan akan mempengaruhi pengelompokan array
+		// di fungsi laporan_to_PDF dan akan menyebabkan kesalhan
+		$this->db->order_by('noIndukNeutron','asc');
+		// $this->db->limit(15);
+		if ($data['cabang']!="all") {
+			$this->db->where('id_cabang', $data['cabang']);
+		}
+
+		if ($data['tryout']!="all") {
+			$this->db->where('id_tryout', $data['tryout']);
+		}
+		if ($data['paket']!="all") {
+			$this->db->where('id_paket', $data['paket']);
+		}
+
+		// $this->db->where('pk.`tgl_pengerjaan >=','2017-04-20');
+		$query = $this->db->get('view_laporan_paket_TO');
+
+		return $query->result_array();
+	}
+
+	// hitung jumlah
+	public function get_count_paket($data)
+	{
+		if ($data['cabang']!="all") {
+			$this->db->where('id_cabang', $data['cabang']);
+		}
+		if ($data['tryout']!="all") {
+		$this->db->where('id_tryout', $data['tryout']);
+		}
+		$this->db->distinct("id_paket");
+		$this->db->select("id_paket");
+		$query = $this->db->get('view_laporan_paket_TO');
+
+		// return $query->result_array();
+		return $query->num_rows();
+	}
+
 }
 ?>

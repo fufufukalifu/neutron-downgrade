@@ -222,7 +222,7 @@ public function get_paket( $to_id ) {
 }
 
 // laporan pdf per paket
-public function laporanPDF($cabang="all",$tryout="all",$paket="all")
+public function laporan_paket_PDF($cabang="all",$tryout="all",$paket="all")
 {
 	$this->load->library('Pdf');
 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
@@ -291,65 +291,61 @@ public function laporanPDF($cabang="all",$tryout="all",$paket="all")
 
 }
 // laporan pdf per to
-public function laporanPDF_to($cabang="all",$tryout="all",$paket="all")
+public function laporan_to_PDF($cabang="338 ",$tryout="all",$paket="all")
 {
 	$this->load->library('Pdf');
 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-	$all_report = $this->admincabang_model->get_report_paket_pdf($datas);		
+	$all_report = $this->admincabang_model->get_report_to_pdf($datas);		
+	$count_paket = $this->admincabang_model->get_count_paket($datas);
 	$data['all_report'] = array();
 	$no=0;
-	$sumNilai=0;
-	$maxNilai=0;
-	$minNilai=100;
+	$index=0;
+	//
+	$tamp_noIndukNeutron='tamp';
 	foreach ( $all_report as $item ) {
 		$no++;
 		$sumBenar=$item ['jmlh_benar'];
 		$sumSalah=$item ['jmlh_salah'];
 		$sumKosong=$item ['jmlh_kosong'];
+		$nama=$item ['namaDepan']." ".$item ['namaBelakang'];
+		$nama_paket=$item['nm_paket'];
+		$noIndukNeutron=$item['noIndukNeutron'];
 			//hitung jumlah soal
 		$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
-						// cek jika pembagi 0
+		// cek jika pembagi 0
 		if ($jumlahSoal != 0) {
 				//hitung nilai
 			$nilai=$sumBenar/$jumlahSoal*100;
 		}
-
 		$paket=$item ['nm_paket'];
 		$cabang=$item ['namaCabang'];
 
-		$data['all_report'][]=array(
-			'no'=>$no,
-			'jumlah_soal'=>$jumlahSoal,
-			'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
-			'jumlah_soal'=>$jumlahSoal,
-			'nilai'=>number_format($nilai,2),
-			'tgl_pengerjaan'=>$item ['tgl_pengerjaan']
-			);
-
-		//sum Nilai
-		$sumNilai += $nilai;
-			//set Max nilai
-		if ($maxNilai<$nilai) {
-			$maxNilai=$nilai;
+		if ($tamp_noIndukNeutron != $noIndukNeutron) {
+			// data siswa
+			$index_tamp=1;
+			$index++;
+			$data['all_report'][$index]=array(
+				'no'=>$no,
+				'no_cbt'=>$noIndukNeutron,
+				'nama'=>$item ['namaDepan']." ".$item ['namaBelakang'],
+				);
+			$tamp_noIndukNeutron = $noIndukNeutron;
+		} else if($tamp_noIndukNeutron == $noIndukNeutron){
+				// pengulangan untuk nilai paket
+				// data nilai paket siswa
+				$data['all_report'][$index]['nm_paket']=$item['nm_paket'];
+				$nilai_paket="nilai_".$index_tamp;
+				$data['all_report'][$index][$nilai_paket]=number_format($nilai,2);
+				$index_tamp++;
 		}
-			//set Min nilai
-		if($minNilai>$nilai){
-			$minNilai=$nilai;
-		}
-
+		
 	}
-		//hitung rata2 nilai
-	$avg=$sumNilai/$no;
-		//format rata2 max 2 digit di belakang koma
-	$formattedAvg = number_format($avg,2);
-	$data['avg']=$formattedAvg;
-	$data['jumlahSiswa']=$no;
-	$data['maxNilai']=number_format($maxNilai,2);
-	$data['minNilai']=number_format($minNilai,2);
 	$data['paket'] = $paket;
 	$data['cabang'] =$cabang;
-	if ($cabang !="all" && $tryout !="all" && $paket !="all") {
-		$this->parser->parse('v-laporan_to.php',$data);
+	var_dump($count_paket);
+	// var_dump($data['all_report']);
+	if ($cabang !="all" && $tryout !="all") {
+		// $this->parser->parse('v-laporan_to.php',$data);
 	}else{
 		redirect(site_url('admincabang/laporanpaket'));
 	}

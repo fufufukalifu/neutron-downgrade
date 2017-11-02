@@ -1,11 +1,44 @@
 <section id="main">
 	<div class="row">
 		<div class="col-md-12">
+			<!-- panel info pengerjaan to per cabang -->
+			<div class="panel panel-info" id="panel-info-to-cab">
+				<div class="panel-heading">
+					<h3 class="panel-title">Info Pengerjaan Tryout Cabang</h3>
+				</div>
+				<div class="panel-body">
+					<!-- panel filter -->
+					<div class="row">
+						
+					</div>
+					<h4>Silahkan Pilih Filter cabang dan Tryout di bawah tabel List Siswa Tryout!</h4>
+							 <h5>untuk menmpikan informasi pengerjaan tryout cabang.</h5>
+							 <h1 class="text-center"></h1>
+					<!-- tabel info  pengerjaan to cabang-->
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Nama Paket</th>
+								<th>Jumlah Peserta</th>
+								<th>Jumlah yang mengerjakan</th>
+								<th>Jumlah yang belum mengerjakan</th>
+							</tr>
+						</thead>
+						<tbody id="tb-info-cab">
+
+						</tbody>
+					</table>
+					<!-- /tabel info  pengerjaan to cabang-->
+				</div>
+			</div>
+			<!-- /panel info pengerjaan to per cabang -->
+		</div>
+		<div class="col-md-12">
 			<div class="panel panel-teal">
 				<!-- header panel -->
 				<div class="panel-heading">
-					<h3 class="panel-title"><button onclick="set_sum_page()">test</button></h3>
-					
+					<h3 class="panel-title">List Siwa Tryout</h3>
 				</div>
 				<!-- /panel header -->
 				<!-- /body panel -->
@@ -87,8 +120,8 @@
 								<th>
 									<div  class="form-group">
 										<div class="btn-group">
-											<button class="btn btn-sm btn-danger active" onclick="ch_status(0)"><i class=" ico-exclamation-sign"></i></button>
-											<button class="btn btn-sm btn-success" onclick="ch_status(1)"><i class=" ico-ok-sign"></i></button>
+											<button class="btn btn-sm btn-danger active" onclick="ch_status(0)" title="Tampilkan siswa yg belum mengerjakan"><i class=" ico-exclamation-sign"></i></button>
+											<button class="btn btn-sm btn-success" onclick="ch_status(1)" title="Tampilkan siswa yg sudah mengerjakan"><i class=" ico-ok-sign"></i></button>
 										</div>
 									</div>
 								</th>
@@ -96,7 +129,22 @@
 						</tfoot>
 					</table>
 				</div>
-				<!-- body panel -->
+				<!-- /body panel -->
+				<!-- panel footer -->
+				<div class="panel-footer">
+						<ul class="pagination">
+							<li><a href="javascript:void(0);" onclick="next_prev()"><i class="ico-arrow-left13"></i></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-1"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-2"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-3"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-4"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-5"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-6"></a></li>
+						   <li><a href="javascript:void(0);" id="pagi-7"></a></li>
+						  <li><a href="javascript:void(0);" onclick="next_page()"><i class="ico-arrow-right14"></i></a></li>
+						</ul>
+				</div>
+				<!--/ panel footer -->
 			</div>
 		</div>
 	</div>
@@ -110,6 +158,14 @@
 	var status_pengerjaan = 0;
 	var per_page = 10;
 	var keysearch = null;
+	var sum_page;
+	var pagi_1 = 1;
+	var pagi_2 = 2;
+	var pagi_3 = 3;
+	var pagi_4 = 4;
+	var pagi_5 = 5;
+	var pagi_6 = 6;
+	var pagi_7 = 7;
 
 	//page 0 = page halaman pertama
 	var page = 0;
@@ -120,8 +176,7 @@
 		set_op_kurikulum();
 		set_op_cabang();
 		set_sum_page();
-		sum_page();
-
+		set_pagination();
 		//event filter by kurikulum
 		$("select[name=kurikulum_op]").change(function(){
 			kurikulum=$("select[name=kurikulum_op]").val();
@@ -154,6 +209,7 @@
 			set_op_paket();
 			//relode tb monitoring
 			set_monitoring();
+			info_tryout();
 		});
 		//event filter by paket
 		$("select[name=paket_op]").change(function(){
@@ -164,6 +220,7 @@
 		});
 		//event untuk menngubah  jumlah record per halaman
 		$("select[name=records_per_page]").change(function(){
+			page = 0;
 			per_page=$("select[name=records_per_page]").val();
 			$("#tb-monitoring").empty();
 				set_monitoring();
@@ -175,8 +232,19 @@
 				set_monitoring();
 		});
 		$('input[name = cariSiswa]').click(function(){
-			console.log("enter");
+		
 		});
+		// even pagination
+		// $("#pagi-1").click(function(){
+		// 		if (pagi_1 != 1) {
+
+		// 		}
+		// });
+		// $("#pagi-2").click(function(){
+		// 		if (pagi_ != 1) {
+					
+		// 		}
+		// });
 	});
 	// filter siswa berdasarkan status pengerjaan
 	function ch_status(dat){
@@ -290,16 +358,74 @@ function set_sum_page(){
 			type:"post",
 			dataType:"text",
 			success:function(dat_retrun){
+				
 				var ob_data = JSON.parse(dat_retrun);
 				sum_page = ob_data;
 			},
+			
 		});
 }
 
 function pagination(){
 
-	
+	// for (i = 0; i < cars.length; i++) { 
+ //    text += cars[i] + "<br>";
+	// }
 }
 
+//tampilkan data halamn sebelumnya
+function next_prev(){
+	page = page - per_page;
+	if (page >= 0) {
+		$("#tb-monitoring").empty();
+		set_monitoring();
+	} else {
+
+	}
+}
+
+//tampilkan data halamn selanjutnya
+function next_page(){
+	page = page + per_page;
+	if (page <= sum_page) {
+		$("#tb-monitoring").empty();
+		set_monitoring();
+	} else {
+		swal("Opps","Tidak ada halamn selanjutnya!","error");
+	}
+}
+
+// set pagination
+function set_pagination(){
+
+	$("#pagi-1").text(pagi_1);
+	$("#pagi-2").text(pagi_2);
+	$("#pagi-3").text(pagi_3);
+	$("#pagi-4").text(pagi_4);
+	$("#pagi-5").text(pagi_5);
+	$("#pagi-6").text(pagi_6);
+	$("#pagi-7").text(pagi_7);
+}
+// set info pengerjaan tryout
+function info_tryout() {
+	var url_post = base_url+"monitoring_to/info_pengerjaan";
+	var datas = {cabang:cabang,tryout:tryout,paket:paket};
+	$.ajax({
+		url:url_post,
+		data:datas,
+		type:"post",
+		dataType:"text",
+		success:function(dat_retrun){
+			var ob_data = JSON.parse(dat_retrun);
+			$("#tb-info-cab").empty(ob_data);
+			$("#tb-info-cab").append(ob_data);
+			var nm_cabang=$("select[name=cabang_op] option:selected").text()
+			var nm_tryout=$("select[name=tryout_op] option:selected").text()
+			$("#panel-info-to-cab h3").text("Info Pengerjaan Tryout Cabang "+nm_cabang);
+			$("#panel-info-to-cab h1").text(nm_tryout);
+		},
+		
+	});
+}
 
 </script>

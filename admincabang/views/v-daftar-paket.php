@@ -356,7 +356,7 @@ function pdf() {
   tryout = $('#select_to').val();
   paket = $('#select_paket').val();
   if (cabang != "all" && tryout != "all" && paket != "all") {
-    url = base_url+"admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
+    url = base_url+"admincabang/laporan_paket_PDF/"+cabang+"/"+tryout+"/"+paket;
     window.open(url, '_blank');
   }else{
     sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
@@ -368,7 +368,7 @@ function pdf_rto() {
   cabang = $('#select_cabang').val();
   tryout = $('#select_to').val();
   if (cabang != "all" && tryout != "all") {
-    url = base_url+"admincabang/laporanPDF_to/"+cabang+"/"+tryout;
+    url = base_url+"admincabang/laporan_to_PDF/"+cabang+"/"+tryout;
     window.open(url, '_blank');
   }else{
     sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
