@@ -740,5 +740,73 @@ public function profil_cabang()
 		}
 		echo json_encode($msg);
 	}
+
+	//create laporan tryout paket csv
+	public function laporan_paket_excel($cabang="all",$tryout="all",$paket="all")
+	{
+		$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
+		$all_report = $this->admincabang_model->get_report_paket_pdf($datas);		
+		// $data['all_report'] = array();
+		$no=0;
+		$sumNilai=0;
+		$maxNilai=0;
+		$minNilai=100;
+		foreach ( $all_report as $item ) {
+			$no++;
+			$sumBenar=$item ['jmlh_benar'];
+			$sumSalah=$item ['jmlh_salah'];
+			$sumKosong=$item ['jmlh_kosong'];
+			$nama=$item ['namaDepan']." ".$item ['namaBelakang'];
+			//hitung jumlah soal
+			$jumlahSoal=$sumBenar+$sumSalah+$sumKosong;
+						// cek jika pembagi 0
+			if ($jumlahSoal != 0) {
+				//hitung nilai
+				$nilai=$sumBenar/$jumlahSoal*100;
+			}
+
+			$paket=$item ['nm_paket'];
+			$cabang=$item ['namaCabang'];
+			$data[]=array(
+				'no'=>$no,
+				'noIndukNeutron'=>$item['noIndukNeutron'],
+				
+				'nama'=>substr($nama,0,10),
+				'tgl_pengerjaan'=>$item ['tgl_pengerjaan'],
+				'jumlah_soal'=>$jumlahSoal,
+				'jmlh_benar'=>$item ['jmlh_benar'],
+				'jmlh_salah'=>$item ['jmlh_salah'],
+				'jmlh_kosong'=>$item ['jmlh_kosong'],
+				'jumlah_soal'=>$jumlahSoal,
+				'nilai'=>number_format($nilai,2),
+				
+			);
+			//sum Nilai
+			$sumNilai += $nilai;
+
+		}
+		// crt csv
+		// ==========================================
+ 		$dat_header= array(
+ 			array('Report Tryout Paket '.$paket.' Cabang '.$cabang),
+ 			array(' ',' ',' ',' ',' ',' ' ),
+ 			array('No','No CBT','nama','Tanggal Pengerjaan','Jumlah Soal','Jumlah Benar','Jumlah Salah','Jumlah Kosong','Nilai' ),);
+ 		$tgl=date("d_m_y");
+ 		$fileName = $cabang.'_report_paket_'.$paket.'.csv';
+
+		//Set the Content-Type and Content-Disposition headers.
+ 		header('Content-Type: application/excel');
+ 		header('Content-Disposition: attachment; filename="' . $fileName . '"');
+ 		$fp = fopen('php://output', 'w');
+ 		$dat_csv=array_merge($dat_header,$data);
+		//Loop through the array containing our CSV data.
+ 		foreach ($dat_csv as $row) {
+    //fputcsv formats the array into a CSV format.
+    //It then writes the result to our output stream.
+ 			fputcsv($fp, $row);
+ 		}
+
+ 		fclose($fp);
+	}
 }
 ?>

@@ -37,7 +37,7 @@ class MYPDF extends TCPDF {
 
 	// Colored table
 	public function ColoredTable($header,$data) {
-		$w = array(10,25);
+		$w = array(10,25, 25, 25, 25);
 		   $this->DrawHeader($header, $w);
 		$fill = 0;
 		foreach($data as $row) {
@@ -46,6 +46,7 @@ class MYPDF extends TCPDF {
       $this->startTransaction();
 			$this->Cell($w[0], 6, $row['no'], 'LR', 0, 'L', $fill);
 			$this->Cell($w[1], 6, ($row['noIndukNeutron']), 'LR', 0, 'LR', $fill);
+			$this->Cell($w[1], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
 		
 			$this->Ln();
 			 //If old number of pages is less than the new number of pages,
@@ -65,6 +66,7 @@ class MYPDF extends TCPDF {
       	//Re-do the row.
 				$this->Cell($w[0], 6, $row['no'], 'LR', 0, 'L', $fill);
 				$this->Cell($w[1], 6, ($row['noIndukNeutron']), 'LR', 0, 'LR', $fill);
+				$this->Cell($w[1], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
 				
 				$this->Ln();
 			}
