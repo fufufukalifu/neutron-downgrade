@@ -465,11 +465,11 @@ class Admincabang_model extends CI_model {
 		$this->db->where('id_tryout', $data['tryout']);
 		}
 		$this->db->distinct("id_paket");
-		$this->db->select("id_paket");
+		$this->db->select("id_paket,nm_paket");
 		$query = $this->db->get('view_laporan_paket_TO');
 
-		// return $query->result_array();
-		return $query->num_rows();
+		return $query->result_array();
+		// return $query->num_rows();
 	}
 
 }
