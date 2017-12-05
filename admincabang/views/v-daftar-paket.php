@@ -41,8 +41,8 @@
         <div class="btn-group" style="margin-bottom:5px;">
           <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">Download Report<span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="javascript:void(0);" onclick="pdf()"">PDF Report TO </a></li>
-            <li><a href="javascript:void(0);" onclick="pdf_rto()">PDF Report Paket </a></li>
+            <li><a href="javascript:void(0);" onclick="pdf_rto()"">PDF Report TO </a></li>
+            <li><a href="javascript:void(0);" onclick="pdf()">PDF Report Paket </a></li>
             <li class="divider"></li>
             <li><a href="javascript:void(0);"  onclick="excel()">Excel Report TO </a></li>
           </ul>
@@ -85,6 +85,7 @@
       <thead>
         <tr>
           <th>No</th>
+            <th>Cabang</th>
           <th>Nis CBT</th>
           <th>Nama SIswa</th>
            <th>Nama Paket</th>

@@ -88,21 +88,21 @@ class MYPDF extends TCPDF {
 				$this->Cell($w[0], 6, $row['no'], 'LR', 0, 'L', $fill);
 				$this->Cell($w[1], 6, ($row['no_cbt']), 'LR', 0, 'LR', $fill);
 				$this->Cell($w[2], 6, ($row['nama']), 'LR', 0, 'LR', $fill);
-				$i=0;
-				$index_cell=3;
-				$sum_nilai=0;
-				foreach ($dat_paket as $key_paket) {
-					$i++;
-					$index_nilai='nilai_'.$i;
-					$tamp_nilai=isset($row[$index_nilai]);
-					if ( $tamp_nilai == false) {
-						$nilai="";
-					} else {
-						$nilai=round($row[$index_nilai],2);
-					}
-					$this->Cell($w[$index_cell], 6, ($nilai), 'LR', 0, 'LR', $fill);
-					$index_cell++;
+			$i=0;
+			$index_cell=3;
+			foreach ($dat_paket as $key_paket) {
+				$i++;
+				$index_nilai='nilai_'.$i;
+				$tamp_nilai=isset($row[$index_nilai]);
+				if ( $tamp_nilai == false) {
+					$nilai="";
+				} else {
+					$nilai=round($row[$index_nilai],2);
 				}
+				$this->Cell($w[$index_cell], 6, ($nilai), 'LR', 0, 'LR', $fill);
+				$index_cell++;
+				
+			}
 					$this->Cell($w[$index_cell], 6, ($row['avg']), 'LR', 0, 'LR', $fill);
 					
 					$this->Ln();

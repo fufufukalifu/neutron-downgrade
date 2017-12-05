@@ -240,8 +240,6 @@ function seevideo($idvideo){
         // } else {
         //     $img=$this->generateavatar->generate_first_letter_avtar_url($namaPengguna);
         // }
-
-         
         
          $data['comments'][]=array(
           'avatar'=> $img,
@@ -249,7 +247,6 @@ function seevideo($idvideo){
           'isiKomen'=>$key->isiKomen ,
           'date_created'=>$key->date_created,
           'komenID'=>$key->komenID,
-
 
           );
       }

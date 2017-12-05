@@ -97,7 +97,7 @@ $(document).ready(function(){
 	});
 
 });
-
+// upload file excel
 function upload_data_xlsx(){
 	var url_upload=base_url+"import_user/upload_xlsx";
 	var keterangan = "siswa";
@@ -150,7 +150,7 @@ function upload_data_xlsx(){
 		oReq.send();	
 	}
 
-
+	// menampilkan preview data import
 	function preview_import(datArr){
 		datImport=datArr;
 			var records_tb = [];
@@ -172,7 +172,7 @@ function upload_data_xlsx(){
 				 });
 			}
 	}
-
+	// menyimpan data siswa dari excel
 	function post_import_user(){
 		var url=base_url+"import_user/set_magic_batch";
 		var uuid_excel=datExcel.uuid_excel;
@@ -184,7 +184,6 @@ function upload_data_xlsx(){
 			type:"post",
 			dataType:"text",
 			success:function(Data){
-				console.log(Data);
 				var ob_data=JSON.parse(Data);
 				// reset_form_xlsx();
 				swal("berhasil!",ob_data, "success");

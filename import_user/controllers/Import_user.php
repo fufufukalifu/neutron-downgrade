@@ -94,10 +94,6 @@
 
  		echo json_encode($datExcel);
  	}
- 	public function set_siswa_batch()
- 	{
-
- 	}
 
  	public function set_guru_batch()
  	{
@@ -221,6 +217,7 @@
  	
 
  	//ajax list excel backup
+ 	// mengambil data excel data import siswa untuk di tampilkan di tabel
  	public function ajax_xlsx()
  	{
  		$no=1;
@@ -480,13 +477,6 @@ public function f_import_magic()
  	{
  		//identitas excel di siswa
  		$uuid_excel="excel_".$this->input->post("uuid");
- 		// if ($dat_retrun==true) {
- 		// 	//pesan
- 		// 	$dat_msg="Token siswa telah dihapus!";
- 		// } else {
- 		// 	//pesan
- 		// 	$dat_msg="Token siswa gagal dihapus!";
- 		// }
  		// hitung jumlah siswa
  		$count_row=$this->Import_user_model->count_row_pengguna_by_xlsx($uuid_excel);
  		// cek  siswa
@@ -542,18 +532,19 @@ public function f_import_magic()
  		// echo json_encode("hai".$uuid_xlsx);
  		$this->parser->parse('token/v_token_pdf.php',$data);
  	}
-//convert array to csv file
+	//convert array to csv file
  	public function csv_file($uuid='')
  	{
  		$uuid_xlsx="excel_".$uuid;
+ 		// get data token siswa berdasarkan data import excel
  		$dat_siswa=$this->Import_user_model->get_token_xlsx($uuid_xlsx);
+ 		// set header  csv
  		$dat_header= array(
  			array('Data Token Siswa'),
  			array(' ',' ',' ',' ',' ',' ' ),
  			array('cabang','No CBT','nama','tgl_lahir','tingkat','token' ),);
  		$tgl=date("d_m_y");
  		$fileName = '_permohonan_token_'.$tgl.'.csv';
-
 		//Set the Content-Type and Content-Disposition headers.
  		header('Content-Type: application/excel');
  		header('Content-Disposition: attachment; filename="' . $fileName . '"');
@@ -561,8 +552,8 @@ public function f_import_magic()
  		$dat_csv=array_merge($dat_header,$dat_siswa);
 		//Loop through the array containing our CSV data.
  		foreach ($dat_csv as $row) {
-    //fputcsv formats the array into a CSV format.
-    //It then writes the result to our output stream.
+    	//fputcsv formats the array into a CSV format.
+    	//It then writes the result to our output stream.
  			fputcsv($fp, $row);
  		}
 

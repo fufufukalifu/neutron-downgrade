@@ -207,7 +207,6 @@ class paketsoal extends MX_Controller
 	#menambahkan paket soal ke dalam database
 	function addpaketsoal() {
 		$this->form_validation->set_rules( 'nama_paket', "Error Nama Paket", 'required' );
-
 		$data = array(
 			'nm_paket' => $this->input->post( 'nama_paket' ) ,
 			'jumlah_soal' => $this->input->post( 'jumlah_soal' ),
@@ -217,11 +216,7 @@ class paketsoal extends MX_Controller
 			'tingkat_ID' =>$this->input->post( 'tingkat_ID' ),
 			'random'=>$this->input->post('random'),
 			'penggunaID'=>$this->session->userdata['id']
-
 			);
-
-
-
 		$this->mpaketsoal->insertpaketsoal( $data );
 	}
 	##

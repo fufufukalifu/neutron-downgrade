@@ -4,8 +4,8 @@
       <div class="panel-heading">
         <h3 class="panel-title">Daftar Paket TO   </h3> 
         <div class="panel-toolbar text-right">
-          <div class="col-md-11">
-           <div class="col-sm-4">
+          <div class="col-md-12">
+           <div class="col-sm-3">
              <!-- kalo gada yang di filter -->
              <?php if (!empty($post)): ?>
                <input name="filter_cabang" type="hidden" value="<?=$post['select_cabang']  ?>">
@@ -22,7 +22,7 @@
             </select>
           </div>
 
-          <div class="col-sm-4">
+          <div class="col-sm-3">
            <select class="form-control" id="select_to">
             <option value="all">Semua Tryout</option>   
             <?php foreach ($to as $item): ?>
@@ -31,14 +31,27 @@
           </select>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
          <select class="form-control col-sm-6" id="select_paket">
           <option value="all">Semua paket</option>
           </select>
           <!-- <button class="btn btn-sm btn-inverse " onclick="pdf()">PDF</button> -->
         </div>
+           <div class="col-sm-3 mt5 ml0 pl0 pr0">
+          <!-- dropdown laporan -->
+        <div class="btn-group" style="margin-bottom:5px;">
+          <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">Download Report<span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="javascript:void(0);" onclick="pdf_rto()"">PDF Report TO </a></li>
+            <li><a href="javascript:void(0);" onclick="pdf()">PDF Report Paket </a></li>
+            <li class="divider"></li>
+            <li><a href="javascript:void(0);"  onclick="excel()">Excel Report TO </a></li>
+          </ul>
+        </div>
+        <!-- /dropdown laporan -->
+        </div>
       </div>
-      <button class="btn btn-sm btn-inverse col-sm-1" onclick="pdf()">PDF</button>
+   
     </div>
 
   </div>
@@ -69,11 +82,12 @@
     <table class="daftarpaket table table-striped display responsive nowrap" style="font-size: 13px" width=100%>
       <thead>
         <tr>
-          <th>No</th>
-          <th>Username</th>
-          <th>Nama Paket</th>
-          <th>Cabang</th>
+        
+           <th>No</th>
+           <th>Cabang</th>
+          <th>Nis CBT</th>
           <th>Nama SIswa</th>
+           <th>Nama Paket</th>
           <th>Jumlah Soal</th>
           <th>Benar</th>
           <th>Salah</th>
@@ -331,14 +345,39 @@ function load_paket(id_to){
 
 
 
+// laporan pdf per paket
 function pdf() {
   /// TOMBOL PDF KETIKA DI KLIK
   cabang = $('#select_cabang').val();
   tryout = $('#select_to').val();
   paket = $('#select_paket').val();
-  console.log("ini gemes");
   if (cabang != "all" && tryout != "all" && paket != "all") {
-    url = base_url+"admincabang/laporanPDF/"+cabang+"/"+tryout+"/"+paket;
+    url = base_url+"admincabang/laporan_paket_PDF/"+cabang+"/"+tryout+"/"+paket;
+    window.open(url, '_blank');
+  }else{
+    sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
+  }
+}
+
+//laporan pdf per to
+function pdf_rto() {
+  cabang = $('#select_cabang').val();
+  tryout = $('#select_to').val();
+  if (cabang != "all" && tryout != "all") {
+    url = base_url+"admincabang/laporan_to_PDF/"+cabang+"/"+tryout;
+    window.open(url, '_blank');
+  }else{
+    sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");
+  }
+}
+
+function excel() {
+  /// TOMBOL PDF KETIKA DI KLIK
+  cabang = $('#select_cabang').val();
+  tryout = $('#select_to').val();
+  paket = $('#select_paket').val();
+  if (cabang != "all" && tryout != "all" && paket != "all") {
+    url = base_url+"admincabang/laporan_paket_excel/"+cabang+"/"+tryout+"/"+paket;
     window.open(url, '_blank');
   }else{
     sweetAlert("Oops...", "Silahkan pilih cabang, tryout dan paket!","error");

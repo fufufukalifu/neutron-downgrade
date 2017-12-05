@@ -129,6 +129,7 @@ class Admincabang extends MX_Controller {
 				}
 				$tb_paket.=	'<tr>
 				<td>'.$no.'</td>	
+				<td>'.$item ['namaCabang'].'</td>
 				<td>'.$item ['namaPengguna'].'</td>
 				<td>'.$nama.'</td>
 				<td>'.$item ['nm_paket'].'</td>
@@ -295,13 +296,19 @@ public function laporan_to_PDF($cabang="all ",$tryout="all",$paket="all")
 {
 	$this->load->library('Pdf');
 	$datas = ['cabang'=>$cabang,'tryout'=>$tryout,'paket'=>$paket];
-	$all_report = $this->admincabang_model->get_report_to_pdf($datas);		
+	$all_report = $this->admincabang_model->get_report_to_pdf($datas);	
+
 	$data['dat_paket'] = $this->admincabang_model->get_count_paket($datas);
+$count_paket=count($data['dat_paket']);
+	// set_index paket
+	for ($i=0; $i <$count_paket ; $i++) { 
+		$data['dat_paket'][$i]["index_paket"]=$i+1;
+	}
 	$data['all_report'] = array();
 	$no=0;
 	$index=-1;
 	//
-	$count_paket=count($data['dat_paket']);
+	
 	$tamp_noIndukNeutron='tamp';
 	$max_avg=0;
 	$sum_nilai_to=0;
@@ -325,19 +332,32 @@ public function laporan_to_PDF($cabang="all ",$tryout="all",$paket="all")
 			// data siswa
 			//jumlah nilai siswa
 			$sum_nilai=0;
-			$index_tamp=1;
+			// $index_tamp=1;
 			$index++;
 			$no++;
+			$ini=0;
 
 			$tamp_noIndukNeutron = $noIndukNeutron;
-		} else if($tamp_noIndukNeutron == $noIndukNeutron){
+		}
+		if($tamp_noIndukNeutron == $noIndukNeutron){
+			$ini++;
 				// pengulangan untuk nilai paket
 				// data nilai paket siswa
-				$data['all_report'][$index]['no']=$no;
+				$data['all_report'][$index]['no']=$ini;
 				$data['all_report'][$index]['no_cbt']=$noIndukNeutron;
 				$data['all_report'][$index]['nama']=$nama;
 				// $data['all_report'][$index]['nm_paket']="sssss";
-				$nilai_paket="nilai_".$index_tamp;
+				
+				$id_paket=$item["id_paket"];
+				for ($i=0; $i < $count_paket ; $i++) { 
+					$tamp_paket=$data['dat_paket'][$i]["id_paket"];
+					if ($tamp_paket==$id_paket) {
+						// $index_tamp=$data['dat_paket'][$i]["index_paket"];
+						$index_tamp=$i+1;
+						$nilai_paket="nilai_".$index_tamp;
+					}
+				}
+			
 				$data['all_report'][$index][$nilai_paket]=number_format($nilai,2);
 				//jumlah nilai siswa
 				$sum_nilai+=number_format($nilai,2);
@@ -362,7 +382,7 @@ public function laporan_to_PDF($cabang="all ",$tryout="all",$paket="all")
 	$data['avg_to']=number_format($avg_to,2);
 	$data['cabang']=$cabang;
 	$data['nm_tryout']=$nm_tryout;
-	// var_dump($data['all_report'][0]);
+
 	if ($cabang !="all" && $tryout !="all") {
 		$this->parser->parse('v-laporan_to.php',$data);
 	}else{

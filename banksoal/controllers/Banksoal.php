@@ -22,8 +22,6 @@
  */
 class Banksoal extends MX_Controller {
 
-
-
     function __construct() {
         parent::__construct();
         $this->load->helper(array('url'));
@@ -548,12 +546,6 @@ class Banksoal extends MX_Controller {
                                 <input type="checkbox" name="ckRand"'.$ckPublish.' value="1">
                                 <label for="ckRand" >&nbsp;&nbsp;</label>
                     </span>';
-
-            // $row[] ='
-            //         <span class="checkbox custom-checkbox custom-checkbox-inverse">
-            //                     <input type="checkbox" name="ckRand"'.$ckRandom.'>
-            //                     <label for="ckRand" >&nbsp;&nbsp;</label>
-            //         </span>';
             $row[] = '
             <form action="'.base_url().'index.php/banksoal/formUpdate" method="get">
 

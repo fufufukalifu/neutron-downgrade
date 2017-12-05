@@ -1,40 +1,6 @@
 <section id="main">
 	<div class="row">
 		<div class="col-md-12">
-			<!-- panel info pengerjaan to per cabang -->
-			<div class="panel panel-info" id="panel-info-to-cab">
-				<div class="panel-heading">
-					<h3 class="panel-title">Info Pengerjaan Tryout Cabang</h3>
-				</div>
-				<div class="panel-body">
-					<!-- panel filter -->
-					<div class="row">
-						
-					</div>
-					<h4>Silahkan Pilih Filter cabang dan Tryout di bawah tabel List Siswa Tryout!</h4>
-							 <h5>untuk menmpikan informasi pengerjaan tryout cabang.</h5>
-							 <h1 class="text-center"></h1>
-					<!-- tabel info  pengerjaan to cabang-->
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Nama Paket</th>
-								<th>Jumlah Peserta</th>
-								<th>Jumlah yang mengerjakan</th>
-								<th>Jumlah yang belum mengerjakan</th>
-							</tr>
-						</thead>
-						<tbody id="tb-info-cab">
-
-						</tbody>
-					</table>
-					<!-- /tabel info  pengerjaan to cabang-->
-				</div>
-			</div>
-			<!-- /panel info pengerjaan to per cabang -->
-		</div>
-		<div class="col-md-12">
 			<div class="panel panel-teal">
 				<!-- header panel -->
 				<div class="panel-heading">
@@ -135,7 +101,7 @@
 						<ul class="pagination">
 							<li><a href="javascript:void(0);" onclick="next_prev()"><i class="ico-arrow-left13"></i></a></li>
 						  <li><a href="javascript:void(0);" id="pagi-1"></a></li>
-						  <li><a href="javascript:void(0);" id="pagi-2"></a></li>
+						  <li><a href="javascript:void(0);" id="pagi-2" ></a></li>
 						  <li><a href="javascript:void(0);" id="pagi-3"></a></li>
 						  <li><a href="javascript:void(0);" id="pagi-4"></a></li>
 						  <li><a href="javascript:void(0);" id="pagi-5"></a></li>
@@ -147,6 +113,42 @@
 				<!--/ panel footer -->
 			</div>
 		</div>
+		<!-- Info jumlah pengerjaan -->
+		<div class="col-md-12">
+			<!-- panel info pengerjaan to per cabang -->
+			<div class="panel panel-info" id="panel-info-to-cab">
+				<div class="panel-heading">
+					<h3 class="panel-title">Info Pengerjaan Tryout Cabang</h3>
+				</div>
+				<div class="panel-body">
+					<!-- panel filter -->
+					<div class="row">
+						
+					</div>
+					<h4>Silahkan Pilih Filter cabang dan Tryout di bawah tabel List Siswa Tryout!</h4>
+							 <h5>untuk menmpikan informasi pengerjaan tryout cabang.</h5>
+							 <h1 class="text-center"></h1>
+					<!-- tabel info  pengerjaan to cabang-->
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Nama Paket</th>
+								<th>Jumlah Peserta</th>
+								<th>Jumlah yang mengerjakan</th>
+								<th>Jumlah yang belum mengerjakan</th>
+							</tr>
+						</thead>
+						<tbody id="tb-info-cab">
+
+						</tbody>
+					</table>
+					<!-- /tabel info  pengerjaan to cabang-->
+				</div>
+			</div>
+			<!-- /panel info pengerjaan to per cabang -->
+		</div>
+		<!-- /Info jumlah pengerjaan -->
 	</div>
 </section>
 <script type="text/javascript">
@@ -300,7 +302,6 @@
 			type:"post",
 			dataType:"text",
 			success:function(dat_retrun){
-				// console.log(dat_retrun);
 				var ob_data = JSON.parse(dat_retrun);
 					$("select[name=kurikulum_op]").append(ob_data);
 			},
@@ -330,7 +331,6 @@
 			type:"post",
 			dataType:"text",
 			success:function(dat_retrun){
-				// console.log(dat_retrun);
 				var ob_data = JSON.parse(dat_retrun);
 					$("select[name=tryout_op]").append(ob_data);
 			},
@@ -397,8 +397,8 @@ function next_page(){
 
 // set pagination
 function set_pagination(){
-
 	$("#pagi-1").text(pagi_1);
+		$("#pagi-1").css('background-color','#005067');
 	$("#pagi-2").text(pagi_2);
 	$("#pagi-3").text(pagi_3);
 	$("#pagi-4").text(pagi_4);

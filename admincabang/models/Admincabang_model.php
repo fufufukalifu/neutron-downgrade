@@ -66,7 +66,7 @@ class Admincabang_model extends CI_model {
 
 	function get_report_paket_pdf($data){
 		$this->db->order_by('namaDepan','asc');
-		$this->db->limit(15);
+		
 		if ($data['cabang']!="all") {
 			$this->db->where('id_cabang', $data['cabang']);
 		}
@@ -437,7 +437,6 @@ class Admincabang_model extends CI_model {
 		// order by jangan di ubah jika ada perubahan akan mempengaruhi pengelompokan array
 		// di fungsi laporan_to_PDF dan akan menyebabkan kesalhan
 		$this->db->order_by('noIndukNeutron','asc');
-		// $this->db->limit(15);
 		if ($data['cabang']!="all") {
 			$this->db->where('id_cabang', $data['cabang']);
 		}
