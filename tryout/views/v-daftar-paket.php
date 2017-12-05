@@ -101,7 +101,7 @@
 
 
                   <?php if ($status_to=='doing'): ?>
-                   <a onclick="kerjakan(<?=$paketitem['id_paket']?>)" 
+                   <a href="<?=base_url()?>tryout/tamp_paket/<?=$paketitem['id_paket']?>"
                      class="btn btn-success border-radius modal-on<?=$paketitem['id_paket']?>"
                      data-todo='<?=json_encode($paketitem)?>'><i class="glyphicon glyphicon-pencil"></i></a>
                    <?php elseif ($status_to=='done'): ?>

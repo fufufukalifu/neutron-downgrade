@@ -436,6 +436,35 @@ public function get_id_siswa_by_ortu() {
         return $query->result()[0]->penggunaID;
     }
 
+     #get paket yang belum untuk info pengerjaan.
+    public function get_paket_for_info($datas) {
+        $id = $datas['id_tryout'];
+        $id_siswa = $datas['id_siswa'];
+        $id_paket = $datas['id_paket'];
+//        backup query
+        $query = "SELECT *, mm.id as mmid, p.durasi FROM tb_paket p
+        JOIN `tb_mm-tryoutpaket` mm ON mm.`id_paket` = p.`id_paket` 
+        JOIN `tb_hakakses-to` ha ON ha.`id_tryout` = mm.`id_tryout`
+        JOIN `tb_tryout` t ON t.`id_tryout` = ha.`id_tryout`
+        WHERE ha.`id_siswa`=$id_siswa AND mm.`id_tryout`=$id
+        AND p.`id_paket` NOT IN 
+        (SELECT p.id_paket
+        FROM `tb_hakakses-to` ha JOIN tb_siswa s 
+        ON s.`id` = ha.`id_siswa` 
+        JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout` 
+        JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout` 
+        JOIN `tb_paket` p ON p.`id_paket` = mmt.`id_paket` 
+        LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id` 
+        WHERE id_siswa =$id_siswa 
+        AND t.`id_tryout`= $id AND rp.siswaID = $id_siswa)
+        AND mm.id_paket= $id_paket
+        ";
+
+        $result = $this->db->query($query);
+        return $result->result_array()[0];
+    }
+    //##
+
 }
 
 ?>
